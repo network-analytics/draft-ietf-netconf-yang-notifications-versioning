@@ -74,8 +74,8 @@
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
       to specify the YANG module version in the subscription and add the YANG
-      module name, revision and filtering meta data to the yang push streaming
-      update.</t>
+      module name, namespace, revision and filtering meta data to the yang
+      push streaming update.</t>
     </abstract>
 
     <note title="Requirements Language">
@@ -103,12 +103,13 @@
       module name and filter definitions.</t>
 
       <t>The semantics can change between different YANG module revisions. The
-      YANG module version statement is described in Section 7.1.2 of <xref
+      YANG module version statement is specified in Section 7.1.2 of <xref
       target="RFC6020"/> and states that the newer version needs to be
       backward compatible to the previous version. Section 3.1 of <xref
-      target="I-D.ietf-netmod-yang-module-versioning"/> describes that newer
-      revisions may not be backward compatible to the previous revision when
-      indicated with non-backwards-compatible.</t>
+      target="I-D.ietf-netmod-yang-module-versioning"/> specifies that newer
+      semantic versions introduced in <xref
+      target="I-D.ietf-netmod-yang-semver"/> MAY not be backward compatible to
+      the previous revision when indicated with non-backwards-compatible.</t>
 
       <t>The YANG notifications subscription mechanism doesn't allow to
       specify the YANG revision. When a network node is being upgraded, the
@@ -117,37 +118,38 @@
       YANG push receiver notified.</t>
 
       <t>This documents extends the current YANG notifications subscription
-      mechanism to allow to subscribe to a specific or latest revision to
-      which the YANG module revision needs to be backward compatible to. It
+      mechanism to allow to subscribe to a specific or latest semantic version
+      to which the YANG module version needs to be backward compatible to. It
       adds besides the existing Subscription ID, the YANG module name,
-      revision and filtering metadata to the YANG push header to lift the YANG
-      push receiver need to lookup the subscription inventory information.</t>
+      namespace, revision and filtering metadata to the YANG push header to
+      lift the YANG push receiver need to lookup the subscription inventory
+      information.</t>
     </section>
 
     <section anchor="Datastore-Selection"
              title="Extend the Datastore Selection">
       <t>The YANG notifications subscription OPTIONALLY can be restricted to
-      the following YANG module version:</t>
+      the following YANG module semantic version:</t>
 
       <dl>
         <dt>latest:</dt>
 
-        <dd>Restricts the subscription to the latest YANG module
-        revision.</dd>
+        <dd>Restricts the subscription to the latest YANG module semantic
+        version.</dd>
       </dl>
 
       <dl>
         <dt>revision:</dt>
 
-        <dd>Restricts the subscription to a specific YANG module
-        revision.</dd>
+        <dd>Restricts the subscription to a specific YANG module semantic
+        version.</dd>
       </dl>
 
       <dl>
         <dt>latest-compatible-revision:</dt>
 
         <dd>Restricts the subscription to the latest compatible YANG module
-        revision referenced to.</dd>
+        semantic version referenced to.</dd>
       </dl>
 
       <t>If nothing is specified, latest YANG module version is implied.</t>
@@ -167,24 +169,39 @@
       </dl>
 
       <dl>
+        <dt>namespace:</dt>
+
+        <dd>Describes the YANG module namespace as specified in Section 7.1.3
+        of <xref target="RFC6020"/> for the related streamed content.</dd>
+      </dl>
+
+      <dl>
         <dt>revision:</dt>
 
-        <dd>Describes the YANG module revision for the related streamed
+        <dd>Describes the YANG module revision as specified in Section 7.1.2
+        of <xref target="RFC6020"/> for the related streamed content.</dd>
+      </dl>
+
+      <dl>
+        <dt>semversion:</dt>
+
+        <dd>Describes the YANG module semantic version as specified in <xref
+        target="I-D.ietf-netmod-yang-semver"/> for the related streamed
         content.</dd>
       </dl>
 
       <dl>
         <dt>xpath:</dt>
 
-        <dd>Describes the YANG module xpath filter for the related streamed
-        content.</dd>
+        <dd>Describes the YANG module xpath filter as specified in Section 6.4
+        of <xref target="RFC6020"/> for the related streamed content.</dd>
       </dl>
 
       <dl>
         <dt>subtree:</dt>
 
-        <dd>Describes the YANG module subtree filter for the related streamed
-        content.</dd>
+        <dd>Describes the YANG module subtree filter as specified in Section 6
+        of <xref target="RFC6241"/> for the related streamed content.</dd>
       </dl>
 
       <t>Figure 1 provides an example of a notification message with the YANG
@@ -202,7 +219,9 @@
  <push-update xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
    <id>101</id>
    <module>ietf-interfaces</module>
+   <namespace>urn:ietf:params:xml:ns:yang:ietf-interfaces</namespace>
    <revision>2014-05-08</revision>
+   <semversion>1.0.0</semversion>
    <xpath>ietf-interfaces:interfaces<xpath>
    <datastore-contents>
       <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
@@ -232,7 +251,9 @@
       xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
    <id>102</id>
    <module>ietf-interfaces</module>
+   <namespace>urn:ietf:params:xml:ns:yang:ietf-interfaces</namespace>
    <revision>2014-05-08</revision>
+   <semversion>1.0.0</semversion>
    <xpath>ietf-interfaces:interfaces<xpath>
    <datastore-changes>
      <yang-patch>
@@ -285,9 +306,13 @@
 
       <?rfc include='reference.RFC.6020'?>
 
+      <?rfc include='reference.RFC.6241'?>
+
       <?rfc include='reference.RFC.8641'?>
 
       <?rfc include='reference.I-D.ietf-netmod-yang-module-versioning'?>
+
+      <?rfc include='reference.I-D.ietf-netmod-yang-semver'?>
     </references>
 
     <references title="Informative References">
