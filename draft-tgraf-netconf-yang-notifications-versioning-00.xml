@@ -222,7 +222,7 @@
    <namespace>urn:ietf:params:xml:ns:yang:ietf-interfaces</namespace>
    <revision>2014-05-08</revision>
    <semversion>1.0.0</semversion>
-   <xpath>ietf-interfaces:interfaces<xpath>
+   <xpath>ietf-interfaces:interfaces</xpath>
    <datastore-contents>
       <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
        <interface>
@@ -254,7 +254,7 @@
    <namespace>urn:ietf:params:xml:ns:yang:ietf-interfaces</namespace>
    <revision>2014-05-08</revision>
    <semversion>1.0.0</semversion>
-   <xpath>ietf-interfaces:interfaces<xpath>
+   <xpath>ietf-interfaces:interfaces</xpath>
    <datastore-changes>
      <yang-patch>
        <patch-id>0</patch-id>
