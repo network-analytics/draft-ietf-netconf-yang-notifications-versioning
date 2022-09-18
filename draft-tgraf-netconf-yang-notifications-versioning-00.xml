@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="2"?>
+<?rfc tocindent="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<rfc category="std"
+     docName="draft-tgraf-netconf-yang-notifications-versioning-00"
+     ipr="trust200902">
+  <front>
+    <title abbrev="Versioning in YANG Notifications Subscription">Support of
+    versioning in YANG Notifications Subscription</title>
+
+    <author fullname="Thomas Graf" initials="T" surname="Graf">
+      <organization>Swisscom</organization>
+
+      <address>
+        <postal>
+          <street>Binzring 17</street>
+
+          <city>Zurich</city>
+
+          <code>8045</code>
+
+          <country>Switzerland</country>
+        </postal>
+
+        <email>thomas.graf@swisscom.com</email>
+      </address>
+    </author>
+
+    <author fullname="Benoit Claise" initials="B" surname="Claise">
+      <organization>Huawei</organization>
+
+      <address>
+        <email>benoit.claise@huawei.com</email>
+      </address>
+    </author>
+
+    <author fullname="Alex Huang Feng" initials="A." surname="Huang Feng">
+      <organization>INSA-Lyon</organization>
+
+      <address>
+        <postal>
+          <street/>
+
+          <city>Lyon</city>
+
+          <region/>
+
+          <code/>
+
+          <country>France</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>alex.huang-feng@insa-lyon.fr</email>
+
+        <uri/>
+      </address>
+    </author>
+
+    <date day="18" month="September" year="2022"/>
+
+    <abstract>
+      <t>This document extends the YANG notifications subscription mechanism
+      to specify the YANG module version in the subscription and add the YANG
+      module name, revision and filtering meta data to the yang push streaming
+      update.</t>
+    </abstract>
+
+    <note title="Requirements Language">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+      document are to be interpreted as described in <xref
+      target="RFC2119">RFC 2119</xref>.</t>
+    </note>
+  </front>
+
+  <middle>
+    <section anchor="Introduction" title="Introduction">
+      <t>In order to process the received YANG push notification messages
+      described in section 3.7 of <xref target="RFC8641"/> at the YANG push
+      receiver, a semantic reference is needed to determine the data types for
+      each field.</t>
+
+      <t>This semantic reference is available during the subscription period
+      described in Section 3.6 of <xref target="RFC8641"/> where for each
+      subscription a locally unique subscription ID described in Section 4.3.2
+      of <xref target="RFC8641"/> is being issued and streamed as metadata
+      with notification message in the YANG push message header. This implies
+      that the YANG receiver needs to lookup the subscription inventory for a
+      Supscription ID in each notification message to determine the YANG
+      module name and filter definitions.</t>
+
+      <t>The semantics can change between different YANG module revisions. The
+      YANG module version statement is described in Section 7.1.2 of <xref
+      target="RFC6020"/> and states that the newer version needs to be
+      backward compatible to the previous version. Section 3.1 of <xref
+      target="I-D.ietf-netmod-yang-module-versioning"/> describes that newer
+      revisions may not be backward compatible to the previous revision when
+      indicated with non-backwards-compatible.</t>
+
+      <t>The YANG notifications subscription mechanism doesn't allow to
+      specify the YANG revision. When a network node is being upgraded, the
+      subscribed YANG module revision MAY change and possibily break the data
+      processing pipeline since the semantics have changed without having the
+      YANG push receiver notified.</t>
+
+      <t>This documents extends the current YANG notifications subscription
+      mechanism to allow to subscribe to a specific or latest revision to
+      which the YANG module revision needs to be backward compatible to. It
+      adds besides the existing Subscription ID, the YANG module name,
+      revision and filtering metadata to the YANG push header to lift the YANG
+      push receiver need to lookup the subscription inventory information.</t>
+    </section>
+
+    <section anchor="Datastore-Selection"
+             title="Extend the Datastore Selection">
+      <t>The YANG notifications subscription OPTIONALLY can be restricted to
+      the following YANG module version:</t>
+
+      <dl>
+        <dt>latest:</dt>
+
+        <dd>Restricts the subscription to the latest YANG module
+        revision.</dd>
+      </dl>
+
+      <dl>
+        <dt>revision:</dt>
+
+        <dd>Restricts the subscription to a specific YANG module
+        revision.</dd>
+      </dl>
+
+      <dl>
+        <dt>latest-compatible-revision:</dt>
+
+        <dd>Restricts the subscription to the latest compatible YANG module
+        revision referenced to.</dd>
+      </dl>
+
+      <t>If nothing is specified, latest YANG module version is implied.</t>
+    </section>
+
+    <section anchor="Streaming-Update"
+             title="Extend the Metadata in Streaming Update">
+      <t>Along with the subscribed content, besides the Subcription ID the
+      following metadata objects are part of a "push-update" or
+      "push-change-update" notification.</t>
+
+      <dl>
+        <dt>module:</dt>
+
+        <dd>Describes the YANG module name for the related streamed
+        content.</dd>
+      </dl>
+
+      <dl>
+        <dt>revision:</dt>
+
+        <dd>Describes the YANG module revision for the related streamed
+        content.</dd>
+      </dl>
+
+      <dl>
+        <dt>xpath:</dt>
+
+        <dd>Describes the YANG module xpath filter for the related streamed
+        content.</dd>
+      </dl>
+
+      <dl>
+        <dt>subtree:</dt>
+
+        <dd>Describes the YANG module subtree filter for the related streamed
+        content.</dd>
+      </dl>
+
+      <t>Figure 1 provides an example of a notification message with the YANG
+      module name, revision and xpath metadata for a subscription tracking the
+      operational status of a single Ethernet interface (per <xref
+      target="RFC8343"/>). This notification message is encoded XML <xref
+      target="W3C.REC-xml-20081126"/> over the Network Configuration Protocol
+      (NETCONF) as per <xref target="RFC8640"/>.</t>
+
+      <figure>
+        <artwork><![CDATA[
+
+<notification xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
+ <eventTime>2022-09-02T10:59:55.32Z</eventTime>
+ <push-update xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+   <id>101</id>
+   <module>ietf-interfaces</module>
+   <revision>2014-05-08</revision>
+   <xpath>ietf-interfaces:interfaces<xpath>
+   <datastore-contents>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+       <interface>
+         <name>eth0</name>
+         <oper-status>up</oper-status>
+       </interface>
+     </interfaces>
+   </datastore-contents>
+ </push-update>
+</notification>
+
+    Figure 1: Push Example for a Periodical Notification Message
+
+        ]]></artwork>
+      </figure>
+
+      <t>Figure 2 provides an example of an on-change notification message for
+      the same subscription.</t>
+
+      <figure>
+        <artwork><![CDATA[
+
+<notification xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
+ <eventTime>2022-09-02T10:58:46.32Z</eventTime>
+ <push-change-update
+      xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+   <id>102</id>
+   <module>ietf-interfaces</module>
+   <revision>2014-05-08</revision>
+   <xpath>ietf-interfaces:interfaces<xpath>
+   <datastore-changes>
+     <yang-patch>
+       <patch-id>0</patch-id>
+       <edit>
+         <edit-id>edit1</edit-id>
+         <operation>replace</operation>
+         <target>/ietf-interfaces:interfaces</target>
+         <value>
+           <interfaces
+                xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+             <interface>
+               <name>eth0</name>
+               <oper-status>down</oper-status>
+             </interface>
+           </interfaces>
+         </value>
+       </edit>
+     </yang-patch>
+   </datastore-changes>
+ </push-change-update>
+</notification>
+
+    Figure 2: Push Example for an On-Change Notification Message
+
+        ]]></artwork>
+      </figure>
+    </section>
+
+    <section anchor="YANG-Data-Model"
+             title="Extend YANG Data Model of Datastore Push Subscription Management">
+      <t>text</t>
+    </section>
+
+    <section anchor="Security" title="Security Considerations">
+      <t>The security considerations for the YANG notifications subscription
+      mechanism are described in <xref target="RFC8641"/>. This documents adds
+      no additional security considerations.</t>
+    </section>
+
+    <section anchor="Acknowledgements" title="Acknowledgements">
+      <t>The authors would like to thank xxx for their review and valuable
+      comments.</t>
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <?rfc include='reference.RFC.2119'?>
+
+      <?rfc include='reference.RFC.6020'?>
+
+      <?rfc include='reference.RFC.8641'?>
+
+      <?rfc include='reference.I-D.ietf-netmod-yang-module-versioning'?>
+    </references>
+
+    <references title="Informative References">
+      <?rfc include='reference.RFC.8343'?>
+
+      <?rfc include='reference.RFC.8640'?>
+
+      <reference anchor="W3C.REC-xml-20081126"
+                 derivedAnchor="W3C.REC-xml-20081126" quoteTitle="true"
+                 target="https://www.w3.org/TR/2008/REC-xml-20081126">
+        <front>
+          <title>Extensible Markup Language (XML) 1.0 (Fifth Edition)</title>
+
+          <author fullname="Tim Bray" initials="T." surname="Bray">
+            <organization showOnFrontPage="true"/>
+          </author>
+
+          <author fullname="Jean Paoli" initials="J." surname="Paoli">
+            <organization showOnFrontPage="true"/>
+          </author>
+
+          <author fullname="Michael Sperberg-McQueen" initials="M."
+                  surname="Sperberg-McQueen">
+            <organization showOnFrontPage="true"/>
+          </author>
+
+          <author fullname="Eve Maler" initials="E." surname="Maler">
+            <organization showOnFrontPage="true"/>
+          </author>
+
+          <author fullname="Francois Yergeau" initials="F." surname="Yergeau">
+            <organization showOnFrontPage="true"/>
+          </author>
+
+          <date month="November" year="2008"/>
+        </front>
+
+        <refcontent>World Wide Web Consortium Recommendation
+        REC-xml-20081126</refcontent>
+      </reference>
+    </references>
+  </back>
+</rfc>
