@@ -11,7 +11,7 @@ Expires: 22 March 2023                                            Huawei
                                                        18 September 2022
 
 
-        Support of versioning in YANG Notifications Subscription
+        Support of Versioning in YANG Notifications Subscription
           draft-tgraf-netconf-yang-notifications-versioning-00
 
 Abstract
@@ -55,7 +55,7 @@ Copyright Notice
 
 Graf, et al.              Expires 22 March 2023                 [Page 1]
 
-Internet-Draft  Versioning in YANG Notifications Subscri  September 2022
+Internet-Draft        YANG Notifications Versioning       September 2022
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -111,7 +111,7 @@ Table of Contents
 
 Graf, et al.              Expires 22 March 2023                 [Page 2]
 
-Internet-Draft  Versioning in YANG Notifications Subscri  September 2022
+Internet-Draft        YANG Notifications Versioning       September 2022
 
 
    The YANG notifications subscription mechanism doesn't allow to
@@ -167,7 +167,7 @@ Internet-Draft  Versioning in YANG Notifications Subscri  September 2022
 
 Graf, et al.              Expires 22 March 2023                 [Page 3]
 
-Internet-Draft  Versioning in YANG Notifications Subscri  September 2022
+Internet-Draft        YANG Notifications Versioning       September 2022
 
 
    Figure 1 provides an example of a notification message with the YANG
@@ -223,7 +223,7 @@ Internet-Draft  Versioning in YANG Notifications Subscri  September 2022
 
 Graf, et al.              Expires 22 March 2023                 [Page 4]
 
-Internet-Draft  Versioning in YANG Notifications Subscri  September 2022
+Internet-Draft        YANG Notifications Versioning       September 2022
 
 
   <notification xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
@@ -279,7 +279,7 @@ Internet-Draft  Versioning in YANG Notifications Subscri  September 2022
 
 Graf, et al.              Expires 22 March 2023                 [Page 5]
 
-Internet-Draft  Versioning in YANG Notifications Subscri  September 2022
+Internet-Draft        YANG Notifications Versioning       September 2022
 
 
 7.  References
@@ -335,7 +335,7 @@ Authors' Addresses
 
 Graf, et al.              Expires 22 March 2023                 [Page 6]
 
-Internet-Draft  Versioning in YANG Notifications Subscri  September 2022
+Internet-Draft        YANG Notifications Versioning       September 2022
 
 
    Thomas Graf

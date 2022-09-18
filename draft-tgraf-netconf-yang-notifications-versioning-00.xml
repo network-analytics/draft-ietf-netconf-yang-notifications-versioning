@@ -14,8 +14,8 @@
      docName="draft-tgraf-netconf-yang-notifications-versioning-00"
      ipr="trust200902">
   <front>
-    <title abbrev="Versioning in YANG Notifications Subscription">Support of
-    versioning in YANG Notifications Subscription</title>
+    <title abbrev="YANG Notifications Versioning">Support of Versioning in
+    YANG Notifications Subscription</title>
 
     <author fullname="Thomas Graf" initials="T" surname="Graf">
       <organization>Swisscom</organization>
