@@ -5,10 +5,10 @@
 Network Working Group                                            T. Graf
 Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
-Expires: 22 March 2023                                            Huawei
+Expires: 23 March 2023                                            Huawei
                                                            A. Huang Feng
                                                                INSA-Lyon
-                                                       18 September 2022
+                                                       19 September 2022
 
 
         Support of Versioning in YANG Notifications Subscription
@@ -17,9 +17,9 @@ Expires: 22 March 2023                                            Huawei
 Abstract
 
    This document extends the YANG notifications subscription mechanism
-   to specify the YANG module version in the subscription and add the
-   YANG module name, namespace, revision and filtering meta data to the
-   yang push streaming update.
+   to specify the YANG module semantic version in the subscription and
+   add the YANG module name, namespace, revision, semantic version and
+   filtering meta data to the yang push streaming update.
 
 Requirements Language
 
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 March 2023.
+   This Internet-Draft will expire on 23 March 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Graf, et al.              Expires 22 March 2023                 [Page 1]
+Graf, et al.              Expires 23 March 2023                 [Page 1]
 
 Internet-Draft        YANG Notifications Versioning       September 2022
 
@@ -72,8 +72,7 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Extend the Datastore Selection  . . . . . . . . . . . . . . .   3
    3.  Extend the Metadata in Streaming Update . . . . . . . . . . .   3
-   4.  Extend YANG Data Model of Datastore Push Subscription
-           Management  . . . . . . . . . . . . . . . . . . . . . . .   5
+   4.  Extend YANG Push Data Model . . . . . . . . . . . . . . . . .   5
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
@@ -91,34 +90,35 @@ Table of Contents
    This semantic reference is available during the subscription period
    described in Section 3.6 of [RFC8641] where for each subscription a
    locally unique subscription ID described in Section 4.3.2 of
-   [RFC8641] is being issued and streamed as metadata with notification
-   message in the YANG push message header.  This implies that the YANG
-   receiver needs to lookup the subscription inventory for a
-   Supscription ID in each notification message to determine the YANG
-   module name and filter definitions.
+   [RFC8641] is being issued and streamed as metadata with the
+   notification message in the YANG push message header.  This implies
+   that the YANG receiver needs to lookup the subscription inventory for
+   a Supscription ID in each notification message to determine the YANG
+   module name, namespace and filter definitions.
 
    The semantics can change between different YANG module revisions.
    The YANG module version statement is specified in Section 7.1.2 of
-   [RFC6020] and states that the newer version needs to be backward
-   compatible to the previous version.  Section 3.1 of
+   [RFC6020] and states that the newer revision needs to be backward
+   compatible to the previous revision.  Section 3.1 of
    [I-D.ietf-netmod-yang-module-versioning] specifies that newer
    semantic versions introduced in [I-D.ietf-netmod-yang-semver] MAY not
-   be backward compatible to the previous revision when indicated with
+   be backward compatible to the previous version when indicated with
    non-backwards-compatible.
 
 
 
 
-Graf, et al.              Expires 22 March 2023                 [Page 2]
+
+Graf, et al.              Expires 23 March 2023                 [Page 2]
 
 Internet-Draft        YANG Notifications Versioning       September 2022
 
 
    The YANG notifications subscription mechanism doesn't allow to
-   specify the YANG revision.  When a network node is being upgraded,
-   the subscribed YANG module revision MAY change and possibily break
-   the data processing pipeline since the semantics have changed without
-   having the YANG push receiver notified.
+   specify the YANG smeantic version.  When a network node is being
+   upgraded, the subscribed YANG module revision MAY change and
+   possibily break the data processing pipeline since the semantics have
+   changed without having the YANG push receiver notified.
 
    This documents extends the current YANG notifications subscription
    mechanism to allow to subscribe to a specific or latest semantic
@@ -146,7 +146,7 @@ Internet-Draft        YANG Notifications Versioning       September 2022
 
 3.  Extend the Metadata in Streaming Update
 
-   Along with the subscribed content, besides the Subcription ID the
+   Along with the subscribed content, besides the Subcription ID, the
    following metadata objects are part of a "push-update" or "push-
    change-update" notification.
 
@@ -165,7 +165,7 @@ Internet-Draft        YANG Notifications Versioning       September 2022
 
 
 
-Graf, et al.              Expires 22 March 2023                 [Page 3]
+Graf, et al.              Expires 23 March 2023                 [Page 3]
 
 Internet-Draft        YANG Notifications Versioning       September 2022
 
@@ -177,8 +177,8 @@ Internet-Draft        YANG Notifications Versioning       September 2022
       Section 6 of [RFC6241] for the related streamed content.
 
    Figure 1 provides an example of a notification message with the YANG
-   module name, revision and xpath metadata for a subscription tracking
-   the operational status of a single Ethernet interface (per
+   module name, revision, semantic version and xpath for a subscription
+   tracking the operational status of a single Ethernet interface (per
    [RFC8343]).  This notification message is encoded XML
    [W3C.REC-xml-20081126] over the Network Configuration Protocol
    (NETCONF) as per [RFC8640].
@@ -221,7 +221,7 @@ Internet-Draft        YANG Notifications Versioning       September 2022
 
 
 
-Graf, et al.              Expires 22 March 2023                 [Page 4]
+Graf, et al.              Expires 23 March 2023                 [Page 4]
 
 Internet-Draft        YANG Notifications Versioning       September 2022
 
@@ -261,7 +261,7 @@ Internet-Draft        YANG Notifications Versioning       September 2022
       Figure 2: Push Example for an On-Change Notification Message
 
 
-4.  Extend YANG Data Model of Datastore Push Subscription Management
+4.  Extend YANG Push Data Model
 
    text
 
@@ -277,7 +277,7 @@ Internet-Draft        YANG Notifications Versioning       September 2022
 
 
 
-Graf, et al.              Expires 22 March 2023                 [Page 5]
+Graf, et al.              Expires 23 March 2023                 [Page 5]
 
 Internet-Draft        YANG Notifications Versioning       September 2022
 
@@ -333,7 +333,7 @@ Internet-Draft        YANG Notifications Versioning       September 2022
 
 
 
-Graf, et al.              Expires 22 March 2023                 [Page 6]
+Graf, et al.              Expires 23 March 2023                 [Page 6]
 
 Internet-Draft        YANG Notifications Versioning       September 2022
 
@@ -389,4 +389,4 @@ Authors' Addresses
 
 
 
-Graf, et al.              Expires 22 March 2023                 [Page 7]
+Graf, et al.              Expires 23 March 2023                 [Page 7]
