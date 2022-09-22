@@ -5,10 +5,10 @@
 Network Working Group                                            T. Graf
 Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
-Expires: 23 March 2023                                            Huawei
+Expires: 26 March 2023                                            Huawei
                                                            A. Huang Feng
                                                                INSA-Lyon
-                                                       19 September 2022
+                                                       22 September 2022
 
 
         Support of Versioning in YANG Notifications Subscription
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 March 2023.
+   This Internet-Draft will expire on 26 March 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Graf, et al.              Expires 23 March 2023                 [Page 1]
+Graf, et al.              Expires 26 March 2023                 [Page 1]
 
 Internet-Draft        YANG Notifications Versioning       September 2022
 
@@ -84,8 +84,9 @@ Table of Contents
 
    In order to process the received YANG push notification messages
    described in section 3.7 of [RFC8641] at the YANG push receiver, a
-   semantic reference is needed to determine the data types for each
-   field.
+   semantic reference to the YANG module and the XPath or subtree is
+   needed to determine the data types for each field and which part of
+   the YANG module the metrics are expose from.
 
    This semantic reference is available during the subscription period
    described in Section 3.6 of [RFC8641] where for each subscription a
@@ -108,8 +109,7 @@ Table of Contents
 
 
 
-
-Graf, et al.              Expires 23 March 2023                 [Page 2]
+Graf, et al.              Expires 26 March 2023                 [Page 2]
 
 Internet-Draft        YANG Notifications Versioning       September 2022
 
@@ -136,11 +136,12 @@ Internet-Draft        YANG Notifications Versioning       September 2022
    latest:  Restricts the subscription to the latest YANG module
       semantic version.
 
-   revision:  Restricts the subscription to a specific YANG module
-      semantic version.
+   semversion:  Restricts the subscription to a specific YANG module
+      semantic version.  Example 2.0.0.
 
-   latest-compatible-revision:  Restricts the subscription to the latest
-      compatible YANG module semantic version referenced to.
+   latest-compatible-semversion:  Restricts the subscription to the
+      latest compatible YANG module semantic version referenced to.
+      Example 2.0.0.
 
    If nothing is specified, latest YANG module version is implied.
 
@@ -164,8 +165,7 @@ Internet-Draft        YANG Notifications Versioning       September 2022
 
 
 
-
-Graf, et al.              Expires 23 March 2023                 [Page 3]
+Graf, et al.              Expires 26 March 2023                 [Page 3]
 
 Internet-Draft        YANG Notifications Versioning       September 2022
 
@@ -221,7 +221,7 @@ Internet-Draft        YANG Notifications Versioning       September 2022
 
 
 
-Graf, et al.              Expires 23 March 2023                 [Page 4]
+Graf, et al.              Expires 26 March 2023                 [Page 4]
 
 Internet-Draft        YANG Notifications Versioning       September 2022
 
@@ -277,7 +277,7 @@ Internet-Draft        YANG Notifications Versioning       September 2022
 
 
 
-Graf, et al.              Expires 23 March 2023                 [Page 5]
+Graf, et al.              Expires 26 March 2023                 [Page 5]
 
 Internet-Draft        YANG Notifications Versioning       September 2022
 
@@ -333,7 +333,7 @@ Internet-Draft        YANG Notifications Versioning       September 2022
 
 
 
-Graf, et al.              Expires 23 March 2023                 [Page 6]
+Graf, et al.              Expires 26 March 2023                 [Page 6]
 
 Internet-Draft        YANG Notifications Versioning       September 2022
 
@@ -389,4 +389,4 @@ Authors' Addresses
 
 
 
-Graf, et al.              Expires 23 March 2023                 [Page 7]
+Graf, et al.              Expires 26 March 2023                 [Page 7]

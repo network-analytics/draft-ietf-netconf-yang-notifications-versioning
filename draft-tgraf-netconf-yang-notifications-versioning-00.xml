@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="19" month="September" year="2022"/>
+    <date day="22" month="September" year="2022"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -90,8 +90,9 @@
     <section anchor="Introduction" title="Introduction">
       <t>In order to process the received YANG push notification messages
       described in section 3.7 of <xref target="RFC8641"/> at the YANG push
-      receiver, a semantic reference is needed to determine the data types for
-      each field.</t>
+      receiver, a semantic reference to the YANG module and the XPath or
+      subtree is needed to determine the data types for each field and which
+      part of the YANG module the metrics are expose from.</t>
 
       <t>This semantic reference is available during the subscription period
       described in Section 3.6 of <xref target="RFC8641"/> where for each
@@ -139,17 +140,17 @@
       </dl>
 
       <dl>
-        <dt>revision:</dt>
+        <dt>semversion:</dt>
 
         <dd>Restricts the subscription to a specific YANG module semantic
-        version.</dd>
+        version. Example 2.0.0.</dd>
       </dl>
 
       <dl>
-        <dt>latest-compatible-revision:</dt>
+        <dt>latest-compatible-semversion:</dt>
 
         <dd>Restricts the subscription to the latest compatible YANG module
-        semantic version referenced to.</dd>
+        semantic version referenced to. Example 2.0.0.</dd>
       </dl>
 
       <t>If nothing is specified, latest YANG module version is implied.</t>
