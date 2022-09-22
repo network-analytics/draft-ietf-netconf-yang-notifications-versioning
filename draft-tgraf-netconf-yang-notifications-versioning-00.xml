@@ -73,17 +73,17 @@
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
-      to specify the YANG module semantic version at the subscription. Then,
-      a new extension with new metadata of the YANG push update notification
+      to specify the YANG module semantic version at the subscription. Then, a
+      new extension with new metadata of the YANG push update notification
       header is proposed.</t>
     </abstract>
 
     <note title="Requirements Language">
-      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
-      NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
-      "MAY", and "OPTIONAL" in this document are to be interpreted as
-      described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> 
-      when, and only when, they appear in all capitals, as shown here.</t>
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+      "OPTIONAL" in this document are to be interpreted as described in BCP 14
+      <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when,
+      they appear in all capitals, as shown here.</t>
     </note>
   </front>
 
@@ -93,7 +93,7 @@
       described in section 3.7 of <xref target="RFC8641"/> at the YANG push
       receiver, a semantic reference to the YANG module and the XPath or
       subtree is needed to determine the data types for each field and which
-      part of the YANG module the metrics are expose from.</t>
+      part of the YANG module the metrics are expose from..</t>
 
       <t>This semantic reference is available during the subscription period
       described in Section 3.6 of <xref target="RFC8641"/> where for each
@@ -111,21 +111,22 @@
       target="I-D.ietf-netmod-yang-module-versioning"/> specifies that newer
       semantic versions introduced in <xref
       target="I-D.ietf-netmod-yang-semver"/> MAY not be backward compatible to
-      the previous version when indicated with non-backwards-compatible keyword.</t>
+      the previous version when indicated with non-backwards-compatible
+      keyword.</t>
 
-      <t>The YANG notifications subscription mechanism defined in <xref target="RFC8641"/>
-      does not allow to specify the YANG semantic version. When a network node is
-      upgraded, the subscribed YANG module revision MAY have changed and might,
-      consequently, break the data processing pipeline since the YANG push receiver
-      may not be aware of this change.</t>
+      <t>The YANG notifications subscription mechanism defined in <xref
+      target="RFC8641"/> does not allow to specify the YANG semantic version.
+      When a network node is upgraded, the subscribed YANG module revision MAY
+      have changed and might, consequently, break the data processing pipeline
+      since the YANG push receiver may not be aware of this change.</t>
 
       <t>This documents extends the current YANG notifications subscription
       mechanism to allow to subscribe to a specific or latest semantic version
       to which the YANG module version needs to be backward compatible to. It
       adds besides the existing Subscription ID, the YANG module name,
       namespace, revision and filtering metadata to the YANG push notification
-      header to lift the YANG push receiver need to lookup the subscription inventory
-      information.</t>
+      header to lift the YANG push receiver need to lookup the subscription
+      inventory information.</t>
     </section>
 
     <section anchor="Datastore-Selection"
