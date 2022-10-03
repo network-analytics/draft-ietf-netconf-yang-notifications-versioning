@@ -8,15 +8,15 @@ module ietf-yang-push-metadata {
     reference
       "RFC 6991: Common YANG Data Types";
   }
-  import ietf-subscribed-notifications {
-    prefix sn;
-    reference
-      "RFC 8639: Subscription to YANG Notifications";
-  }
+  // import ietf-subscribed-notifications {
+  //   prefix sn;
+  //   reference
+  //     "RFC 8639: Subscription to YANG Notifications";
+  // }
   import ietf-yang-push {
     prefix yp;
     reference
-      "RFC 6941: Subscription to YANG Notifications for Datastore Updates";
+      "RFC 8641: Subscription to YANG Notifications for Datastore Updates";
   }
   import ietf-yang-revisions {
     prefix rev;
@@ -63,12 +63,8 @@ module ietf-yang-push-metadata {
     reference
       "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
   }
- 
-  augment "/yp:push-update" {
-    description
-      "This augmentation adds the module, the namespace, the revision, the 
-      semversion, the xpath and the subtree in the push-update notification";
 
+  grouping yang-push-metadata {
     leaf module {
       type string;
       description
@@ -99,5 +95,19 @@ module ietf-yang-push-metadata {
       description
         "This references the YANG module subtree of the sent notification. TODO: type subtree?";
     }
+  }
+
+  augment "/yp:push-update" {
+    description
+      "This augmentation adds the module, the namespace, the revision, the 
+      semversion, the xpath and the subtree in the push-update notification";
+    uses ypm:yang-push-metadata;
+  }
+
+  augment "/yp:push-change-update" {
+    description
+      "This augmentation adds the module, the namespace, the revision, the 
+      semversion, the xpath and the subtree in the push-change-update notification";
+      uses ypm:yang-push-metadata;
   }
 }
