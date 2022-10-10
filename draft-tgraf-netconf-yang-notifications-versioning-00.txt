@@ -72,11 +72,13 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Extend the Datastore Selection  . . . . . . . . . . . . . . .   3
    3.  Extend the Metadata in Streaming Update . . . . . . . . . . .   3
-   4.  Extend YANG Push Data Model . . . . . . . . . . . . . . . . .   5
+   4.  The "ietf-yang-push-metadata" Module  . . . . . . . . . . . .   5
+     4.1.  Data Model Overview . . . . . . . . . . . . . . . . . . .   5
+     4.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .   6
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
-   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   8
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
-     7.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
      7.2.  Informative References  . . . . . . . . . . . . . . . . .   9
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
 
@@ -97,14 +99,12 @@ Table of Contents
    a subscription ID in each notification message to determine the YANG
    module name, namespace and filter definitions.
 
-   The semantics can change between different YANG module revisions.
-   The YANG module version statement is specified in Section 7.1.2 of
-   [RFC6020] and states that the newer revision needs to be backward
-   compatible to the previous revision.  Section 3.1 of
-   [I-D.ietf-netmod-yang-module-versioning] specifies that newer
-   semantic versions introduced in [I-D.ietf-netmod-yang-semver] MAY not
-   be backward compatible to the previous version when indicated with
-   non-backwards-compatible keyword.
+
+
+
+
+
+
 
 
 
@@ -113,6 +113,15 @@ Graf, et al.              Expires 13 April 2023                 [Page 2]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
+
+   The semantics can change between different YANG module revisions.
+   The YANG module version statement is specified in Section 7.1.2 of
+   [RFC6020] and states that the newer revision needs to be backward
+   compatible to the previous revision.  Section 3.1 of
+   [I-D.ietf-netmod-yang-module-versioning] specifies that newer
+   semantic versions introduced in [I-D.ietf-netmod-yang-semver] MAY not
+   be backward compatible to the previous version when indicated with
+   non-backwards-compatible keyword.
 
    The YANG notifications subscription mechanism defined in [RFC8641]
    does not allow to specify the YANG module revision.  When a network
@@ -153,6 +162,14 @@ Internet-Draft        YANG Notifications Versioning         October 2022
    change-update" notification.
 
    module:  Describes the YANG module name for the related streamed
+
+
+
+Graf, et al.              Expires 13 April 2023                 [Page 3]
+
+Internet-Draft        YANG Notifications Versioning         October 2022
+
+
       content.
 
    namespace:  Describes the YANG module namespace as specified in
@@ -162,14 +179,6 @@ Internet-Draft        YANG Notifications Versioning         October 2022
       Section 7.1.2 of [RFC6020] for the related streamed content.
 
    revision-label:  Describes the YANG module semantic version as
-
-
-
-Graf, et al.              Expires 13 April 2023                 [Page 3]
-
-Internet-Draft        YANG Notifications Versioning         October 2022
-
-
       specified in [I-D.ietf-netmod-yang-semver] for the related
       streamed content.
 
@@ -209,15 +218,6 @@ Internet-Draft        YANG Notifications Versioning         October 2022
    Figure 1: XML Push Example for a Periodical Notification Message
 
 
-   Figure 2 provides an example of a JSON encoded, [RFC8259],
-   notification message over HTTPS-based [I-D.ietf-netconf-https-notif]
-   or UDP-based [I-D.ietf-netconf-udp-notif] transport for the same
-   subscription.
-
-
-
-
-
 
 
 
@@ -225,6 +225,11 @@ Graf, et al.              Expires 13 April 2023                 [Page 4]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
+
+   Figure 2 provides an example of a JSON encoded, [RFC8259],
+   notification message over HTTPS-based [I-D.ietf-netconf-https-notif]
+   or UDP-based [I-D.ietf-netconf-udp-notif] transport for the same
+   subscription.
 
 {
     "ietf-notification:notification": {
@@ -256,9 +261,48 @@ Internet-Draft        YANG Notifications Versioning         October 2022
  Figure 2: JSON Push Example for a Periodical Notification Message
 
 
-4.  Extend YANG Push Data Model
+4.  The "ietf-yang-push-metadata" Module
 
-   The YANG model has six leaves augmented into one place of [RFC8641].
+4.1.  Data Model Overview
+
+   This YANG module augments "ietf-yang-push" module to add subcription
+   metadata into the "push-update" and "push-change-update"
+   notification.
+
+
+
+
+
+
+
+
+
+Graf, et al.              Expires 13 April 2023                 [Page 5]
+
+Internet-Draft        YANG Notifications Versioning         October 2022
+
+
+   module: ietf-yang-push-metadata
+
+     augment /yp:push-update:
+       +--ro module?                     string
+       +--ro namespace?                  string
+       +--ro revision?                   rev:revision-date-or-label
+       +--ro semversion?                 ysver:version
+       +--ro datastore-xpath-filter?     yang:xpath1.0 {sn:xpath}?
+       +--ro datastore-subtree-filter?   <anydata> {sn:subtree}?
+     augment /yp:push-change-update:
+       +--ro module?                     string
+       +--ro namespace?                  string
+       +--ro revision?                   rev:revision-date-or-label
+       +--ro semversion?                 ysver:version
+       +--ro datastore-xpath-filter?     yang:xpath1.0 {sn:xpath}?
+       +--ro datastore-subtree-filter?   <anydata> {sn:subtree}?
+
+4.2.  YANG Module
+
+   The YANG module has six leaves augmenting the model of YANG-push
+   [RFC8641].
 
    <CODE BEGINS> file "ietf-yang-push-metadata@2022-10-10.yang"
    module ietf-yang-push-metadata {
@@ -274,62 +318,18 @@ Internet-Draft        YANG Notifications Versioning         October 2022
      import ietf-subscribed-notifications {
        prefix sn;
        reference
-
-
-
-Graf, et al.              Expires 13 April 2023                 [Page 5]
-
-Internet-Draft        YANG Notifications Versioning         October 2022
-
-
          "RFC 8639: Subscription to YANG Notifications";
      }
      import ietf-yang-push {
        prefix yp;
        reference
-         "RFC 6941: Subscription to YANG Notifications for
-         Datastore Updates";
+         "RFC 8641: Subscription to YANG Notifications for Datastore Updates";
      }
      import ietf-yang-revisions {
        prefix rev;
        reference
-         "RFC XXXX: draft-ietf-netmod-yang-module-versioning-06,
-         Updated YANG Module Revision Handling";
-     }
-     import ietf-yang-semver {
-       prefix ysver;
-       reference
-         "RFC XXXX: draft-ietf-netmod-yang-semver-07, YANG Semantic
-         Versioning";
-     }
-
-     organization "IETF NETCONF (Network Configuration) Working Group";
-     contact
-       "WG Web:   <http:/tools.ietf.org/wg/netconf/>
-        WG List:  <mailto:netconf@ietf.org>
-
-        Authors:  Thomas Graf
-                  <mailto:thomas.graf@swisscom.com>
-                  Benoit Claise
-                  <mailto:benoit.claise@huawei.com>
-                  Alex Huang Feng
-                  <mailto:alex.huang-feng@insa-lyon.fr>";
-
-     description
-       "Defines YANG push event notification header with metadata.
-
-       Copyright (c) 2022 IETF Trust and the persons identified as
-       authors of the code.  All rights reserved.
-
-       Redistribution and use in source and binary forms, with or
-       without modification, is permitted pursuant to, and subject
-       to the license terms contained in, the Revised BSD License
-       set forth in Section 4.c of the IETF Trust's Legal Provisions
-       relating to IETF Documents
-       (https://trustee.ietf.org/license-info).
-
-       This version of this YANG module is part of RFC XXXX; see the
-       RFC itself for full legal notices.";
+         "RFC XXXX: draft-ietf-netmod-yang-module-versioning-06, Updated YANG
+         Module Revision Handling";
 
 
 
@@ -338,54 +338,54 @@ Graf, et al.              Expires 13 April 2023                 [Page 6]
 Internet-Draft        YANG Notifications Versioning         October 2022
 
 
+     }
+     import ietf-yang-semver {
+       prefix ysver;
+       reference
+         "RFC XXXX: draft-ietf-netmod-yang-semver-07, YANG Semantic Versioning";
+     }
+
+     organization "IETF NETCONF (Network Configuration) Working Group";
+     contact
+       "WG Web:   <http:/tools.ietf.org/wg/netconf/>
+       WG List:  <mailto:netconf@ietf.org>
+
+       Authors:  Thomas Graf
+                 <mailto:thomas.graf@swisscom.com>
+                 Benoit Claise
+                 <mailto:benoit.claise@huawei.com>
+                 Alex Huang Feng
+                 <mailto:alex.huang-feng@insa-lyon.fr>";
+
+     description
+       "Defines YANG push event notification header with metadata.
+
+       Copyright (c) 2022 IETF Trust and the persons identified as
+       authors of the code.  All rights reserved.
+
+       Redistribution and use in source and binary forms, with or without
+       modification, is permitted pursuant to, and subject to the license
+       terms contained in, the Revised BSD License set forth in Section
+       4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
+       (https://trustee.ietf.org/license-info).
+
+       This version of this YANG module is part of RFC XXXX; see the RFC
+       itself for full legal notices.";
+
      revision 2022-09-21 {
        description
          "First revision";
        reference
-         "RFC XXXX: Support of Versioning in YANG Notifications
-         Subscription";
+         "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
      }
 
-     augment "/yp:push-update" {
-       description
-         "This augmentation adds the module, the namespace, the
-         revision, the revision label, the xpath and the subtree in the
-         push-update notification";
-
+     grouping yang-push-metadata {
        leaf module {
          type string;
          description
            "This references the YANG module of the sent notification.";
        }
        leaf namespace {
-         type string;
-         description
-           "This references the YANG module namespace of the sent
-           notification.";
-       }
-       leaf revision {
-         type rev:revision-date-or-label;
-         description
-           "This references the YANG module revision of the sent
-           notification.";
-       }
-       leaf revision-label {
-         type ysver:version;
-         description
-           "This references the YANG module revision label of the sent
-           notification.";
-       }
-       leaf xpath {
-         type yang:xpath1.0;
-         description
-           "This references the YANG module xpath of the sent
-           notification.";
-       }
-       leaf subtree {
-         type string;
-         description
-           "This references the YANG module subtree of the sent
-           notification. TODO: type subtree?";
 
 
 
@@ -394,7 +394,45 @@ Graf, et al.              Expires 13 April 2023                 [Page 7]
 Internet-Draft        YANG Notifications Versioning         October 2022
 
 
+         type string;
+         description
+           "This references the YANG module namespace of the sent notification.";
        }
+       leaf revision {
+         type rev:revision-date-or-label;
+         description
+           "This references the YANG module revision of the sent notification.";
+       }
+       leaf semversion {
+         type ysver:version;
+         description
+           "This references the YANG module semversion of the sent notification.";
+       }
+       leaf datastore-xpath-filter {
+         type yang:xpath1.0;
+         if-feature "sn:xpath";
+         description
+           "This references the YANG module xpath of the sent notification.";
+       }
+       anydata datastore-subtree-filter {
+         if-feature "sn:subtree";
+         description
+           "This references the YANG module subtree of the sent notification.";
+       }
+     }
+
+     augment "/yp:push-update" {
+       description
+         "This augmentation adds the module, the namespace, the revision, the
+         semversion, the xpath and the subtree in the push-update notification";
+       uses ypm:yang-push-metadata;
+     }
+
+     augment "/yp:push-change-update" {
+       description
+         "This augmentation adds the module, the namespace, the revision, the
+         semversion, the xpath and the subtree in the push-change-update notification";
+         uses ypm:yang-push-metadata;
      }
    }
    <CODE ENDS>
@@ -404,6 +442,13 @@ Internet-Draft        YANG Notifications Versioning         October 2022
    The security considerations for the YANG notifications subscription
    mechanism are described in [RFC8641].  This documents adds no
    additional security considerations.
+
+
+
+Graf, et al.              Expires 13 April 2023                 [Page 8]
+
+Internet-Draft        YANG Notifications Versioning         October 2022
+
 
 6.  Acknowledgements
 
@@ -439,17 +484,6 @@ Internet-Draft        YANG Notifications Versioning         October 2022
               DOI 10.17487/RFC6020, October 2010,
               <https://www.rfc-editor.org/info/rfc6020>.
 
-
-
-
-
-
-
-Graf, et al.              Expires 13 April 2023                 [Page 8]
-
-Internet-Draft        YANG Notifications Versioning         October 2022
-
-
    [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
               and A. Bierman, Ed., "Network Configuration Protocol
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
@@ -464,6 +498,13 @@ Internet-Draft        YANG Notifications Versioning         October 2022
               September 2019, <https://www.rfc-editor.org/info/rfc8641>.
 
 7.2.  Informative References
+
+
+
+Graf, et al.              Expires 13 April 2023                 [Page 9]
+
+Internet-Draft        YANG Notifications Versioning         October 2022
+
 
    [I-D.ietf-netconf-https-notif]
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
@@ -498,14 +539,6 @@ Internet-Draft        YANG Notifications Versioning         October 2022
    [W3C.REC-xml-20081126]
               Bray, T., Paoli, J., Sperberg-McQueen, M., Maler, E., and
               F. Yergeau, "Extensible Markup Language (XML) 1.0 (Fifth
-
-
-
-Graf, et al.              Expires 13 April 2023                 [Page 9]
-
-Internet-Draft        YANG Notifications Versioning         October 2022
-
-
               Edition)", World Wide Web Consortium Recommendation REC-
               xml-20081126, November 2008,
               <https://www.w3.org/TR/2008/REC-xml-20081126>.
@@ -518,6 +551,15 @@ Authors' Addresses
    CH-8045 Zurich
    Switzerland
    Email: thomas.graf@swisscom.com
+
+
+
+
+
+
+Graf, et al.              Expires 13 April 2023                [Page 10]
+
+Internet-Draft        YANG Notifications Versioning         October 2022
 
 
    Benoit Claise
@@ -557,4 +599,18 @@ Authors' Addresses
 
 
 
-Graf, et al.              Expires 13 April 2023                [Page 10]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Graf, et al.              Expires 13 April 2023                [Page 11]

@@ -8,11 +8,11 @@ module ietf-yang-push-metadata {
     reference
       "RFC 6991: Common YANG Data Types";
   }
-  // import ietf-subscribed-notifications {
-  //   prefix sn;
-  //   reference
-  //     "RFC 8639: Subscription to YANG Notifications";
-  // }
+  import ietf-subscribed-notifications {
+    prefix sn;
+    reference
+      "RFC 8639: Subscription to YANG Notifications";
+  }
   import ietf-yang-push {
     prefix yp;
     reference
@@ -85,15 +85,16 @@ module ietf-yang-push-metadata {
       description
         "This references the YANG module semversion of the sent notification.";
     }
-    leaf xpath {
+    leaf datastore-xpath-filter {
       type yang:xpath1.0;
+      if-feature "sn:xpath";
       description
         "This references the YANG module xpath of the sent notification.";
     }
-    leaf subtree {
-      type string;
+    anydata datastore-subtree-filter {
+      if-feature "sn:subtree";
       description
-        "This references the YANG module subtree of the sent notification. TODO: type subtree?";
+        "This references the YANG module subtree of the sent notification.";
     }
   }
 
