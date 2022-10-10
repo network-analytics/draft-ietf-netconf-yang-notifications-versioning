@@ -288,14 +288,14 @@ Internet-Draft        YANG Notifications Versioning         October 2022
        +--ro module?                     string
        +--ro namespace?                  string
        +--ro revision?                   rev:revision-date-or-label
-       +--ro semversion?                 ysver:version
+       +--ro revision-label?             ysver:version
        +--ro datastore-xpath-filter?     yang:xpath1.0 {sn:xpath}?
        +--ro datastore-subtree-filter?   <anydata> {sn:subtree}?
      augment /yp:push-change-update:
        +--ro module?                     string
        +--ro namespace?                  string
        +--ro revision?                   rev:revision-date-or-label
-       +--ro semversion?                 ysver:version
+       +--ro revision-label?             ysver:version
        +--ro datastore-xpath-filter?     yang:xpath1.0 {sn:xpath}?
        +--ro datastore-subtree-filter?   <anydata> {sn:subtree}?
 
@@ -348,14 +348,14 @@ Internet-Draft        YANG Notifications Versioning         October 2022
      organization "IETF NETCONF (Network Configuration) Working Group";
      contact
        "WG Web:   <http:/tools.ietf.org/wg/netconf/>
-       WG List:  <mailto:netconf@ietf.org>
+        WG List:  <mailto:netconf@ietf.org>
 
-       Authors:  Thomas Graf
-                 <mailto:thomas.graf@swisscom.com>
-                 Benoit Claise
-                 <mailto:benoit.claise@huawei.com>
-                 Alex Huang Feng
-                 <mailto:alex.huang-feng@insa-lyon.fr>";
+        Authors:  Thomas Graf
+                  <mailto:thomas.graf@swisscom.com>
+                  Benoit Claise
+                  <mailto:benoit.claise@huawei.com>
+                  Alex Huang Feng
+                  <mailto:alex.huang-feng@insa-lyon.fr>";
 
      description
        "Defines YANG push event notification header with metadata.
@@ -403,7 +403,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
          description
            "This references the YANG module revision of the sent notification.";
        }
-       leaf semversion {
+       leaf revision-label {
          type ysver:version;
          description
            "This references the YANG module semversion of the sent notification.";

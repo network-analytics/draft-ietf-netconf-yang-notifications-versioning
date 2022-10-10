@@ -80,7 +80,7 @@ module ietf-yang-push-metadata {
       description
         "This references the YANG module revision of the sent notification.";
     }
-    leaf semversion {
+    leaf revision-label {
       type ysver:version;
       description
         "This references the YANG module semversion of the sent notification.";
