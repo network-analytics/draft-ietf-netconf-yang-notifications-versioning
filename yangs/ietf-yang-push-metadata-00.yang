@@ -16,7 +16,7 @@ module ietf-yang-push-metadata {
   import ietf-yang-push {
     prefix yp;
     reference
-      "RFC 6941: Subscription to YANG Notifications for Datastore Updates";
+      "RFC 8641: Subscription to YANG Notifications for Datastore Updates";
   }
   import ietf-yang-revisions {
     prefix rev;
@@ -63,12 +63,8 @@ module ietf-yang-push-metadata {
     reference
       "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
   }
- 
-  augment "/yp:push-update" {
-    description
-      "This augmentation adds the module, the namespace, the revision, the 
-      semversion, the xpath and the subtree in the push-update notification";
 
+  grouping yang-push-metadata {
     leaf module {
       type string;
       description
@@ -84,20 +80,35 @@ module ietf-yang-push-metadata {
       description
         "This references the YANG module revision of the sent notification.";
     }
-    leaf semversion {
+    leaf revision-label {
       type ysver:version;
       description
         "This references the YANG module semversion of the sent notification.";
     }
-    leaf xpath {
+    leaf datastore-xpath-filter {
       type yang:xpath1.0;
+      if-feature "sn:xpath";
       description
         "This references the YANG module xpath of the sent notification.";
     }
-    leaf subtree {
-      type string;
+    anydata datastore-subtree-filter {
+      if-feature "sn:subtree";
       description
-        "This references the YANG module subtree of the sent notification. TODO: type subtree?";
+        "This references the YANG module subtree of the sent notification.";
     }
+  }
+
+  augment "/yp:push-update" {
+    description
+      "This augmentation adds the module, the namespace, the revision, the 
+      semversion, the xpath and the subtree in the push-update notification";
+    uses ypm:yang-push-metadata;
+  }
+
+  augment "/yp:push-change-update" {
+    description
+      "This augmentation adds the module, the namespace, the revision, the 
+      semversion, the xpath and the subtree in the push-change-update notification";
+      uses ypm:yang-push-metadata;
   }
 }
