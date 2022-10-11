@@ -5,10 +5,10 @@
 Network Working Group                                            T. Graf
 Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
-Expires: 13 April 2023                                            Huawei
+Expires: 14 April 2023                                            Huawei
                                                            A. Huang Feng
                                                                INSA-Lyon
-                                                         10 October 2022
+                                                         11 October 2022
 
 
         Support of Versioning in YANG Notifications Subscription
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 April 2023.
+   This Internet-Draft will expire on 14 April 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Graf, et al.              Expires 13 April 2023                 [Page 1]
+Graf, et al.              Expires 14 April 2023                 [Page 1]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -72,15 +72,15 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Extend the Datastore Selection  . . . . . . . . . . . . . . .   3
    3.  Extend the Metadata in Streaming Update . . . . . . . . . . .   3
-   4.  The "ietf-yang-push-metadata" Module  . . . . . . . . . . . .   5
-     4.1.  Data Model Overview . . . . . . . . . . . . . . . . . . .   5
-     4.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .   6
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
-   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-     7.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .   9
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
+   4.  The "ietf-yang-push-metadata" Module  . . . . . . . . . . . .   6
+     4.1.  Data Model Overview . . . . . . . . . . . . . . . . . . .   6
+     4.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .   7
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  10
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .  10
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
 
 1.  Introduction
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Graf, et al.              Expires 13 April 2023                 [Page 2]
+Graf, et al.              Expires 14 April 2023                 [Page 2]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -165,7 +165,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 13 April 2023                 [Page 3]
+Graf, et al.              Expires 14 April 2023                 [Page 3]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -182,54 +182,105 @@ Internet-Draft        YANG Notifications Versioning         October 2022
       specified in [I-D.ietf-netmod-yang-semver] for the related
       streamed content.
 
-   xpath:  Describes the YANG module xpath filter as specified in
-      Section 6.4 of [RFC6020] for the related streamed content.
+   datastore-xpath-filter:  Describes the YANG module xpath filter as
+      specified in Section 6.4 of [RFC6020] for the related streamed
+      content.
 
-   subtree:  Describes the YANG module subtree filter as specified in
-      Section 6 of [RFC6241] for the related streamed content.
+   datastore-subtree-filter:  Describes the YANG module subtree filter
+      as specified in Section 6 of [RFC6241] for the related streamed
+      content.
 
    Figure 1 provides an example of a notification message with the YANG
-   module name, revision, revision label and xpath for a subscription
-   tracking the operational status of a single Ethernet interface (per
-   [RFC8343]).  This notification message is encoded XML
+   module name, revision, revision label and datastore-xpath-filter for
+   a subscription tracking the operational status of a single Ethernet
+   interface (per [RFC8343]).  This notification message is encoded XML
    [W3C.REC-xml-20081126] over the Network Configuration Protocol
    (NETCONF) as per [RFC8640].
 
-  <notification xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
-   <eventTime>2022-09-02T10:59:55.32Z</eventTime>
-   <push-update xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
-     <id>101</id>
-     <module>ietf-interfaces</module>
-     <namespace>urn:ietf:params:xml:ns:yang:ietf-interfaces</namespace>
-     <revision>2014-05-08</revision>
-     <revision-label>1.0.0</revision-label>
-     <xpath>ietf-interfaces:interfaces</xpath>
-     <datastore-contents>
-        <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
-         <interface>
-           <name>eth0</name>
-           <oper-status>up</oper-status>
-         </interface>
-       </interfaces>
-     </datastore-contents>
-   </push-update>
-  </notification>
-
-   Figure 1: XML Push Example for a Periodical Notification Message
 
 
 
 
 
-Graf, et al.              Expires 13 April 2023                 [Page 4]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Graf, et al.              Expires 14 April 2023                 [Page 4]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
+
+
+<notification xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
+ <eventTime>2022-09-02T10:59:55.32Z</eventTime>
+ <push-update xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+   <id>101</id>
+   <module>ietf-interfaces</module>
+   <namespace>urn:ietf:params:xml:ns:yang:ietf-interfaces</namespace>
+   <revision>2014-05-08</revision>
+   <revision-label>1.0.0</revision-label>
+   <datastore-xpath-filter>ietf-interfaces:interfaces</datastore-xpath-filter>
+   <datastore-contents>
+      <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+       <interface>
+         <name>eth0</name>
+         <oper-status>up</oper-status>
+       </interface>
+     </interfaces>
+   </datastore-contents>
+ </push-update>
+</notification>
+
+ Figure 1: XML Push Example for a Periodical Notification Message
 
 
    Figure 2 provides an example of a JSON encoded, [RFC8259],
    notification message over HTTPS-based [I-D.ietf-netconf-https-notif]
    or UDP-based [I-D.ietf-netconf-udp-notif] transport for the same
    subscription.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Graf, et al.              Expires 14 April 2023                 [Page 5]
+
+Internet-Draft        YANG Notifications Versioning         October 2022
+
 
 {
     "ietf-notification:notification": {
@@ -240,7 +291,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
             "namespace": "urn:ietf:params:xml:ns:yang:ietf-interfaces",{
             "revision": "2014-05-08",{
             "revision-label": "1.0.0",{
-            "xpath": "ietf-interfaces:interfaces",
+            "datastore-xpath-filter": "ietf-interfaces:interfaces",
             "datastore-contents": {
                 "ietf-interfaces:interface": {
                     "name": {
@@ -277,7 +328,12 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 13 April 2023                 [Page 5]
+
+
+
+
+
+Graf, et al.              Expires 14 April 2023                 [Page 6]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -333,7 +389,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 13 April 2023                 [Page 6]
+Graf, et al.              Expires 14 April 2023                 [Page 7]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -389,7 +445,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 13 April 2023                 [Page 7]
+Graf, et al.              Expires 14 April 2023                 [Page 8]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -445,7 +501,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 13 April 2023                 [Page 8]
+Graf, et al.              Expires 14 April 2023                 [Page 9]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -501,7 +557,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 13 April 2023                 [Page 9]
+Graf, et al.              Expires 14 April 2023                [Page 10]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -557,7 +613,7 @@ Authors' Addresses
 
 
 
-Graf, et al.              Expires 13 April 2023                [Page 10]
+Graf, et al.              Expires 14 April 2023                [Page 11]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -613,4 +669,4 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 13 April 2023                [Page 11]
+Graf, et al.              Expires 14 April 2023                [Page 12]

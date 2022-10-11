@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="10" month="October" year="2022"/>
+    <date day="11" month="October" year="2022"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -195,25 +195,25 @@
       </dl>
 
       <dl>
-        <dt>xpath:</dt>
+        <dt>datastore-xpath-filter:</dt>
 
         <dd>Describes the YANG module xpath filter as specified in Section 6.4
         of <xref target="RFC6020"/> for the related streamed content.</dd>
       </dl>
 
       <dl>
-        <dt>subtree:</dt>
+        <dt>datastore-subtree-filter:</dt>
 
         <dd>Describes the YANG module subtree filter as specified in Section 6
         of <xref target="RFC6241"/> for the related streamed content.</dd>
       </dl>
 
       <t>Figure 1 provides an example of a notification message with the YANG
-      module name, revision, revision label and xpath for a subscription
-      tracking the operational status of a single Ethernet interface (per
-      <xref target="RFC8343"/>). This notification message is encoded XML
-      <xref target="W3C.REC-xml-20081126"/> over the Network Configuration
-      Protocol (NETCONF) as per <xref target="RFC8640"/>.</t>
+      module name, revision, revision label and datastore-xpath-filter for a
+      subscription tracking the operational status of a single Ethernet
+      interface (per <xref target="RFC8343"/>). This notification message is
+      encoded XML <xref target="W3C.REC-xml-20081126"/> over the Network
+      Configuration Protocol (NETCONF) as per <xref target="RFC8640"/>.</t>
 
       <figure>
         <artwork><![CDATA[
@@ -226,7 +226,7 @@
    <namespace>urn:ietf:params:xml:ns:yang:ietf-interfaces</namespace>
    <revision>2014-05-08</revision>
    <revision-label>1.0.0</revision-label>
-   <xpath>ietf-interfaces:interfaces</xpath>
+   <datastore-xpath-filter>ietf-interfaces:interfaces</datastore-xpath-filter>
    <datastore-contents>
       <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
        <interface>
@@ -261,7 +261,7 @@
             "namespace": "urn:ietf:params:xml:ns:yang:ietf-interfaces",{
             "revision": "2014-05-08",{
             "revision-label": "1.0.0",{
-            "xpath": "ietf-interfaces:interfaces",
+            "datastore-xpath-filter": "ietf-interfaces:interfaces",
             "datastore-contents": {
                 "ietf-interfaces:interface": {
                     "name": {
@@ -285,10 +285,12 @@
       </figure>
     </section>
 
-    <section anchor="YANG-push-metadata-module" title='The "ietf-yang-push-metadata" Module'>
+    <section anchor="YANG-push-metadata-module"
+             title="The &quot;ietf-yang-push-metadata&quot; Module">
       <section anchor="YANG-metadata-model" title="Data Model Overview">
-        <t>This YANG module augments "ietf-yang-push" module to add subcription 
-        metadata into the "push-update" and "push-change-update" notification.</t>
+        <t>This YANG module augments "ietf-yang-push" module to add
+        subcription metadata into the "push-update" and "push-change-update"
+        notification.</t>
 
         <t><figure>
             <artwork><![CDATA[
@@ -311,9 +313,10 @@ module: ietf-yang-push-metadata
 ]]></artwork>
           </figure></t>
       </section>
+
       <section anchor="YANG-metadata-module" title="YANG Module">
-        <t>The YANG module has six leaves augmenting the model of 
-        <xref target="RFC8641">YANG-push</xref>.</t>
+        <t>The YANG module has six leaves augmenting the model of <xref
+        target="RFC8641">YANG-push</xref>.</t>
 
         <t><figure>
             <artwork><![CDATA[
