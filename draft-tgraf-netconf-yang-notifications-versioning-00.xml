@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="11" month="October" year="2022"/>
+    <date day="17" month="October" year="2022"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -95,12 +95,14 @@
       subtree is needed to determine the data types for each field and which
       part of the YANG module the metrics are expose from.</t>
 
-      <t>This specification applies to the telemetry dial-out mode, where 
-      a publisher is configured to stream notification out of band, as 
-      opposed to the dial-in mode, where the subscriber can initiate and 
-      modify the subscription dynamically in-band. In the latter case, the 
-      subscriber knows already all the subscriber YANG-related information, 
-      which it has to know in order to configure the subscription.</t>
+      <t>This specification applies to the YANG push configured subscriptions
+      defined in Section 2.5 of <xref target="RFC8639"/>, where a publisher is
+      configured to stream notification out of band, as opposed to dynamic
+      subscriptions defined in Section 2.4 of <xref target="RFC8641"/>, where
+      the subscriber can initiate and modify the subscription dynamically
+      in-band. In the latter case, the subscriber knows already all the
+      subscriber YANG-related information, which it has to know in order to
+      configure the subscription.</t>
 
       <t>This semantic reference is available during the subscription period
       described in Section 3.6 of <xref target="RFC8641"/> where for each
@@ -453,7 +455,6 @@ module ietf-yang-push-metadata {
       no additional security considerations.</t>
     </section>
 
-
     <section anchor="IANA_Considerations" title="IANA Considerations">
       <t>This document has no IANA actions.</t>
     </section>
@@ -473,6 +474,8 @@ module ietf-yang-push-metadata {
       <?rfc include='reference.RFC.6241'?>
 
       <?rfc include='reference.RFC.8174'?>
+
+      <?rfc include='reference.RFC.8639'?>
 
       <?rfc include='reference.RFC.8641'?>
 

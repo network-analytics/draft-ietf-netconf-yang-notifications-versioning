@@ -5,10 +5,10 @@
 Network Working Group                                            T. Graf
 Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
-Expires: 14 April 2023                                            Huawei
+Expires: 20 April 2023                                            Huawei
                                                            A. Huang Feng
                                                                INSA-Lyon
-                                                         11 October 2022
+                                                         17 October 2022
 
 
         Support of Versioning in YANG Notifications Subscription
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 April 2023.
+   This Internet-Draft will expire on 20 April 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Graf, et al.              Expires 14 April 2023                 [Page 1]
+Graf, et al.              Expires 20 April 2023                 [Page 1]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -71,16 +71,17 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Extend the Datastore Selection  . . . . . . . . . . . . . . .   3
-   3.  Extend the Metadata in Streaming Update . . . . . . . . . . .   3
+   3.  Extend the Metadata in Streaming Update . . . . . . . . . . .   4
    4.  The "ietf-yang-push-metadata" Module  . . . . . . . . . . . .   6
      4.1.  Data Model Overview . . . . . . . . . . . . . . . . . . .   6
      4.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .   7
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
-   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  10
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
-     7.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .  10
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  10
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  11
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  12
 
 1.  Introduction
 
@@ -90,6 +91,29 @@ Table of Contents
    needed to determine the data types for each field and which part of
    the YANG module the metrics are expose from.
 
+   This specification applies to the YANG push configured subscriptions
+   defined in Section 2.5 of [RFC8639], where a publisher is configured
+   to stream notification out of band, as opposed to dynamic
+   subscriptions defined in Section 2.4 of [RFC8641], where the
+   subscriber can initiate and modify the subscription dynamically in-
+   band.  In the latter case, the subscriber knows already all the
+   subscriber YANG-related information, which it has to know in order to
+   configure the subscription.
+
+
+
+
+
+
+
+
+
+
+Graf, et al.              Expires 20 April 2023                 [Page 2]
+
+Internet-Draft        YANG Notifications Versioning         October 2022
+
+
    This semantic reference is available during the subscription period
    described in Section 3.6 of [RFC8641] where for each subscription a
    locally unique subscription ID described in Section 4.3.2 of
@@ -97,22 +121,7 @@ Table of Contents
    notification message in the YANG push message header.  This implies
    that the YANG receiver needs to lookup the subscription inventory for
    a subscription ID in each notification message to determine the YANG
-   module name, namespace and filter definitions.
-
-
-
-
-
-
-
-
-
-
-
-Graf, et al.              Expires 14 April 2023                 [Page 2]
-
-Internet-Draft        YANG Notifications Versioning         October 2022
-
+   module name, namespace, and filter definitions.
 
    The semantics can change between different YANG module revisions.
    The YANG module version statement is specified in Section 7.1.2 of
@@ -153,6 +162,14 @@ Internet-Draft        YANG Notifications Versioning         October 2022
       latest compatible YANG module semantic version referenced to.
       Example 2.0.0.
 
+
+
+
+Graf, et al.              Expires 20 April 2023                 [Page 3]
+
+Internet-Draft        YANG Notifications Versioning         October 2022
+
+
    If nothing is specified, latest YANG module version is implied.
 
 3.  Extend the Metadata in Streaming Update
@@ -162,14 +179,6 @@ Internet-Draft        YANG Notifications Versioning         October 2022
    change-update" notification.
 
    module:  Describes the YANG module name for the related streamed
-
-
-
-Graf, et al.              Expires 14 April 2023                 [Page 3]
-
-Internet-Draft        YANG Notifications Versioning         October 2022
-
-
       content.
 
    namespace:  Describes the YANG module namespace as specified in
@@ -212,16 +221,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-
-
-
-
-
-
-
-
-
-Graf, et al.              Expires 14 April 2023                 [Page 4]
+Graf, et al.              Expires 20 April 2023                 [Page 4]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -277,7 +277,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 14 April 2023                 [Page 5]
+Graf, et al.              Expires 20 April 2023                 [Page 5]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -333,7 +333,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 14 April 2023                 [Page 6]
+Graf, et al.              Expires 20 April 2023                 [Page 6]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -389,7 +389,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 14 April 2023                 [Page 7]
+Graf, et al.              Expires 20 April 2023                 [Page 7]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -445,7 +445,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 14 April 2023                 [Page 8]
+Graf, et al.              Expires 20 April 2023                 [Page 8]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -501,19 +501,23 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 14 April 2023                 [Page 9]
+Graf, et al.              Expires 20 April 2023                 [Page 9]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
 
-6.  Acknowledgements
+6.  IANA Considerations
+
+   This document has no IANA actions.
+
+7.  Acknowledgements
 
    The authors would like to thank xxx for their review and valuable
    comments.
 
-7.  References
+8.  References
 
-7.1.  Normative References
+8.1.  Normative References
 
    [I-D.ietf-netmod-yang-module-versioning]
               Wilton, R., Rahman, R., Lengyel, B., Clarke, J., and J.
@@ -549,18 +553,25 @@ Internet-Draft        YANG Notifications Versioning         October 2022
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+
+
+
+
+Graf, et al.              Expires 20 April 2023                [Page 10]
+
+Internet-Draft        YANG Notifications Versioning         October 2022
+
+
+   [RFC8639]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
+              E., and A. Tripathy, "Subscription to YANG Notifications",
+              RFC 8639, DOI 10.17487/RFC8639, September 2019,
+              <https://www.rfc-editor.org/info/rfc8639>.
+
    [RFC8641]  Clemm, A. and E. Voit, "Subscription to YANG Notifications
               for Datastore Updates", RFC 8641, DOI 10.17487/RFC8641,
               September 2019, <https://www.rfc-editor.org/info/rfc8641>.
 
-7.2.  Informative References
-
-
-
-Graf, et al.              Expires 14 April 2023                [Page 10]
-
-Internet-Draft        YANG Notifications Versioning         October 2022
-
+8.2.  Informative References
 
    [I-D.ietf-netconf-https-notif]
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
@@ -599,6 +610,14 @@ Internet-Draft        YANG Notifications Versioning         October 2022
               xml-20081126, November 2008,
               <https://www.w3.org/TR/2008/REC-xml-20081126>.
 
+
+
+
+Graf, et al.              Expires 20 April 2023                [Page 11]
+
+Internet-Draft        YANG Notifications Versioning         October 2022
+
+
 Authors' Addresses
 
    Thomas Graf
@@ -607,15 +626,6 @@ Authors' Addresses
    CH-8045 Zurich
    Switzerland
    Email: thomas.graf@swisscom.com
-
-
-
-
-
-
-Graf, et al.              Expires 14 April 2023                [Page 11]
-
-Internet-Draft        YANG Notifications Versioning         October 2022
 
 
    Benoit Claise
@@ -659,14 +669,4 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-
-
-
-
-
-
-
-
-
-
-Graf, et al.              Expires 14 April 2023                [Page 12]
+Graf, et al.              Expires 20 April 2023                [Page 12]
