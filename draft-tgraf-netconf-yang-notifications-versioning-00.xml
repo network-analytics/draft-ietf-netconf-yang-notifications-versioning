@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="17" month="October" year="2022"/>
+    <date day="20" month="October" year="2022"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -297,9 +297,11 @@
     <section anchor="YANG-push-metadata-module"
              title="The &quot;ietf-yang-push-metadata&quot; Module">
       <section anchor="YANG-metadata-model" title="Data Model Overview">
-        <t>This YANG module augments "ietf-yang-push" module to add
+        <t>This YANG module augments the "ietf-yang-push" module to add
         subcription metadata into the "push-update" and "push-change-update"
-        notification.</t>
+        notification and the ability to define the "revision" and
+        "revision-label" in the "establish-subscription" and
+        "modify-subscription" in the datastore push subscription.</t>
 
         <t><figure>
             <artwork><![CDATA[
