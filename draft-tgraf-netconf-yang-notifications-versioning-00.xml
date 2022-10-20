@@ -319,6 +319,21 @@ module: ietf-yang-push-metadata
     +--ro revision-label?             ysver:version
     +--ro datastore-xpath-filter?     yang:xpath1.0 {sn:xpath}?
     +--ro datastore-subtree-filter?   <anydata> {sn:subtree}?
+  augment /sn:establish-subscription/sn:input/sn:target:
+    +-- revision?         rev:revision-date-or-label
+    +-- revision-label?   ysver:version
+  augment /sn:modify-subscription/sn:input/sn:target:
+    +-- revision?         rev:revision-date-or-label
+    +-- revision-label?   ysver:version
+  augment /sn:subscription-started/sn:target:
+    +-- revision?         rev:revision-date-or-label
+    +-- revision-label?   ysver:version
+  augment /sn:subscription-modified/sn:target:
+    +-- revision?         rev:revision-date-or-label
+    +-- revision-label?   ysver:version
+  augment /sn:subscriptions/sn:subscription/sn:target:
+    +--rw revision?         rev:revision-date-or-label
+    +--rw revision-label?   ysver:version
 ]]></artwork>
           </figure></t>
       </section>
@@ -396,6 +411,25 @@ module ietf-yang-push-metadata {
       "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
   }
 
+  feature yang-push-metadata-supported {
+    description
+      "This feature indicates the YANG Notifications have the metadata 
+      defined in this YANG module.";
+  }
+
+  grouping yang-push-module-version {
+    leaf revision {
+      type rev:revision-date-or-label;
+      description
+        "This references the YANG module revision of the sent notification.";
+    }
+    leaf revision-label {
+      type ysver:version;
+      description
+        "This references the YANG module semversion of the sent notification.";
+    }
+  }
+
   grouping yang-push-metadata {
     leaf module {
       type string;
@@ -407,16 +441,9 @@ module ietf-yang-push-metadata {
       description
         "This references the YANG module namespace of the sent notification.";
     }
-    leaf revision {
-      type rev:revision-date-or-label;
-      description
-        "This references the YANG module revision of the sent notification.";
-    }
-    leaf revision-label {
-      type ysver:version;
-      description
-        "This references the YANG module semversion of the sent notification.";
-    }
+
+    uses ypm:yang-push-module-version;
+
     leaf datastore-xpath-filter {
       type yang:xpath1.0;
       if-feature "sn:xpath";
@@ -429,7 +456,7 @@ module ietf-yang-push-metadata {
         "This references the YANG module subtree of the sent notification.";
     }
   }
-
+  // Event notifications
   augment "/yp:push-update" {
     description
       "This augmentation adds the module, the namespace, the revision, the 
@@ -442,6 +469,27 @@ module ietf-yang-push-metadata {
       "This augmentation adds the module, the namespace, the revision, the 
       semversion, the xpath and the subtree in the push-change-update notification";
       uses ypm:yang-push-metadata;
+  }
+
+  // Subscription parameters
+  augment "/sn:establish-subscription/sn:input/sn:target" {
+    uses ypm:yang-push-module-version;
+  }
+  augment "/sn:modify-subscription/sn:input/sn:target" {
+    uses ypm:yang-push-module-version;
+  }
+
+  // Subscription notifications
+  augment "/sn:subscription-started/sn:target" {
+    uses ypm:yang-push-module-version;
+  }
+  augment "/sn:subscription-modified/sn:target" {
+    uses ypm:yang-push-module-version;
+  }
+
+  // Subscription container
+  augment "/sn:subscriptions/sn:subscription/sn:target" {
+    uses ypm:yang-push-module-version;
   }
 }
 <CODE ENDS>]]></artwork>

@@ -75,13 +75,13 @@ Table of Contents
    4.  The "ietf-yang-push-metadata" Module  . . . . . . . . . . . .   6
      4.1.  Data Model Overview . . . . . . . . . . . . . . . . . . .   6
      4.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .   7
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  10
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  11
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  12
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  10
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  11
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  11
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  11
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  12
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
 
 1.  Introduction
 
@@ -354,6 +354,21 @@ Internet-Draft        YANG Notifications Versioning         October 2022
        +--ro revision-label?             ysver:version
        +--ro datastore-xpath-filter?     yang:xpath1.0 {sn:xpath}?
        +--ro datastore-subtree-filter?   <anydata> {sn:subtree}?
+     augment /sn:establish-subscription/sn:input/sn:target:
+       +-- revision?         rev:revision-date-or-label
+       +-- revision-label?   ysver:version
+     augment /sn:modify-subscription/sn:input/sn:target:
+       +-- revision?         rev:revision-date-or-label
+       +-- revision-label?   ysver:version
+     augment /sn:subscription-started/sn:target:
+       +-- revision?         rev:revision-date-or-label
+       +-- revision-label?   ysver:version
+     augment /sn:subscription-modified/sn:target:
+       +-- revision?         rev:revision-date-or-label
+       +-- revision-label?   ysver:version
+     augment /sn:subscriptions/sn:subscription/sn:target:
+       +--rw revision?         rev:revision-date-or-label
+       +--rw revision-label?   ysver:version
 
 4.2.  YANG Module
 
@@ -371,6 +386,14 @@ Internet-Draft        YANG Notifications Versioning         October 2022
        reference
          "RFC 6991: Common YANG Data Types";
      }
+
+
+
+Graf, et al.              Expires 20 April 2023                 [Page 7]
+
+Internet-Draft        YANG Notifications Versioning         October 2022
+
+
      import ietf-subscribed-notifications {
        prefix sn;
        reference
@@ -386,14 +409,6 @@ Internet-Draft        YANG Notifications Versioning         October 2022
        reference
          "RFC XXXX: draft-ietf-netmod-yang-module-versioning-06, Updated YANG
          Module Revision Handling";
-
-
-
-Graf, et al.              Expires 20 April 2023                 [Page 7]
-
-Internet-Draft        YANG Notifications Versioning         October 2022
-
-
      }
      import ietf-yang-semver {
        prefix ysver;
@@ -428,21 +443,6 @@ Internet-Draft        YANG Notifications Versioning         October 2022
        This version of this YANG module is part of RFC XXXX; see the RFC
        itself for full legal notices.";
 
-     revision 2022-09-21 {
-       description
-         "First revision";
-       reference
-         "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
-     }
-
-     grouping yang-push-metadata {
-       leaf module {
-         type string;
-         description
-           "This references the YANG module of the sent notification.";
-       }
-       leaf namespace {
-
 
 
 Graf, et al.              Expires 20 April 2023                 [Page 8]
@@ -450,10 +450,20 @@ Graf, et al.              Expires 20 April 2023                 [Page 8]
 Internet-Draft        YANG Notifications Versioning         October 2022
 
 
-         type string;
-         description
-           "This references the YANG module namespace of the sent notification.";
-       }
+     revision 2022-09-21 {
+       description
+         "First revision";
+       reference
+         "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
+     }
+
+     feature yang-push-metadata-supported {
+       description
+         "This feature indicates the YANG Notifications have the metadata
+         defined in this YANG module.";
+     }
+
+     grouping yang-push-module-version {
        leaf revision {
          type rev:revision-date-or-label;
          description
@@ -464,6 +474,22 @@ Internet-Draft        YANG Notifications Versioning         October 2022
          description
            "This references the YANG module semversion of the sent notification.";
        }
+     }
+
+     grouping yang-push-metadata {
+       leaf module {
+         type string;
+         description
+           "This references the YANG module of the sent notification.";
+       }
+       leaf namespace {
+         type string;
+         description
+           "This references the YANG module namespace of the sent notification.";
+       }
+
+       uses ypm:yang-push-module-version;
+
        leaf datastore-xpath-filter {
          type yang:xpath1.0;
          if-feature "sn:xpath";
@@ -472,11 +498,19 @@ Internet-Draft        YANG Notifications Versioning         October 2022
        }
        anydata datastore-subtree-filter {
          if-feature "sn:subtree";
+
+
+
+Graf, et al.              Expires 20 April 2023                 [Page 9]
+
+Internet-Draft        YANG Notifications Versioning         October 2022
+
+
          description
            "This references the YANG module subtree of the sent notification.";
        }
      }
-
+     // Event notifications
      augment "/yp:push-update" {
        description
          "This augmentation adds the module, the namespace, the revision, the
@@ -490,6 +524,27 @@ Internet-Draft        YANG Notifications Versioning         October 2022
          semversion, the xpath and the subtree in the push-change-update notification";
          uses ypm:yang-push-metadata;
      }
+
+     // Subscription parameters
+     augment "/sn:establish-subscription/sn:input/sn:target" {
+       uses ypm:yang-push-module-version;
+     }
+     augment "/sn:modify-subscription/sn:input/sn:target" {
+       uses ypm:yang-push-module-version;
+     }
+
+     // Subscription notifications
+     augment "/sn:subscription-started/sn:target" {
+       uses ypm:yang-push-module-version;
+     }
+     augment "/sn:subscription-modified/sn:target" {
+       uses ypm:yang-push-module-version;
+     }
+
+     // Subscription container
+     augment "/sn:subscriptions/sn:subscription/sn:target" {
+       uses ypm:yang-push-module-version;
+     }
    }
    <CODE ENDS>
 
@@ -501,7 +556,8 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 20 April 2023                 [Page 9]
+
+Graf, et al.              Expires 20 April 2023                [Page 10]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -557,7 +613,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 20 April 2023                [Page 10]
+Graf, et al.              Expires 20 April 2023                [Page 11]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -613,7 +669,7 @@ Internet-Draft        YANG Notifications Versioning         October 2022
 
 
 
-Graf, et al.              Expires 20 April 2023                [Page 11]
+Graf, et al.              Expires 20 April 2023                [Page 12]
 
 Internet-Draft        YANG Notifications Versioning         October 2022
 
@@ -669,4 +725,4 @@ Authors' Addresses
 
 
 
-Graf, et al.              Expires 20 April 2023                [Page 12]
+Graf, et al.              Expires 20 April 2023                [Page 13]
