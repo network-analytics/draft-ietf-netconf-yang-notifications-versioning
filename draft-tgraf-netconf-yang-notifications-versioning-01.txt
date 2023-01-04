@@ -75,13 +75,13 @@ Table of Contents
    4.  The "ietf-yang-push-metadata" Module  . . . . . . . . . . . .   5
      4.1.  Data Model Overview . . . . . . . . . . . . . . . . . . .   5
      4.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .   6
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  10
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   8
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .   9
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
 
@@ -255,41 +255,8 @@ Internet-Draft        YANG Notifications Versioning         January 2023
    subscription" and "modify-subscription" in the datastore push
    subscription.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Graf, et al.               Expires 7 July 2023                  [Page 5]
-
-Internet-Draft        YANG Notifications Versioning         January 2023
-
-
    module: ietf-yang-push-metadata
 
-     augment /sn:subscription-started:
-       +--ro revision?                   rev:revision-date-or-label
-       +--ro revision-label?             ysver:version
-     augment /sn:subscription-modified:
-       +--ro revision?                   rev:revision-date-or-label
-       +--ro revision-label?             ysver:version
      augment /sn:establish-subscription/sn:input/sn:target:
        +-- revision?         rev:revision-date-or-label
        +-- revision-label?   ysver:version
@@ -306,22 +273,26 @@ Internet-Draft        YANG Notifications Versioning         January 2023
        +--rw revision?         rev:revision-date-or-label
        +--rw revision-label?   ysver:version
 
+
+
+
+
+Graf, et al.               Expires 7 July 2023                  [Page 5]
+
+Internet-Draft        YANG Notifications Versioning         January 2023
+
+
 4.2.  YANG Module
 
    The YANG module has four leaves augmenting the model of YANG-push
    [RFC8641].
 
-   <CODE BEGINS> file "ietf-yang-push-metadata@2022-10-10.yang"
+   <CODE BEGINS> file "ietf-yang-push-metadata@2023-01-04.yang"
    module ietf-yang-push-metadata {
      yang-version 1.1;
      namespace
        "urn:ietf:params:xml:ns:yang:ietf-yang-push-metadata";
      prefix ypm;
-     import ietf-yang-types {
-       prefix yang;
-       reference
-         "RFC 6991: Common YANG Data Types";
-     }
      import ietf-subscribed-notifications {
        prefix sn;
        reference
@@ -330,14 +301,6 @@ Internet-Draft        YANG Notifications Versioning         January 2023
      import ietf-yang-revisions {
        prefix rev;
        reference
-
-
-
-Graf, et al.               Expires 7 July 2023                  [Page 6]
-
-Internet-Draft        YANG Notifications Versioning         January 2023
-
-
          "RFC XXXX: draft-ietf-netmod-yang-module-versioning-06, Updated YANG
          Module Revision Handling";
      }
@@ -367,6 +330,14 @@ Internet-Draft        YANG Notifications Versioning         January 2023
 
        Redistribution and use in source and binary forms, with or without
        modification, is permitted pursuant to, and subject to the license
+
+
+
+Graf, et al.               Expires 7 July 2023                  [Page 6]
+
+Internet-Draft        YANG Notifications Versioning         January 2023
+
+
        terms contained in, the Revised BSD License set forth in Section
        4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
        (https://trustee.ietf.org/license-info).
@@ -374,25 +345,18 @@ Internet-Draft        YANG Notifications Versioning         January 2023
        This version of this YANG module is part of RFC XXXX; see the RFC
        itself for full legal notices.";
 
-     revision 2023-01-03 {
+     revision 2023-01-04 {
        description
          "First revision";
        reference
          "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
      }
 
-     feature yang-push-metadata-supported {
+     feature yang-push-version-supported {
        description
-         "This feature indicates the YANG Notifications have the metadata
-         defined in this YANG module.";
+         "This feature indicates the YANG Subscription Notifications have the
+         metadata defined in this YANG module.";
      }
-
-
-
-Graf, et al.               Expires 7 July 2023                  [Page 7]
-
-Internet-Draft        YANG Notifications Versioning         January 2023
-
 
      grouping yang-push-module-version {
        leaf revision {
@@ -405,21 +369,6 @@ Internet-Draft        YANG Notifications Versioning         January 2023
          description
            "This references the YANG module semversion of the sent notification.";
        }
-     }
-
-     // Event notifications
-     augment "/sn:subscription-started" {
-       description
-         "This augmentation adds the revision and the semversion in the
-         push-update notification";
-       uses ypm:yang-push-metadata;
-     }
-
-     augment "/sn:subscription-modified" {
-       description
-         "This augmentation adds the revision and the semversion in the
-         push-update notification";
-         uses ypm:yang-push-module-version;
      }
 
      // Subscription parameters
@@ -438,18 +387,17 @@ Internet-Draft        YANG Notifications Versioning         January 2023
        uses ypm:yang-push-module-version;
      }
 
-     // Subscription container
-     augment "/sn:subscriptions/sn:subscription/sn:target" {
-       uses ypm:yang-push-module-version;
-     }
 
 
-
-Graf, et al.               Expires 7 July 2023                  [Page 8]
+Graf, et al.               Expires 7 July 2023                  [Page 7]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
 
+     // Subscription container
+     augment "/sn:subscriptions/sn:subscription/sn:target" {
+       uses ypm:yang-push-module-version;
+     }
    }
    <CODE ENDS>
 
@@ -487,33 +435,36 @@ Internet-Draft        YANG Notifications Versioning         January 2023
               08, 24 October 2022, <https://www.ietf.org/archive/id/
               draft-ietf-netmod-yang-semver-08.txt>.
 
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
+   [RFC2119]  Bradner, S. and RFC Publisher, "Key words for use in RFCs
+              to Indicate Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-   [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
-              the Network Configuration Protocol (NETCONF)", RFC 6020,
-              DOI 10.17487/RFC6020, October 2010,
-              <https://www.rfc-editor.org/info/rfc6020>.
 
 
 
 
 
-Graf, et al.               Expires 7 July 2023                  [Page 9]
+Graf, et al.               Expires 7 July 2023                  [Page 8]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
 
+   [RFC6020]  Bjorklund, M., Ed. and RFC Publisher, "YANG - A Data
+              Modeling Language for the Network Configuration Protocol
+              (NETCONF)", RFC 6020, DOI 10.17487/RFC6020, October 2010,
+              <https://www.rfc-editor.org/info/rfc6020>.
+
    [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
-              and A. Bierman, Ed., "Network Configuration Protocol
-              (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
+              Bierman, A., Ed., and RFC Publisher, "Network
+              Configuration Protocol (NETCONF)", RFC 6241,
+              DOI 10.17487/RFC6241, June 2011,
               <https://www.rfc-editor.org/info/rfc6241>.
 
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+   [RFC8174]  Leiba, B. and RFC Publisher, "Ambiguity of Uppercase vs
+              Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174,
+              DOI 10.17487/RFC8174, May 2017,
+              <https://www.rfc-editor.org/info/rfc8174>.
 
    [RFC8639]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., Tripathy, A., and RFC Publisher, "Subscription to YANG
@@ -547,20 +498,17 @@ Internet-Draft        YANG Notifications Versioning         January 2023
               DOI 10.17487/RFC8259, December 2017,
               <https://www.rfc-editor.org/info/rfc8259>.
 
-   [RFC8343]  Bjorklund, M. and RFC Publisher, "A YANG Data Model for
-              Interface Management", RFC 8343, DOI 10.17487/RFC8343,
-              March 2018, <https://www.rfc-editor.org/info/rfc8343>.
 
 
 
-
-
-
-
-Graf, et al.               Expires 7 July 2023                 [Page 10]
+Graf, et al.               Expires 7 July 2023                  [Page 9]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
+
+   [RFC8343]  Bjorklund, M. and RFC Publisher, "A YANG Data Model for
+              Interface Management", RFC 8343, DOI 10.17487/RFC8343,
+              March 2018, <https://www.rfc-editor.org/info/rfc8343>.
 
    [RFC8640]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., Tripathy, A., and RFC Publisher, "Dynamic Subscription
@@ -609,8 +557,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-Graf, et al.               Expires 7 July 2023                 [Page 11]
+Graf, et al.               Expires 7 July 2023                 [Page 10]
