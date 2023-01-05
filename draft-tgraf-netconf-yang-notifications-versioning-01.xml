@@ -263,12 +263,6 @@
             <artwork><![CDATA[
 module: ietf-yang-push-metadata
 
-  augment /sn:subscription-started:
-    +--ro revision?                   rev:revision-date-or-label
-    +--ro revision-label?             ysver:version
-  augment /sn:subscription-modified:
-    +--ro revision?                   rev:revision-date-or-label
-    +--ro revision-label?             ysver:version
   augment /sn:establish-subscription/sn:input/sn:target:
     +-- revision?         rev:revision-date-or-label
     +-- revision-label?   ysver:version
@@ -294,17 +288,12 @@ module: ietf-yang-push-metadata
 
         <t><figure>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-yang-push-metadata@2022-10-10.yang"
+<CODE BEGINS> file "ietf-yang-push-metadata@2023-01-04.yang"
 module ietf-yang-push-metadata {
   yang-version 1.1;
   namespace
     "urn:ietf:params:xml:ns:yang:ietf-yang-push-metadata";
   prefix ypm;
-  import ietf-yang-types {
-    prefix yang;
-    reference
-      "RFC 6991: Common YANG Data Types";
-  }
   import ietf-subscribed-notifications {
     prefix sn;
     reference
@@ -349,17 +338,17 @@ module ietf-yang-push-metadata {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2023-01-03 {
+  revision 2023-01-04 {
     description
       "First revision";
     reference
       "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
   }
 
-  feature yang-push-metadata-supported {
+  feature yang-push-version-supported {
     description
-      "This feature indicates the YANG Notifications have the metadata 
-      defined in this YANG module.";
+      "This feature indicates the YANG Subscription Notifications have the
+      metadata defined in this YANG module.";
   }
 
   grouping yang-push-module-version {
@@ -373,21 +362,6 @@ module ietf-yang-push-metadata {
       description
         "This references the YANG module semversion of the sent notification.";
     }
-  }
-
-  // Event notifications
-  augment "/sn:subscription-started" {
-    description
-      "This augmentation adds the revision and the semversion in the 
-      push-update notification";
-    uses ypm:yang-push-metadata;
-  }
-
-  augment "/sn:subscription-modified" {
-    description
-      "This augmentation adds the revision and the semversion in the 
-      push-update notification";
-      uses ypm:yang-push-module-version;
   }
 
   // Subscription parameters
