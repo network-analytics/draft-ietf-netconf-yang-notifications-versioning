@@ -5,10 +5,10 @@
 Network Working Group                                            T. Graf
 Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
-Expires: 7 July 2023                                              Huawei
+Expires: 16 July 2023                                             Huawei
                                                            A. Huang Feng
                                                                INSA-Lyon
-                                                          3 January 2023
+                                                         12 January 2023
 
 
         Support of Versioning in YANG Notifications Subscription
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 July 2023.
+   This Internet-Draft will expire on 16 July 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Graf, et al.               Expires 7 July 2023                  [Page 1]
+Graf, et al.              Expires 16 July 2023                  [Page 1]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
@@ -109,15 +109,15 @@ Table of Contents
 
 
 
-Graf, et al.               Expires 7 July 2023                  [Page 2]
+Graf, et al.              Expires 16 July 2023                  [Page 2]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
 
-   This semantic reference is available during the subscription period
-   described in Section 3.6 of [RFC8641] and being streamed from the
-   publisher to receiver with the subscription state change
-   notifications described in Section 2.7 of [RFC8641] where for each
+   This semantic reference is available when the subscription is being
+   establish as described in Section 3.6 of [RFC8641] and being streamed
+   from the publisher to receiver with the subscription state change
+   notifications described in Section 2.7 of [RFC8639] where for each
    subscription a locally unique subscription ID described in
    Section 4.3.2 of [RFC8641] is being issued and streamed as metadata
    with the notification message in the YANG push message header.
@@ -138,8 +138,8 @@ Internet-Draft        YANG Notifications Versioning         January 2023
    since the YANG push receiver may not be aware of this change.
 
    This documents extends the current YANG notifications subscription
-   mechanism to allow to subscribe to a specific revision or latest
-   semantic version to which the YANG module version needs to be
+   mechanism to allow to subscribe to a specific revision or latest YANG
+   module semantic version to which the YANG module version needs to be
    backward compatible to.  The subscription state change "subscription-
    started" and "subscription-modified" notification messages are also
    extended to include the revision and semantic version.
@@ -165,7 +165,7 @@ Internet-Draft        YANG Notifications Versioning         January 2023
 
 
 
-Graf, et al.               Expires 7 July 2023                  [Page 3]
+Graf, et al.              Expires 16 July 2023                  [Page 3]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
@@ -173,9 +173,9 @@ Internet-Draft        YANG Notifications Versioning         January 2023
 3.  Extend the Subscription State Change Notifications
 
    Besides the Subscription ID and the xpath or sub-tree filter
-   reference, the following metadata objects are part of a
-   "subscription-started" or "subscription-modified" subscription state
-   change notification.
+   reference as described in Section 2.7 of [RFC8639], the following
+   metadata objects are part of a "subscription-started" or
+   "subscription-modified" subscription state change notification.
 
    revision:  Describes the YANG module revision as specified in
       Section 7.1.9 of [RFC6020] for the related streamed content.
@@ -221,7 +221,7 @@ Internet-Draft        YANG Notifications Versioning         January 2023
 
 
 
-Graf, et al.               Expires 7 July 2023                  [Page 4]
+Graf, et al.              Expires 16 July 2023                  [Page 4]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
@@ -248,11 +248,12 @@ Internet-Draft        YANG Notifications Versioning         January 2023
 
 4.1.  Data Model Overview
 
-   This YANG module adds the revision and revision-label into the
-   "subscription-started" and "subscription-modified" subscription state
-   change notifications and the ability to define the "revision" and
-   "revision-label" in the "establish-subscription" and "modify-
-   subscription" RPCs in the datastore push subscription.
+   This YANG module augments the "ietf-yang-push" module with the
+   revision and revision-label in the "subscription-started" and
+   "subscription-modified" subscription state change notifications and
+   the ability to define the "revision" and "revision-label" in the
+   "establish-subscription" and "modify-subscription" RPCs in the
+   datastore push subscription.
 
    module: ietf-yang-push-revision
 
@@ -276,8 +277,7 @@ Internet-Draft        YANG Notifications Versioning         January 2023
 
 
 
-
-Graf, et al.               Expires 7 July 2023                  [Page 5]
+Graf, et al.              Expires 16 July 2023                  [Page 5]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
@@ -333,7 +333,7 @@ Internet-Draft        YANG Notifications Versioning         January 2023
 
 
 
-Graf, et al.               Expires 7 July 2023                  [Page 6]
+Graf, et al.              Expires 16 July 2023                  [Page 6]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
@@ -389,7 +389,7 @@ Internet-Draft        YANG Notifications Versioning         January 2023
 
 
 
-Graf, et al.               Expires 7 July 2023                  [Page 7]
+Graf, et al.              Expires 16 July 2023                  [Page 7]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
@@ -445,7 +445,7 @@ Internet-Draft        YANG Notifications Versioning         January 2023
 
 
 
-Graf, et al.               Expires 7 July 2023                  [Page 8]
+Graf, et al.              Expires 16 July 2023                  [Page 8]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
@@ -501,7 +501,7 @@ Internet-Draft        YANG Notifications Versioning         January 2023
 
 
 
-Graf, et al.               Expires 7 July 2023                  [Page 9]
+Graf, et al.              Expires 16 July 2023                  [Page 9]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
@@ -557,7 +557,7 @@ Authors' Addresses
 
 
 
-Graf, et al.               Expires 7 July 2023                 [Page 10]
+Graf, et al.              Expires 16 July 2023                 [Page 10]
 
 Internet-Draft        YANG Notifications Versioning         January 2023
 
@@ -613,4 +613,4 @@ Internet-Draft        YANG Notifications Versioning         January 2023
 
 
 
-Graf, et al.               Expires 7 July 2023                 [Page 11]
+Graf, et al.              Expires 16 July 2023                 [Page 11]
