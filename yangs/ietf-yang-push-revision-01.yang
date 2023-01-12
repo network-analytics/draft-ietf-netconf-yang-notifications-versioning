@@ -1,7 +1,7 @@
-module ietf-yang-push-metadata {
+module ietf-yang-push-revision {
   yang-version 1.1;
   namespace
-    "urn:ietf:params:xml:ns:yang:ietf-yang-push-metadata";
+    "urn:ietf:params:xml:ns:yang:ietf-yang-push-revision";
   prefix ypm;
   import ietf-subscribed-notifications {
     prefix sn;
@@ -33,7 +33,9 @@ module ietf-yang-push-metadata {
                <mailto:alex.huang-feng@insa-lyon.fr>";
 
   description
-    "Defines YANG push event notification header with metadata.
+    "Defines YANG push event notification header with the revision and
+    the revision-label. Adds the support of the revision and
+    revision-label selection in the YANG push subscription RPCs.
 
     Copyright (c) 2023 IETF Trust and the persons identified as
     authors of the code.  All rights reserved.
@@ -47,38 +49,54 @@ module ietf-yang-push-metadata {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2023-01-04 {
+  revision 2023-01-12 {
     description
       "First revision";
     reference
       "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
   }
 
-  feature yang-push-version-supported {
+  feature yang-push-revision-supported {
     description
-      "This feature indicates the YANG Subscription Notifications have the
-      metadata defined in this YANG module.";
+      "This feature indicates the YANG Subscription Notifications supports
+      the revision and revision-label defined in this YANG module.";
+  }
+
+  grouping yang-push-module-version-config {
+    leaf revision {
+      type rev:revision-date-or-label;
+      config true;
+      description
+        "This references the YANG module revision to be sent in the subscription.";
+    }
+    leaf revision-label {
+      type ysver:version;
+      description
+        "This references the YANG module semversion to be sent in the subscription.";
+    }
   }
 
   grouping yang-push-module-version {
     leaf revision {
       type rev:revision-date-or-label;
+      config false;
+      mandatory true;
       description
-        "This references the YANG module revision of the sent notification.";
+        "This references the YANG module revision of the sent notification message.";
     }
     leaf revision-label {
       type ysver:version;
       description
-        "This references the YANG module semversion of the sent notification.";
+        "This references the YANG module semversion of the sent notification message.";
     }
   }
 
   // Subscription parameters
   augment "/sn:establish-subscription/sn:input/sn:target" {
-    uses ypm:yang-push-module-version;
+    uses ypm:yang-push-module-version-config;
   }
   augment "/sn:modify-subscription/sn:input/sn:target" {
-    uses ypm:yang-push-module-version;
+    uses ypm:yang-push-module-version-config;
   }
 
   // Subscription notifications
