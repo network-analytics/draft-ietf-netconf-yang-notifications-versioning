@@ -69,13 +69,13 @@
       </address>
     </author>
 
-    <date day="3" month="January" year="2023"/>
+    <date day="12" month="January" year="2023"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
       to specify the YANG module semantic version at the subscription. Then, a
-      new extension with new metadata of the YANG push subscription state
-      change notifications header is proposed.</t>
+      new extension with the revision and revision-label of the YANG push
+      subscription state change notifications header is proposed.</t>
     </abstract>
 
     <note title="Requirements Language">
@@ -98,7 +98,7 @@
       <t>This specification applies to the YANG push configured subscriptions
       defined in Section 2.5 of <xref target="RFC8639"/>, where a publisher is
       configured to stream notification out of band, as opposed to dynamic
-      subscriptions defined in Section 2.4 of <xref target="RFC8641"/>, where
+      subscriptions defined in Section 2.4 of <xref target="RFC8639"/>, where
       the subscriber can initiate and modify the subscription dynamically
       in-band. In the latter case, the subscriber knows already all the
       subscriber YANG-related information, which it has to know in order to
@@ -132,10 +132,9 @@
       <t>This documents extends the current YANG notifications subscription
       mechanism to allow to subscribe to a specific revision or latest
       semantic version to which the YANG module version needs to be backward
-      compatible to and streams its specific YANG module revision in the
-      subscription state change subscription-started and subscription-modified
-      notification messages along the Subscription ID and xpath or sub-tree
-      filter reference.</t>
+      compatible to. The subscription state change "subscription-started" and
+      "subscription-modified" notification messages are also extended to include 
+      the revision and semantic version.</t>
     </section>
 
     <section anchor="Datastore-Selection"
@@ -154,14 +153,14 @@
         <dt>revision:</dt>
 
         <dd>Restricts the subscription to a specific YANG module revision.
-        Example 2014-05-08.</dd>
+        Example: "2014-05-08".</dd>
       </dl>
 
       <dl>
         <dt>latest-compatible-semversion:</dt>
 
         <dd>Restricts the subscription to the latest compatible YANG module
-        semantic version referenced to. Example 2.0.0.</dd>
+        semantic version referenced to. Example: "2.0.0".</dd>
       </dl>
 
       <t>If nothing is specified, latest YANG module version is implied.</t>
@@ -177,7 +176,7 @@
       <dl>
         <dt>revision:</dt>
 
-        <dd>Describes the YANG module revision as specified in Section 7.1.2
+        <dd>Describes the YANG module revision as specified in Section 7.1.9
         of <xref target="RFC6020"/> for the related streamed content.</dd>
       </dl>
 
@@ -189,17 +188,18 @@
         content.</dd>
       </dl>
 
-      <t>Figure 1 provides an example of a "subscription-modified"
-      subscription state change notification message with the YANG revision,
-      revision label and datastore-xpath-filter for tracking the operational
-      status of a single Ethernet interface (per <xref target="RFC8343"/>).
-      This subscription state change notification message is encoded XML <xref
-      target="W3C.REC-xml-20081126"/> over the Network Configuration Protocol
-      (NETCONF) as per <xref target="RFC8640"/>.</t>
+      <t><xref target="subscription_modified_example_xml_fig"/> provides an example
+      of a "subscription-modified" subscription state change notification
+      message with the YANG revision, revision label and datastore-xpath-filter
+      for tracking the operational status of a single Ethernet interface (per
+      <xref target="RFC8343"/>). This subscription state change notification
+      message is encoded XML <xref target="W3C.REC-xml-20081126"/> over the
+      Network Configuration Protocol (NETCONF) as per <xref target="RFC8640"/>.
+      </t>
 
-      <figure>
+      <figure anchor="subscription_modified_example_xml_fig" 
+        title="XML Push Example for a subscription-modified notification message">
         <artwork><![CDATA[
-
 <notification xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
   <eventTime>2023-01-03T10:00:00Z</eventTime>
   <subscription-modified
@@ -213,21 +213,19 @@
     <stream>NETCONF</stream>
   </subscription-modified>
 </notification>
-
- Figure 1: XML Push Example for a subscription-modified notification message
-
         ]]></artwork>
       </figure>
 
-      <t>Figure 2 provides an example of a JSON encoded, <xref
-      target="RFC8259"/>, subscription state change notification message over
-      HTTPS-based <xref target="I-D.ietf-netconf-https-notif"/> or UDP-based
+      <t><xref target="subscription_modified_example_json_fig"/> provides an
+      example of a JSON encoded, <xref target="RFC8259"/>, subscription state
+      change notification message over HTTPS-based
+      <xref target="I-D.ietf-netconf-https-notif"/> or UDP-based
       <xref target="I-D.ietf-netconf-udp-notif"/> transport for the same
       subscription.</t>
 
-      <figure>
+      <figure anchor="subscription_modified_example_json_fig"
+        title="JSON Push Example for a subscription-modified notification message">
         <artwork><![CDATA[
-
 {
   "ietf-restconf:notification" : {
     "eventTime": "2023-01-03T10:00:00Z",
@@ -242,57 +240,53 @@
     }
   }
 } 
-
- Figure 2: JSON Push Example for a subscription-modified notification message
-
         ]]></artwork>
       </figure>
     </section>
 
-    <section anchor="YANG-push-metadata-module"
-             title="The &quot;ietf-yang-push-metadata&quot; Module">
-      <section anchor="YANG-metadata-model" title="Data Model Overview">
-        <t>This YANG module augments the "ietf-yang-push" module to add the
-        revision metadata into the "subscription-started" and
-        "subscription-modified" subscription state change notifications and
-        the ability to define the "revision" and "revision-label" in the
-        "establish-subscription" and "modify-subscription" in the datastore
-        push subscription.</t>
+    <section anchor="YANG-push-revision-module"
+             title="The &quot;ietf-yang-push-revision&quot; Module">
+      <section anchor="YANG-revision-model" title="Data Model Overview">
+        <t>This YANG module adds the revision and revision-label into the
+        "subscription-started" and "subscription-modified" subscription
+        state change notifications and the ability to define the "revision"
+        and "revision-label" in the "establish-subscription" and
+        "modify-subscription" RPCs in the datastore push subscription.</t>
 
         <t><figure>
             <artwork><![CDATA[
-module: ietf-yang-push-metadata
+module: ietf-yang-push-revision
 
   augment /sn:establish-subscription/sn:input/sn:target:
-    +-- revision?         rev:revision-date-or-label
+    +--rw revision?         rev:revision-date-or-label
     +-- revision-label?   ysver:version
   augment /sn:modify-subscription/sn:input/sn:target:
-    +-- revision?         rev:revision-date-or-label
+    +--rw revision?         rev:revision-date-or-label
     +-- revision-label?   ysver:version
   augment /sn:subscription-started/sn:target:
-    +-- revision?         rev:revision-date-or-label
+    +--ro revision          rev:revision-date-or-label
     +-- revision-label?   ysver:version
   augment /sn:subscription-modified/sn:target:
-    +-- revision?         rev:revision-date-or-label
+    +--ro revision          rev:revision-date-or-label
     +-- revision-label?   ysver:version
   augment /sn:subscriptions/sn:subscription/sn:target:
-    +--rw revision?         rev:revision-date-or-label
+    +--ro revision          rev:revision-date-or-label
     +--rw revision-label?   ysver:version
 ]]></artwork>
           </figure></t>
       </section>
 
-      <section anchor="YANG-metadata-module" title="YANG Module">
-        <t>The YANG module has four leaves augmenting the model of <xref
-        target="RFC8641">YANG-push</xref>.</t>
+      <section anchor="YANG-revision-module" title="YANG Module">
+        <t>The YANG module has two leaves augmenting the model of <xref
+        target="RFC8639">Subscription to YANG Notifications</xref>.</t>
 
         <t><figure>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-yang-push-metadata@2023-01-04.yang"
-module ietf-yang-push-metadata {
+<CODE BEGINS> file "ietf-yang-push-revision@2023-01-12.yang"
+module ietf-yang-push-revision {
   yang-version 1.1;
   namespace
-    "urn:ietf:params:xml:ns:yang:ietf-yang-push-metadata";
+    "urn:ietf:params:xml:ns:yang:ietf-yang-push-revision";
   prefix ypm;
   import ietf-subscribed-notifications {
     prefix sn;
@@ -324,7 +318,9 @@ module ietf-yang-push-metadata {
                <mailto:alex.huang-feng@insa-lyon.fr>";
 
   description
-    "Defines YANG push event notification header with metadata.
+    "Defines YANG push event notification header with the revision and
+    the revision-label. Adds the support of the revision and
+    revision-label selection in the YANG push subscription RPCs.
 
     Copyright (c) 2023 IETF Trust and the persons identified as
     authors of the code.  All rights reserved.
@@ -338,38 +334,54 @@ module ietf-yang-push-metadata {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2023-01-04 {
+  revision 2023-01-12 {
     description
       "First revision";
     reference
       "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
   }
 
-  feature yang-push-version-supported {
+  feature yang-push-revision-supported {
     description
-      "This feature indicates the YANG Subscription Notifications have the
-      metadata defined in this YANG module.";
+      "This feature indicates the YANG Subscription Notifications supports
+      the revision and revision-label defined in this YANG module.";
+  }
+
+  grouping yang-push-module-version-config {
+    leaf revision {
+      type rev:revision-date-or-label;
+      config true;
+      description
+        "This references the YANG module revision to be sent in the subscription.";
+    }
+    leaf revision-label {
+      type ysver:version;
+      description
+        "This references the YANG module semversion to be sent in the subscription.";
+    }
   }
 
   grouping yang-push-module-version {
     leaf revision {
       type rev:revision-date-or-label;
+      config false;
+      mandatory true;
       description
-        "This references the YANG module revision of the sent notification.";
+        "This references the YANG module revision of the sent notification message.";
     }
     leaf revision-label {
       type ysver:version;
       description
-        "This references the YANG module semversion of the sent notification.";
+        "This references the YANG module semversion of the sent notification message.";
     }
   }
 
   // Subscription parameters
   augment "/sn:establish-subscription/sn:input/sn:target" {
-    uses ypm:yang-push-module-version;
+    uses ypm:yang-push-module-version-config;
   }
   augment "/sn:modify-subscription/sn:input/sn:target" {
-    uses ypm:yang-push-module-version;
+    uses ypm:yang-push-module-version-config;
   }
 
   // Subscription notifications
