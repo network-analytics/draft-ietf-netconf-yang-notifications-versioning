@@ -18,8 +18,8 @@ Abstract
 
    This document extends the YANG notifications subscription mechanism
    to specify the YANG module semantic version at the subscription.
-   Then, a new extension with the revision and revision-label of the
-   YANG push subscription state change notifications header is proposed.
+   Then, a new extension with the revision and the semantic version of
+   the YANG push subscription state change notification is proposed.
 
 Requirements Language
 
