@@ -17,7 +17,7 @@ module ietf-yang-push-revision {
   import ietf-yang-semver {
     prefix ysver;
     reference
-      "RFC XXXX: draft-ietf-netmod-yang-semver-07, YANG Semantic Versioning";
+      "RFC XXXX: draft-ietf-netmod-yang-semver-08, YANG Semantic Versioning";
   }
 
   organization "IETF NETCONF (Network Configuration) Working Group";
