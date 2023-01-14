@@ -17,7 +17,7 @@ module ietf-yang-push-revision {
   import ietf-yang-semver {
     prefix ysver;
     reference
-      "RFC XXXX: draft-ietf-netmod-yang-semver-07, YANG Semantic Versioning";
+      "RFC XXXX: draft-ietf-netmod-yang-semver-08, YANG Semantic Versioning";
   }
 
   organization "IETF NETCONF (Network Configuration) Working Group";
@@ -63,9 +63,11 @@ module ietf-yang-push-revision {
   }
 
   grouping yang-push-module-version-config {
+    description
+      "This grouping combines the revision and revision-label leaves, with 
+       the revison being configurable.";
     leaf revision {
       type rev:revision-date-or-label;
-      config true;
       description
         "This references the YANG module revision to be sent in the subscription.";
     }
@@ -77,6 +79,9 @@ module ietf-yang-push-revision {
   }
 
   grouping yang-push-module-version {
+    description
+      "This grouping combines the revision and revision-label leaves, with 
+       the revison being non configurable.";
     leaf revision {
       type rev:revision-date-or-label;
       config false;
@@ -93,22 +98,37 @@ module ietf-yang-push-revision {
 
   // Subscription parameters
   augment "/sn:establish-subscription/sn:input/sn:target" {
+    description
+      "Augment the establish-subscription RPC from the ietf-subscribed-notifications 
+      YANG module with the yang-push-module-version-config grouping.";
     uses ypm:yang-push-module-version-config;
   }
   augment "/sn:modify-subscription/sn:input/sn:target" {
-    uses ypm:yang-push-module-version-config;
+  description
+      "Augment the modify-subscription RPC from the ietf-subscribed-notifications 
+      YANG module with the yang-push-module-version-config grouping.";
+          uses ypm:yang-push-module-version-config;
   }
 
   // Subscription notifications
   augment "/sn:subscription-started/sn:target" {
+  description
+      "Augment the subscription-started RPC from the ietf-subscribed-notifications 
+      YANG module with the yang-push-module-version grouping.";
     uses ypm:yang-push-module-version;
   }
   augment "/sn:subscription-modified/sn:target" {
+  description
+      "Augment the subscription-modified RPC from the ietf-subscribed-notifications 
+      YANG module with the yang-push-module-version grouping.";
     uses ypm:yang-push-module-version;
   }
 
   // Subscription container
   augment "/sn:subscriptions/sn:subscription/sn:target" {
+  description
+      "Augment the subscriptions RPC from the ietf-subscribed-notifications 
+      YANG module with the yang-push-module-version grouping.";
     uses ypm:yang-push-module-version;
   }
 }
