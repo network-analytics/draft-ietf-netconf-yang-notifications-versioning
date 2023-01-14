@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="12" month="January" year="2023"/>
+    <date day="14" month="January" year="2023"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -254,10 +254,11 @@
         "establish-subscription" and "modify-subscription" RPCs in the
         datastore push subscription.</t>
 
-          <section anchor="Tree View" title="Tree View">
-               <t>The following is the YANG tree diagram <xref target="RFC8340"/>
-               for the ietf-yang-push-revision YANG module</t>
-            <t><figure>
+        <section anchor="Tree View" title="Tree View">
+          <t>The following is the YANG tree diagram <xref target="RFC8340"/>
+          for the ietf-yang-push-revision YANG module</t>
+
+          <t><figure>
               <artwork><![CDATA[
 module: ietf-yang-push-revision
 
@@ -277,14 +278,16 @@ module: ietf-yang-push-revision
     +--ro revision          rev:revision-date-or-label
     +--rw revision-label?   ysver:version
 ]]></artwork>
-          </figure></t>
+            </figure></t>
         </section>
 
-          <section anchor="Full Tree View" title="Full Tree View">
-               <t>The following is the YANG tree diagram <xref target="RFC8340"/>
-               for the ietf-yang-push-revision augmentation within the ietf-subscribed-notifications,
-               including the RPCs and notifications.</t>
-            <t><figure>
+        <section anchor="Full Tree View" title="Full Tree View">
+          <t>The following is the YANG tree diagram <xref target="RFC8340"/>
+          for the ietf-yang-push-revision augmentation within the
+          ietf-subscribed-notifications, including the RPCs and
+          notifications.</t>
+
+          <t><figure>
               <artwork><![CDATA[
 pyang -f tree ietf-yang-push-revision.yang ietf-yang-revisions.yang ietf-subscribed-notifications@2019-09-09.yang 
 ietf-yang-push-revision.yang:118 (at ietf-yang-push-revision.yang:88): error: cannot augment with mandatory node "revision"
@@ -471,9 +474,8 @@ module: ietf-subscribed-notifications
        +--ro reason    identityref
 
 ]]></artwork>
-          </figure></t>
+            </figure></t>
         </section>
-
       </section>
 
       <section anchor="YANG-revision-module" title="YANG Module">
