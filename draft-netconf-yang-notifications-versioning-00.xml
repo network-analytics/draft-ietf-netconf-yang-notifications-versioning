@@ -10,8 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std"
-     docName="draft-tgraf-netconf-yang-notifications-versioning-03"
+<rfc category="std" docName="draft-netconf-yang-notifications-versioning-00"
      ipr="trust200902">
   <front>
     <title abbrev="YANG Notifications Versioning">Support of Versioning in
@@ -69,7 +68,7 @@
       </address>
     </author>
 
-    <date day="20" month="May" year="2023"/>
+    <date day="18" month="June" year="2023"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -143,6 +142,13 @@
       the following YANG module revision for future capabilities:</t>
 
       <dl>
+        <dt>latest:</dt>
+
+        <dd>Restricts the subscription to the latest YANG module
+        revision.</dd>
+      </dl>
+
+      <dl>
         <dt>revision:</dt>
 
         <dd>Restricts the subscription to a specific YANG module revision.
@@ -150,7 +156,7 @@
       </dl>
 
       <dl>
-        <dt>revision-label:</dt>
+        <dt>latest-compatible-semversion:</dt>
 
         <dd>Restricts the subscription to the latest compatible YANG module
         semantic version referenced to. Example: "2.0.0".</dd>
