@@ -5,14 +5,14 @@
 Network Working Group                                            T. Graf
 Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
-Expires: 20 December 2023                                         Huawei
+Expires: 21 December 2023                                         Huawei
                                                            A. Huang Feng
                                                                INSA-Lyon
-                                                            18 June 2023
+                                                            19 June 2023
 
 
         Support of Versioning in YANG Notifications Subscription
-             draft-netconf-yang-notifications-versioning-01
+          draft-ietf-netconf-yang-notifications-versioning-01
 
 Abstract
 
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 December 2023.
+   This Internet-Draft will expire on 21 December 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Graf, et al.            Expires 20 December 2023                [Page 1]
+Graf, et al.            Expires 21 December 2023                [Page 1]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Graf, et al.            Expires 20 December 2023                [Page 2]
+Graf, et al.            Expires 21 December 2023                [Page 2]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -165,7 +165,7 @@ Internet-Draft        YANG Notifications Versioning            June 2023
 
 
 
-Graf, et al.            Expires 20 December 2023                [Page 3]
+Graf, et al.            Expires 21 December 2023                [Page 3]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -221,7 +221,7 @@ Internet-Draft        YANG Notifications Versioning            June 2023
 
 
 
-Graf, et al.            Expires 20 December 2023                [Page 4]
+Graf, et al.            Expires 21 December 2023                [Page 4]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -277,7 +277,7 @@ Internet-Draft        YANG Notifications Versioning            June 2023
 
 
 
-Graf, et al.            Expires 20 December 2023                [Page 5]
+Graf, et al.            Expires 21 December 2023                [Page 5]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -333,7 +333,7 @@ module: ietf-subscribed-notifications
 
 
 
-Graf, et al.            Expires 20 December 2023                [Page 6]
+Graf, et al.            Expires 21 December 2023                [Page 6]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -389,7 +389,7 @@ Internet-Draft        YANG Notifications Versioning            June 2023
 
 
 
-Graf, et al.            Expires 20 December 2023                [Page 7]
+Graf, et al.            Expires 21 December 2023                [Page 7]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -445,7 +445,7 @@ Internet-Draft        YANG Notifications Versioning            June 2023
 
 
 
-Graf, et al.            Expires 20 December 2023                [Page 8]
+Graf, et al.            Expires 21 December 2023                [Page 8]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -501,7 +501,7 @@ Internet-Draft        YANG Notifications Versioning            June 2023
 
 
 
-Graf, et al.            Expires 20 December 2023                [Page 9]
+Graf, et al.            Expires 21 December 2023                [Page 9]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -557,7 +557,7 @@ Internet-Draft        YANG Notifications Versioning            June 2023
 
 
 
-Graf, et al.            Expires 20 December 2023               [Page 10]
+Graf, et al.            Expires 21 December 2023               [Page 10]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -613,7 +613,7 @@ Internet-Draft        YANG Notifications Versioning            June 2023
 
 
 
-Graf, et al.            Expires 20 December 2023               [Page 11]
+Graf, et al.            Expires 21 December 2023               [Page 11]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -669,7 +669,7 @@ Internet-Draft        YANG Notifications Versioning            June 2023
 
 
 
-Graf, et al.            Expires 20 December 2023               [Page 12]
+Graf, et al.            Expires 21 December 2023               [Page 12]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -725,7 +725,7 @@ Internet-Draft        YANG Notifications Versioning            June 2023
 
 
 
-Graf, et al.            Expires 20 December 2023               [Page 13]
+Graf, et al.            Expires 21 December 2023               [Page 13]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -781,7 +781,7 @@ Internet-Draft        YANG Notifications Versioning            June 2023
 
 
 
-Graf, et al.            Expires 20 December 2023               [Page 14]
+Graf, et al.            Expires 21 December 2023               [Page 14]
 
 Internet-Draft        YANG Notifications Versioning            June 2023
 
@@ -837,4 +837,4 @@ Authors' Addresses
 
 
 
-Graf, et al.            Expires 20 December 2023               [Page 15]
+Graf, et al.            Expires 21 December 2023               [Page 15]
