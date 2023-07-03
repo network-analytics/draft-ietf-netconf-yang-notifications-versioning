@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="19" month="June" year="2023"/>
+    <date day="03" month="July" year="2023"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -198,12 +198,17 @@
   <subscription-modified
       xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications">
     <id>101</id>
-    <revision>2014-05-08</revision>
-    <revision-label>1.0.0</revision-label>
-    <stream-xpath-filter xmlns:int="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+    <stream-xpath-filter 
+      xmlns:int="urn:ietf:params:xml:ns:yang:ietf-interfaces">
       /int:interfaces
     </stream-xpath-filter>
     <stream>NETCONF</stream>
+    <module-version
+      xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push-revision">
+      <module-name>ietf-interfaces</module-name>
+      <revision>2014-05-08</revision>
+      <revision-label>1.0.0</revision-label>
+    </module-version>
   </subscription-modified>
 </notification>
         ]]></artwork>
@@ -224,12 +229,13 @@
     "eventTime": "2023-01-03T10:00:00Z",
     "ietf-subscribed-notifications:subscription-modified": {
       "id": 101,
-      "revision": "2014-05-08",
-      "revision-label": "1.0.0",
       "stream-xpath-filter": "/ietf-interfaces:interfaces",
-      "stream": {
-         "ietf-netconf-subscribed-notifications" : "NETCONF"
-      }
+      "stream": "NETCONF",
+      "ietf-yang-push-revision:module-version": {
+        "module-name": "ietf-interfaces"
+        "revision": "2014-05-08",
+        "revision-label": "1.0.0",
+      },
     }
   }
 } 
@@ -255,21 +261,76 @@
               <artwork><![CDATA[
 module: ietf-yang-push-revision
 
-  augment /sn:establish-subscription/sn:input/sn:target:
-    +--rw revision?         rev:revision-date-or-label
-    +-- revision-label?   ysver:version
-  augment /sn:modify-subscription/sn:input/sn:target:
-    +--rw revision?         rev:revision-date-or-label
-    +-- revision-label?   ysver:version
-  augment /sn:subscription-started/sn:target:
-    +--ro revision          rev:revision-date-or-label
-    +-- revision-label?   ysver:version
-  augment /sn:subscription-modified/sn:target:
-    +--ro revision          rev:revision-date-or-label
-    +-- revision-label?   ysver:version
-  augment /sn:subscriptions/sn:subscription/sn:target:
-    +--ro revision          rev:revision-date-or-label
-    +--rw revision-label?   ysver:version
+  augment /sn:filters/sn:stream-filter:
+    +--rw module-version* [module-name]
+       +--rw module-name       string
+       +--rw revision?         rev:revision-date-or-label
+       +--rw revision-label?   ysver:version
+  augment /sn:filters/yp:selection-filter:
+    +--rw module-version* [module-name]
+       +--rw module-name       string
+       +--rw revision?         rev:revision-date-or-label
+       +--rw revision-label?   ysver:version
+  augment /sn:establish-subscription/sn:input/sn:target/sn:stream
+            /sn:stream-filter/sn:within-subscription:
+    +-- module-version* [module-name]
+       +-- module-name       string
+       +-- revision?         rev:revision-date-or-label
+       +-- revision-label?   ysver:version
+  augment /sn:establish-subscription/sn:input/sn:target/yp:datastore
+            /yp:selection-filter/yp:within-subscription:
+    +-- module-version* [module-name]
+       +-- module-name       string
+       +-- revision?         rev:revision-date-or-label
+       +-- revision-label?   ysver:version
+  augment /sn:modify-subscription/sn:input/sn:target/sn:stream
+            /sn:stream-filter/sn:within-subscription:
+    +-- module-version* [module-name]
+       +-- module-name       string
+       +-- revision?         rev:revision-date-or-label
+       +-- revision-label?   ysver:version
+  augment /sn:modify-subscription/sn:input/sn:target/yp:datastore
+            /yp:selection-filter/yp:within-subscription:
+    +-- module-version* [module-name]
+       +-- module-name       string
+       +-- revision?         rev:revision-date-or-label
+       +-- revision-label?   ysver:version
+  augment /sn:subscription-started/sn:target/sn:stream
+            /sn:stream-filter/sn:within-subscription:
+    +--ro module-version* [module-name]
+       +--ro module-name       string
+       +--ro revision          rev:revision-date-or-label
+       +--ro revision-label?   ysver:version
+  augment /sn:subscription-started/sn:target/yp:datastore
+            /yp:selection-filter/yp:within-subscription:
+    +--ro module-version* [module-name]
+       +--ro module-name       string
+       +--ro revision          rev:revision-date-or-label
+       +--ro revision-label?   ysver:version
+  augment /sn:subscription-modified/sn:target/sn:stream
+            /sn:stream-filter/sn:within-subscription:
+    +--ro module-version* [module-name]
+       +--ro module-name       string
+       +--ro revision          rev:revision-date-or-label
+       +--ro revision-label?   ysver:version
+  augment /sn:subscription-modified/sn:target/yp:datastore
+            /yp:selection-filter/yp:within-subscription:
+    +--ro module-version* [module-name]
+       +--ro module-name       string
+       +--ro revision          rev:revision-date-or-label
+       +--ro revision-label?   ysver:version
+  augment /sn:subscriptions/sn:subscription/sn:target/sn:stream
+            /sn:stream-filter/sn:within-subscription:
+    +--rw module-version* [module-name]
+       +--rw module-name       string
+       +--rw revision?         rev:revision-date-or-label
+       +--rw revision-label?   ysver:version
+  augment /sn:subscriptions/sn:subscription/sn:target/yp:datastore
+            /yp:selection-filter/yp:within-subscription:
+    +--rw module-version* [module-name]
+       +--rw module-name       string
+       +--rw revision?         rev:revision-date-or-label
+       +--rw revision-label?   ysver:version
 ]]></artwork>
             </figure></t>
         </section>
@@ -282,8 +343,34 @@ module: ietf-yang-push-revision
 
           <t><figure>
               <artwork><![CDATA[
-pyang -f tree ietf-yang-push-revision.yang ietf-yang-revisions.yang ietf-subscribed-notifications@2019-09-09.yang 
-ietf-yang-push-revision.yang:118 (at ietf-yang-push-revision.yang:88): error: cannot augment with mandatory node "revision"
+pyang -f tree ietf-yang-push-revision.yang ietf-yang-push@2019-09-09.yang ietf-yang-revisions@2022-11-29.yang ietf-subscribed-notifications@2019-09-09.yang
+module: ietf-yang-push
+
+  rpcs:
+    +---x resync-subscription {on-change}?
+       +---w input
+          +---w id    sn:subscription-id
+
+  notifications:
+    +---n push-update
+    |  +--ro id?                   sn:subscription-id
+    |  +--ro datastore-contents?   <anydata>
+    |  +--ro incomplete-update?    empty
+    +---n push-change-update {on-change}?
+       +--ro id?                  sn:subscription-id
+       +--ro datastore-changes
+       |  +--ro yang-patch
+       |     +--ro patch-id    string
+       |     +--ro comment?    string
+       |     +--ro edit* [edit-id]
+       |        +--ro edit-id      string
+       |        +--ro operation    enumeration
+       |        +--ro target       target-resource-offset
+       |        +--ro point?       target-resource-offset
+       |        +--ro where?       enumeration
+       |        +--ro value?       <anydata>
+       +--ro incomplete-update?   empty
+
 module: ietf-subscribed-notifications
   +--ro streams
   |  +--ro stream* [name]
@@ -294,56 +381,125 @@ module: ietf-subscribed-notifications
   |     +--ro replay-log-aged-time?       yang:date-and-time {replay}?
   +--rw filters
   |  +--rw stream-filter* [name]
-  |     +--rw name                           string
-  |     +--rw (filter-spec)?
-  |        +--:(stream-subtree-filter)
-  |        |  +--rw stream-subtree-filter?   <anydata> {subtree}?
-  |        +--:(stream-xpath-filter)
-  |           +--rw stream-xpath-filter?     yang:xpath1.0 {xpath}?
+  |  |  +--rw name                           string
+  |  |  +--rw (filter-spec)?
+  |  |  |  +--:(stream-subtree-filter)
+  |  |  |  |  +--rw stream-subtree-filter?   <anydata> {subtree}?
+  |  |  |  +--:(stream-xpath-filter)
+  |  |  |     +--rw stream-xpath-filter?     yang:xpath1.0 {xpath}?
+  |  |  +--rw ypr:module-version* [module-name]
+  |  |     +--rw ypr:module-name       string
+  |  |     +--rw ypr:revision?         rev:revision-date-or-label
+  |  |     +--rw ypr:revision-label?   ysver:version
+  |  +--rw yp:selection-filter* [filter-id]
+  |     +--rw yp:filter-id                         string
+  |     +--rw (yp:filter-spec)?
+  |     |  +--:(yp:datastore-subtree-filter)
+  |     |  |  +--rw yp:datastore-subtree-filter?   <anydata>
+  |     |  |          {sn:subtree}?
+  |     |  +--:(yp:datastore-xpath-filter)
+  |     |     +--rw yp:datastore-xpath-filter?     yang:xpath1.0
+  |     |             {sn:xpath}?
+  |     +--rw ypr:module-version* [module-name]
+  |        +--rw ypr:module-name       string
+  |        +--rw ypr:revision?         rev:revision-date-or-label
+  |        +--rw ypr:revision-label?   ysver:version
   +--rw subscriptions
      +--rw subscription* [id]
-        +--rw id                                         subscription-id
+        +--rw id
+        |       subscription-id
         +--rw (target)
         |  +--:(stream)
         |  |  +--rw (stream-filter)?
         |  |  |  +--:(by-reference)
-        |  |  |  |  +--rw stream-filter-name             stream-filter-ref
+        |  |  |  |  +--rw stream-filter-name
+        |  |  |  |          stream-filter-ref
         |  |  |  +--:(within-subscription)
         |  |  |     +--rw (filter-spec)?
-        |  |  |        +--:(stream-subtree-filter)
-        |  |  |        |  +--rw stream-subtree-filter?   <anydata> {subtree}?
-        |  |  |        +--:(stream-xpath-filter)
-        |  |  |           +--rw stream-xpath-filter?     yang:xpath1.0 {xpath}?
-        |  |  +--rw stream                               stream-ref
-        |  |  +--ro replay-start-time?                   yang:date-and-time {replay}?
-        |  |  +--rw configured-replay?                   empty {configured,replay}?
-        |  +--:(ypm:revision)
-        |  |  +--ro ypm:revision                         rev:revision-date-or-label
-        |  +--:(ypm:revision-label)
-        |     +--rw ypm:revision-label?                  ysver:version
-        +--rw stop-time?                                 yang:date-and-time
-        +--rw dscp?                                      inet:dscp {dscp}?
-        +--rw weighting?                                 uint8 {qos}?
-        +--rw dependency?                                subscription-id {qos}?
-        +--rw transport?                                 transport {configured}?
-        +--rw encoding?                                  encoding
-        +--rw purpose?                                   string {configured}?
+        |  |  |     |  +--:(stream-subtree-filter)
+        |  |  |     |  |  +--rw stream-subtree-filter?
+        |  |  |     |  |          <anydata> {subtree}?
+        |  |  |     |  +--:(stream-xpath-filter)
+        |  |  |     |     +--rw stream-xpath-filter?
+        |  |  |     |             yang:xpath1.0 {xpath}?
+        |  |  |     +--rw ypr:module-version* [module-name]
+        |  |  |        +--rw ypr:module-name       string
+        |  |  |        +--rw ypr:revision?
+        |  |  |        |       rev:revision-date-or-label
+        |  |  |        +--rw ypr:revision-label?   ysver:version
+        |  |  +--rw stream
+        |  |  |       stream-ref
+        |  |  +--ro replay-start-time?
+        |  |  |       yang:date-and-time {replay}?
+        |  |  +--rw configured-replay?                         empty
+        |  |          {configured,replay}?
+        |  +--:(yp:datastore)
+        |     +--rw yp:datastore
+        |     |       identityref
+        |     +--rw (yp:selection-filter)?
+        |        +--:(yp:by-reference)
+        |        |  +--rw yp:selection-filter-ref
+        |        |          selection-filter-ref
+        |        +--:(yp:within-subscription)
+        |           +--rw (yp:filter-spec)?
+        |           |  +--:(yp:datastore-subtree-filter)
+        |           |  |  +--rw yp:datastore-subtree-filter?
+        |           |  |          <anydata> {sn:subtree}?
+        |           |  +--:(yp:datastore-xpath-filter)
+        |           |     +--rw yp:datastore-xpath-filter?
+        |           |             yang:xpath1.0 {sn:xpath}?
+        |           +--rw ypr:module-version* [module-name]
+        |              +--rw ypr:module-name       string
+        |              +--rw ypr:revision?
+        |              |       rev:revision-date-or-label
+        |              +--rw ypr:revision-label?   ysver:version
+        +--rw stop-time?
+        |       yang:date-and-time
+        +--rw dscp?
+        |       inet:dscp {dscp}?
+        +--rw weighting?                                       uint8
+        |       {qos}?
+        +--rw dependency?
+        |       subscription-id {qos}?
+        +--rw transport?
+        |       transport {configured}?
+        +--rw encoding?
+        |       encoding
+        +--rw purpose?                                         string
+        |       {configured}?
         +--rw (notification-message-origin)? {configured}?
         |  +--:(interface-originated)
-        |  |  +--rw source-interface?                    if:interface-ref {interface-designation}?
+        |  |  +--rw source-interface?
+        |  |          if:interface-ref {interface-designation}?
         |  +--:(address-originated)
-        |     +--rw source-vrf?                          -> /ni:network-instances/network-instance/name {supports-vrf}?
-        |     +--rw source-address?                      inet:ip-address-no-zone
-        +--ro configured-subscription-state?             enumeration {configured}?
+        |     +--rw source-vrf?
+        |     |       -> /ni:network-instances/network-instance/name
+        |     |       {supports-vrf}?
+        |     +--rw source-address?
+        |             inet:ip-address-no-zone
+        +--ro configured-subscription-state?
+        |       enumeration {configured}?
         +--rw receivers
-           +--rw receiver* [name]
-              +--rw name                      string
-              +--ro sent-event-records?       yang:zero-based-counter64
-              +--ro excluded-event-records?   yang:zero-based-counter64
-              +--ro state                     enumeration
-              +---x reset {configured}?
-                 +--ro output
-                    +--ro time    yang:date-and-time
+        |  +--rw receiver* [name]
+        |     +--rw name                      string
+        |     +--ro sent-event-records?
+        |     |       yang:zero-based-counter64
+        |     +--ro excluded-event-records?
+        |     |       yang:zero-based-counter64
+        |     +--ro state                     enumeration
+        |     +---x reset {configured}?
+        |        +--ro output
+        |           +--ro time    yang:date-and-time
+        +--rw (yp:update-trigger)?
+           +--:(yp:periodic)
+           |  +--rw yp:periodic!
+           |     +--rw yp:period         centiseconds
+           |     +--rw yp:anchor-time?   yang:date-and-time
+           +--:(yp:on-change) {on-change}?
+              +--rw yp:on-change!
+                 +--rw yp:dampening-period?   centiseconds
+                 +--rw yp:sync-on-start?      boolean
+                 +--rw yp:excluded-change*    change-type
 
   rpcs:
     +---x establish-subscription
@@ -352,46 +508,122 @@ module: ietf-subscribed-notifications
     |  |  |  +--:(stream)
     |  |  |  |  +---w (stream-filter)?
     |  |  |  |  |  +--:(by-reference)
-    |  |  |  |  |  |  +---w stream-filter-name             stream-filter-ref
+    |  |  |  |  |  |  +---w stream-filter-name
+    |  |  |  |  |  |          stream-filter-ref
     |  |  |  |  |  +--:(within-subscription)
     |  |  |  |  |     +---w (filter-spec)?
-    |  |  |  |  |        +--:(stream-subtree-filter)
-    |  |  |  |  |        |  +---w stream-subtree-filter?   <anydata> {subtree}?
-    |  |  |  |  |        +--:(stream-xpath-filter)
-    |  |  |  |  |           +---w stream-xpath-filter?     yang:xpath1.0 {xpath}?
-    |  |  |  |  +---w stream                               stream-ref
-    |  |  |  |  +---w replay-start-time?                   yang:date-and-time {replay}?
-    |  |  |  +--:(ypm:revision)
-    |  |  |  |  +---w ypm:revision?                        rev:revision-date-or-label
-    |  |  |  +--:(ypm:revision-label)
-    |  |  |     +---w ypm:revision-label?                  ysver:version
-    |  |  +---w stop-time?                                 yang:date-and-time
-    |  |  +---w dscp?                                      inet:dscp {dscp}?
-    |  |  +---w weighting?                                 uint8 {qos}?
-    |  |  +---w dependency?                                subscription-id {qos}?
-    |  |  +---w encoding?                                  encoding
+    |  |  |  |  |     |  +--:(stream-subtree-filter)
+    |  |  |  |  |     |  |  +---w stream-subtree-filter?
+    |  |  |  |  |     |  |          <anydata> {subtree}?
+    |  |  |  |  |     |  +--:(stream-xpath-filter)
+    |  |  |  |  |     |     +---w stream-xpath-filter?
+    |  |  |  |  |     |             yang:xpath1.0 {xpath}?
+    |  |  |  |  |     +---w ypr:module-version* [module-name]
+    |  |  |  |  |        +---w ypr:module-name       string
+    |  |  |  |  |        +---w ypr:revision?
+    |  |  |  |  |        |       rev:revision-date-or-label
+    |  |  |  |  |        +---w ypr:revision-label?   ysver:version
+    |  |  |  |  +---w stream
+    |  |  |  |  |       stream-ref
+    |  |  |  |  +---w replay-start-time?
+    |  |  |  |          yang:date-and-time {replay}?
+    |  |  |  +--:(yp:datastore)
+    |  |  |     +---w yp:datastore
+    |  |  |     |       identityref
+    |  |  |     +---w (yp:selection-filter)?
+    |  |  |        +--:(yp:by-reference)
+    |  |  |        |  +---w yp:selection-filter-ref
+    |  |  |        |          selection-filter-ref
+    |  |  |        +--:(yp:within-subscription)
+    |  |  |           +---w (yp:filter-spec)?
+    |  |  |           |  +--:(yp:datastore-subtree-filter)
+    |  |  |           |  |  +---w yp:datastore-subtree-filter?
+    |  |  |           |  |          <anydata> {sn:subtree}?
+    |  |  |           |  +--:(yp:datastore-xpath-filter)
+    |  |  |           |     +---w yp:datastore-xpath-filter?
+    |  |  |           |             yang:xpath1.0 {sn:xpath}?
+    |  |  |           +---w ypr:module-version* [module-name]
+    |  |  |              +---w ypr:module-name       string
+    |  |  |              +---w ypr:revision?
+    |  |  |              |       rev:revision-date-or-label
+    |  |  |              +---w ypr:revision-label?   ysver:version
+    |  |  +---w stop-time?
+    |  |  |       yang:date-and-time
+    |  |  +---w dscp?
+    |  |  |       inet:dscp {dscp}?
+    |  |  +---w weighting?                                       uint8
+    |  |  |       {qos}?
+    |  |  +---w dependency?
+    |  |  |       subscription-id {qos}?
+    |  |  +---w encoding?
+    |  |  |       encoding
+    |  |  +---w (yp:update-trigger)?
+    |  |     +--:(yp:periodic)
+    |  |     |  +---w yp:periodic!
+    |  |     |     +---w yp:period         centiseconds
+    |  |     |     +---w yp:anchor-time?   yang:date-and-time
+    |  |     +--:(yp:on-change) {on-change}?
+    |  |        +---w yp:on-change!
+    |  |           +---w yp:dampening-period?   centiseconds
+    |  |           +---w yp:sync-on-start?      boolean
+    |  |           +---w yp:excluded-change*    change-type
     |  +--ro output
     |     +--ro id                            subscription-id
-    |     +--ro replay-start-time-revision?   yang:date-and-time {replay}?
+    |     +--ro replay-start-time-revision?   yang:date-and-time
+    |             {replay}?
     +---x modify-subscription
     |  +---w input
-    |     +---w id                                         subscription-id
+    |     +---w id
+    |     |       subscription-id
     |     +---w (target)
     |     |  +--:(stream)
     |     |  |  +---w (stream-filter)?
     |     |  |     +--:(by-reference)
-    |     |  |     |  +---w stream-filter-name             stream-filter-ref
+    |     |  |     |  +---w stream-filter-name
+    |     |  |     |          stream-filter-ref
     |     |  |     +--:(within-subscription)
     |     |  |        +---w (filter-spec)?
-    |     |  |           +--:(stream-subtree-filter)
-    |     |  |           |  +---w stream-subtree-filter?   <anydata> {subtree}?
-    |     |  |           +--:(stream-xpath-filter)
-    |     |  |              +---w stream-xpath-filter?     yang:xpath1.0 {xpath}?
-    |     |  +--:(ypm:revision)
-    |     |  |  +---w ypm:revision?                        rev:revision-date-or-label
-    |     |  +--:(ypm:revision-label)
-    |     |     +---w ypm:revision-label?                  ysver:version
-    |     +---w stop-time?                                 yang:date-and-time
+    |     |  |        |  +--:(stream-subtree-filter)
+    |     |  |        |  |  +---w stream-subtree-filter?
+    |     |  |        |  |          <anydata> {subtree}?
+    |     |  |        |  +--:(stream-xpath-filter)
+    |     |  |        |     +---w stream-xpath-filter?
+    |     |  |        |             yang:xpath1.0 {xpath}?
+    |     |  |        +---w ypr:module-version* [module-name]
+    |     |  |           +---w ypr:module-name       string
+    |     |  |           +---w ypr:revision?
+    |     |  |           |       rev:revision-date-or-label
+    |     |  |           +---w ypr:revision-label?   ysver:version
+    |     |  +--:(yp:datastore)
+    |     |     +---w yp:datastore
+    |     |     |       identityref
+    |     |     +---w (yp:selection-filter)?
+    |     |        +--:(yp:by-reference)
+    |     |        |  +---w yp:selection-filter-ref
+    |     |        |          selection-filter-ref
+    |     |        +--:(yp:within-subscription)
+    |     |           +---w (yp:filter-spec)?
+    |     |           |  +--:(yp:datastore-subtree-filter)
+    |     |           |  |  +---w yp:datastore-subtree-filter?
+    |     |           |  |          <anydata> {sn:subtree}?
+    |     |           |  +--:(yp:datastore-xpath-filter)
+    |     |           |     +---w yp:datastore-xpath-filter?
+    |     |           |             yang:xpath1.0 {sn:xpath}?
+    |     |           +---w ypr:module-version* [module-name]
+    |     |              +---w ypr:module-name       string
+    |     |              +---w ypr:revision?
+    |     |              |       rev:revision-date-or-label
+    |     |              +---w ypr:revision-label?   ysver:version
+    |     +---w stop-time?
+    |     |       yang:date-and-time
+    |     +---w (yp:update-trigger)?
+    |        +--:(yp:periodic)
+    |        |  +---w yp:periodic!
+    |        |     +---w yp:period         centiseconds
+    |        |     +---w yp:anchor-time?   yang:date-and-time
+    |        +--:(yp:on-change) {on-change}?
+    |           +---w yp:on-change!
+    |              +---w yp:dampening-period?   centiseconds
     +---x delete-subscription
     |  +---w input
     |     +---w id    subscription-id
@@ -405,67 +637,153 @@ module: ietf-subscribed-notifications
     +---n subscription-completed {configured}?
     |  +--ro id    subscription-id
     +---n subscription-modified
-    |  +--ro id                                         subscription-id
+    |  +--ro id
+    |  |       subscription-id
     |  +--ro (target)
     |  |  +--:(stream)
     |  |  |  +--ro (stream-filter)?
     |  |  |  |  +--:(by-reference)
-    |  |  |  |  |  +--ro stream-filter-name             stream-filter-ref
+    |  |  |  |  |  +--ro stream-filter-name
+    |  |  |  |  |          stream-filter-ref
     |  |  |  |  +--:(within-subscription)
     |  |  |  |     +--ro (filter-spec)?
-    |  |  |  |        +--:(stream-subtree-filter)
-    |  |  |  |        |  +--ro stream-subtree-filter?   <anydata> {subtree}?
-    |  |  |  |        +--:(stream-xpath-filter)
-    |  |  |  |           +--ro stream-xpath-filter?     yang:xpath1.0 {xpath}?
-    |  |  |  +--ro stream                               stream-ref
-    |  |  |  +--ro replay-start-time?                   yang:date-and-time {replay}?
-    |  |  +--:(ypm:revision)
-    |  |  |  +--ro ypm:revision                         rev:revision-date-or-label
-    |  |  +--:(ypm:revision-label)
-    |  |     +--ro ypm:revision-label?                  ysver:version
-    |  +--ro stop-time?                                 yang:date-and-time
-    |  +--ro dscp?                                      inet:dscp {dscp}?
-    |  +--ro weighting?                                 uint8 {qos}?
-    |  +--ro dependency?                                subscription-id {qos}?
-    |  +--ro transport?                                 transport {configured}?
-    |  +--ro encoding?                                  encoding
-    |  +--ro purpose?                                   string {configured}?
+    |  |  |  |     |  +--:(stream-subtree-filter)
+    |  |  |  |     |  |  +--ro stream-subtree-filter?
+    |  |  |  |     |  |          <anydata> {subtree}?
+    |  |  |  |     |  +--:(stream-xpath-filter)
+    |  |  |  |     |     +--ro stream-xpath-filter?
+    |  |  |  |     |             yang:xpath1.0 {xpath}?
+    |  |  |  |     +--ro ypr:module-version* [module-name]
+    |  |  |  |        +--ro ypr:module-name       string
+    |  |  |  |        +--ro ypr:revision
+    |  |  |  |        |       rev:revision-date-or-label
+    |  |  |  |        +--ro ypr:revision-label?   ysver:version
+    |  |  |  +--ro stream
+    |  |  |  |       stream-ref
+    |  |  |  +--ro replay-start-time?
+    |  |  |          yang:date-and-time {replay}?
+    |  |  +--:(yp:datastore)
+    |  |     +--ro yp:datastore
+    |  |     |       identityref
+    |  |     +--ro (yp:selection-filter)?
+    |  |        +--:(yp:by-reference)
+    |  |        |  +--ro yp:selection-filter-ref
+    |  |        |          selection-filter-ref
+    |  |        +--:(yp:within-subscription)
+    |  |           +--ro (yp:filter-spec)?
+    |  |           |  +--:(yp:datastore-subtree-filter)
+    |  |           |  |  +--ro yp:datastore-subtree-filter?
+    |  |           |  |          <anydata> {sn:subtree}?
+    |  |           |  +--:(yp:datastore-xpath-filter)
+    |  |           |     +--ro yp:datastore-xpath-filter?
+    |  |           |             yang:xpath1.0 {sn:xpath}?
+    |  |           +--ro ypr:module-version* [module-name]
+    |  |              +--ro ypr:module-name       string
+    |  |              +--ro ypr:revision
+    |  |              |       rev:revision-date-or-label
+    |  |              +--ro ypr:revision-label?   ysver:version
+    |  +--ro stop-time?
+    |  |       yang:date-and-time
+    |  +--ro dscp?
+    |  |       inet:dscp {dscp}?
+    |  +--ro weighting?                                       uint8
+    |  |       {qos}?
+    |  +--ro dependency?
+    |  |       subscription-id {qos}?
+    |  +--ro transport?
+    |  |       transport {configured}?
+    |  +--ro encoding?                                        encoding
+    |  +--ro purpose?                                         string
+    |  |       {configured}?
+    |  +--ro (yp:update-trigger)?
+    |     +--:(yp:periodic)
+    |     |  +--ro yp:periodic!
+    |     |     +--ro yp:period         centiseconds
+    |     |     +--ro yp:anchor-time?   yang:date-and-time
+    |     +--:(yp:on-change) {on-change}?
+    |        +--ro yp:on-change!
+    |           +--ro yp:dampening-period?   centiseconds
+    |           +--ro yp:sync-on-start?      boolean
+    |           +--ro yp:excluded-change*    change-type
     +---n subscription-resumed
     |  +--ro id    subscription-id
     +---n subscription-started {configured}?
-    |  +--ro id                                         subscription-id
+    |  +--ro id
+    |  |       subscription-id
     |  +--ro (target)
     |  |  +--:(stream)
     |  |  |  +--ro (stream-filter)?
     |  |  |  |  +--:(by-reference)
-    |  |  |  |  |  +--ro stream-filter-name             stream-filter-ref
+    |  |  |  |  |  +--ro stream-filter-name
+    |  |  |  |  |          stream-filter-ref
     |  |  |  |  +--:(within-subscription)
     |  |  |  |     +--ro (filter-spec)?
-    |  |  |  |        +--:(stream-subtree-filter)
-    |  |  |  |        |  +--ro stream-subtree-filter?   <anydata> {subtree}?
-    |  |  |  |        +--:(stream-xpath-filter)
-    |  |  |  |           +--ro stream-xpath-filter?     yang:xpath1.0 {xpath}?
-    |  |  |  +--ro stream                               stream-ref
-    |  |  |  +--ro replay-start-time?                   yang:date-and-time {replay}?
-    |  |  |  +--ro replay-previous-event-time?          yang:date-and-time {replay}?
-    |  |  +--:(ypm:revision)
-    |  |  |  +--ro ypm:revision                         rev:revision-date-or-label
-    |  |  +--:(ypm:revision-label)
-    |  |     +--ro ypm:revision-label?                  ysver:version
-    |  +--ro stop-time?                                 yang:date-and-time
-    |  +--ro dscp?                                      inet:dscp {dscp}?
-    |  +--ro weighting?                                 uint8 {qos}?
-    |  +--ro dependency?                                subscription-id {qos}?
-    |  +--ro transport?                                 transport {configured}?
-    |  +--ro encoding?                                  encoding
-    |  +--ro purpose?                                   string {configured}?
+    |  |  |  |     |  +--:(stream-subtree-filter)
+    |  |  |  |     |  |  +--ro stream-subtree-filter?
+    |  |  |  |     |  |          <anydata> {subtree}?
+    |  |  |  |     |  +--:(stream-xpath-filter)
+    |  |  |  |     |     +--ro stream-xpath-filter?
+    |  |  |  |     |             yang:xpath1.0 {xpath}?
+    |  |  |  |     +--ro ypr:module-version* [module-name]
+    |  |  |  |        +--ro ypr:module-name       string
+    |  |  |  |        +--ro ypr:revision
+    |  |  |  |        |       rev:revision-date-or-label
+    |  |  |  |        +--ro ypr:revision-label?   ysver:version
+    |  |  |  +--ro stream
+    |  |  |  |       stream-ref
+    |  |  |  +--ro replay-start-time?
+    |  |  |  |       yang:date-and-time {replay}?
+    |  |  |  +--ro replay-previous-event-time?
+    |  |  |          yang:date-and-time {replay}?
+    |  |  +--:(yp:datastore)
+    |  |     +--ro yp:datastore
+    |  |     |       identityref
+    |  |     +--ro (yp:selection-filter)?
+    |  |        +--:(yp:by-reference)
+    |  |        |  +--ro yp:selection-filter-ref
+    |  |        |          selection-filter-ref
+    |  |        +--:(yp:within-subscription)
+    |  |           +--ro (yp:filter-spec)?
+    |  |           |  +--:(yp:datastore-subtree-filter)
+    |  |           |  |  +--ro yp:datastore-subtree-filter?
+    |  |           |  |          <anydata> {sn:subtree}?
+    |  |           |  +--:(yp:datastore-xpath-filter)
+    |  |           |     +--ro yp:datastore-xpath-filter?
+    |  |           |             yang:xpath1.0 {sn:xpath}?
+    |  |           +--ro ypr:module-version* [module-name]
+    |  |              +--ro ypr:module-name       string
+    |  |              +--ro ypr:revision
+    |  |              |       rev:revision-date-or-label
+    |  |              +--ro ypr:revision-label?   ysver:version
+    |  +--ro stop-time?
+    |  |       yang:date-and-time
+    |  +--ro dscp?
+    |  |       inet:dscp {dscp}?
+    |  +--ro weighting?                                       uint8
+    |  |       {qos}?
+    |  +--ro dependency?
+    |  |       subscription-id {qos}?
+    |  +--ro transport?
+    |  |       transport {configured}?
+    |  +--ro encoding?                                        encoding
+    |  +--ro purpose?                                         string
+    |  |       {configured}?
+    |  +--ro (yp:update-trigger)?
+    |     +--:(yp:periodic)
+    |     |  +--ro yp:periodic!
+    |     |     +--ro yp:period         centiseconds
+    |     |     +--ro yp:anchor-time?   yang:date-and-time
+    |     +--:(yp:on-change) {on-change}?
+    |        +--ro yp:on-change!
+    |           +--ro yp:dampening-period?   centiseconds
+    |           +--ro yp:sync-on-start?      boolean
+    |           +--ro yp:excluded-change*    change-type
     +---n subscription-suspended
     |  +--ro id        subscription-id
     |  +--ro reason    identityref
     +---n subscription-terminated
        +--ro id        subscription-id
        +--ro reason    identityref
-
 ]]></artwork>
             </figure></t>
         </section>
@@ -477,27 +795,33 @@ module: ietf-subscribed-notifications
 
         <t><figure>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-yang-push-revision@2023-01-12.yang"
+<CODE BEGINS> file "ietf-yang-push-revision@2023-07-03.yang"
 module ietf-yang-push-revision {
   yang-version 1.1;
   namespace
     "urn:ietf:params:xml:ns:yang:ietf-yang-push-revision";
-  prefix ypm;
+  prefix ypr;
   import ietf-subscribed-notifications {
     prefix sn;
     reference
       "RFC 8639: Subscription to YANG Notifications";
   }
+  import ietf-yang-push {
+    prefix yp;
+    reference
+      "RFC 8641: Subscriptions to YANG Datastores";
+  }
   import ietf-yang-revisions {
     prefix rev;
     reference
-      "RFC XXXX: draft-ietf-netmod-yang-module-versioning-06, Updated YANG
-      Module Revision Handling";
+      "RFC XXXX: draft-ietf-netmod-yang-module-versioning-06,
+      Updated YANG Module Revision Handling";
   }
   import ietf-yang-semver {
     prefix ysver;
     reference
-      "RFC XXXX: draft-ietf-netmod-yang-semver-08, YANG Semantic Versioning";
+      "RFC XXXX: draft-ietf-netmod-yang-semver-08, YANG Semantic
+      Versioning";
   }
 
   organization "IETF NETCONF (Network Configuration) Working Group";
@@ -529,87 +853,196 @@ module ietf-yang-push-revision {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2023-01-12 {
+  revision 2023-07-03 {
     description
       "First revision";
     reference
-      "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
+      "RFC XXXX: Support of Versioning in YANG Notifications
+      Subscription";
   }
 
   feature yang-push-revision-supported {
     description
-      "This feature indicates the YANG Subscription Notifications supports
-      the revision and revision-label defined in this YANG module.";
+      "This feature indicates the YANG Subscription Notifications
+      supports specifying the list of modules, revisions and
+      revision-label in the YANG subscription.";
   }
 
   grouping yang-push-module-version-config {
     description
-      "This grouping combines the revision and revision-label leaves, with 
-       the revison being configurable.";
+      "This grouping combines the module name, the revision and
+      revision-label leaves, with the revision being configurable.";
+    leaf module-name {
+      type string;
+      description
+        "This references the YANG module name.";
+    }
     leaf revision {
       type rev:revision-date-or-label;
       description
-        "This references the YANG module revision to be sent in the subscription.";
+        "This references the YANG module revision to be sent in the
+        subscription.";
     }
     leaf revision-label {
       type ysver:version;
       description
-        "This references the YANG module semversion to be sent in the subscription.";
+        "This references the YANG module semversion to be sent in the
+        subscription.";
     }
   }
 
   grouping yang-push-module-version {
     description
-      "This grouping combines the revision and revision-label leaves, with 
-       the revison being non configurable.";
+      "This grouping combines the module name, the revision and
+      revision-label leaves, with the revision being non
+      configurable.";
+    leaf module-name {
+      type string;
+      config false;
+      mandatory true;
+      description
+        "This references the YANG module name.";
+    }
     leaf revision {
       type rev:revision-date-or-label;
       config false;
       mandatory true;
       description
-        "This references the YANG module revision of the sent notification message.";
+        "This references the YANG module revision of the sent
+        notification message.";
     }
     leaf revision-label {
       type ysver:version;
       description
-        "This references the YANG module semversion of the sent notification message.";
+        "This references the YANG module semversion of the sent
+        notification message.";
     }
   }
 
-  // Subscription parameters
-  augment "/sn:establish-subscription/sn:input/sn:target" {
+  grouping yang-push-module-version-list {
     description
-      "Augment the establish-subscription RPC from the ietf-subscribed-notifications 
-      YANG module with the yang-push-module-version-config grouping.";
-    uses ypm:yang-push-module-version-config;
+      "This grouping defines a list of yang-push-module-version
+      grouping.";
+    list module-version {
+      key "module-name";
+      config false;
+      description
+        "List of yang-push-module-version grouping. The revision is
+        not configurable.";
+      uses ypr:yang-push-module-version;
+    }
   }
-  augment "/sn:modify-subscription/sn:input/sn:target" {
-  description
-      "Augment the modify-subscription RPC from the ietf-subscribed-notifications 
-      YANG module with the yang-push-module-version-config grouping.";
-          uses ypm:yang-push-module-version-config;
+
+  grouping yang-push-module-version-config-list {
+    description
+      "This grouping defines a list of yang-push-module-version-config
+      grouping.";
+    list module-version {
+      key "module-name";
+      description
+        "List of yang-push-module-version-config grouping. The revision
+        is configurable.";
+      uses ypr:yang-push-module-version-config;
+    }
+  }
+
+  // Filters
+  augment "/sn:filters/sn:stream-filter" {
+    description 
+      "Augment the filters from subscribed notifications with a list
+      of yang-push-module-version-config grouping.";
+    uses ypr:yang-push-module-version-config-list;
+  }
+  augment "/sn:filters/yp:selection-filter" {
+    description
+      "Augment the filters from YANG push with a list of
+      yang-push-module-version grouping.";
+    uses ypr:yang-push-module-version-config-list;
+  }
+
+  // Subscription parameters
+  augment "/sn:establish-subscription/sn:input/sn:target/sn:stream"
+        + "/sn:stream-filter/sn:within-subscription" {
+    description
+      "Augment the establish-subscription RPC from the
+      ietf-subscribed-notifications YANG module with the
+      yang-push-module-version-config-list grouping.";
+    uses ypr:yang-push-module-version-config-list;
+  }
+  augment "/sn:establish-subscription/sn:input/sn:target"
+        + "/yp:datastore/yp:selection-filter/yp:within-subscription" {
+    description
+      "Augment the establish-subscription RPC from the ietf-yang-push
+      YANG module with the yang-push-module-version-config-list
+      grouping.";
+    uses ypr:yang-push-module-version-config-list;
+  }
+  augment "/sn:modify-subscription/sn:input/sn:target/sn:stream"
+        + "/sn:stream-filter/sn:within-subscription" {
+    description
+      "Augment the modify-subscription RPC from the
+      ietf-subscribed-notifications YANG module with the
+      yang-push-module-version-config-list grouping.";
+    uses ypr:yang-push-module-version-config-list;
+  }
+  augment "/sn:modify-subscription/sn:input/sn:target/yp:datastore"
+        + "/yp:selection-filter/yp:within-subscription" {
+    description
+      "Augment the modify-subscription RPC from the ietf-yang-push 
+      YANG module with the yang-push-module-version-config-list
+      grouping.";
+    uses ypr:yang-push-module-version-config-list;
   }
 
   // Subscription notifications
-  augment "/sn:subscription-started/sn:target" {
-  description
-      "Augment the subscription-started RPC from the ietf-subscribed-notifications 
-      YANG module with the yang-push-module-version grouping.";
-    uses ypm:yang-push-module-version;
+  augment "/sn:subscription-started/sn:target/sn:stream"
+        + "/sn:stream-filter/sn:within-subscription" {
+    description
+      "Augment the subscription-started notification from the
+      ietf-subscribed-notifications YANG module with the
+      yang-push-module-version-list grouping.";
+    uses ypr:yang-push-module-version-list;
   }
-  augment "/sn:subscription-modified/sn:target" {
-  description
-      "Augment the subscription-modified RPC from the ietf-subscribed-notifications 
-      YANG module with the yang-push-module-version grouping.";
-    uses ypm:yang-push-module-version;
+  augment "/sn:subscription-started/sn:target/yp:datastore"
+        + "/yp:selection-filter/yp:within-subscription" {
+    description
+      "Augment the subscription-started notification from the
+      ietf-yang-push YANG module with the
+      yang-push-module-version-list grouping.";
+    uses ypr:yang-push-module-version-list;
+  }
+  augment "/sn:subscription-modified/sn:target/sn:stream"
+        + "/sn:stream-filter/sn:within-subscription" {
+    description
+      "Augment the subscription-modified notification from the
+      ietf-subscribed-notifications YANG module with the
+      yang-push-module-version-list grouping.";
+    uses ypr:yang-push-module-version-list;
+  }
+  augment "/sn:subscription-modified/sn:target/yp:datastore"
+        + "/yp:selection-filter/yp:within-subscription" {
+    description
+      "Augment the subscription-modified notification from the
+      ietf-yang-push YANG module with the
+      yang-push-module-version-list grouping.";
+    uses ypr:yang-push-module-version-list;
   }
 
   // Subscription container
-  augment "/sn:subscriptions/sn:subscription/sn:target" {
-  description
-      "Augment the subscriptions RPC from the ietf-subscribed-notifications 
-      YANG module with the yang-push-module-version grouping.";
-    uses ypm:yang-push-module-version;
+  augment "/sn:subscriptions/sn:subscription/sn:target/sn:stream"
+        + "/sn:stream-filter/sn:within-subscription" {
+    description
+      "Augment the subscriptions RPC container from the
+      ietf-subscribed-notifications YANG module with the
+      yang-push-module-version-config-list grouping.";
+    uses ypr:yang-push-module-version-config-list;
+  }
+  augment "/sn:subscriptions/sn:subscription/sn:target/yp:datastore"
+        + "/yp:selection-filter/yp:within-subscription" {
+    description
+      "Augment the subscription RPC container from ietf-yang-push
+      YANG module with the yang-push-module-version-config-list grouping.";
+    uses ypr:yang-push-module-version-config-list;
   }
 }
 <CODE ENDS>]]></artwork>
