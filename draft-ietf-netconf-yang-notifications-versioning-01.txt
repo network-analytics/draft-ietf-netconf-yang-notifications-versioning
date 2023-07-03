@@ -233,11 +233,11 @@ Internet-Draft        YANG Notifications Versioning            July 2023
          "id": 101,
          "stream-xpath-filter": "/ietf-interfaces:interfaces",
          "stream": "NETCONF",
-         "ietf-yang-push-revision:module-version": {
+         "ietf-yang-push-revision:module-version": [{
            "module-name": "ietf-interfaces"
            "revision": "2014-05-08",
            "revision-label": "1.0.0",
-         },
+         }],
        }
      }
    }
