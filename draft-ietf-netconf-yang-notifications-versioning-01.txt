@@ -5,10 +5,10 @@
 Network Working Group                                            T. Graf
 Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
-Expires: 4 January 2024                                           Huawei
+Expires: 5 January 2024                                           Huawei
                                                            A. Huang Feng
                                                                INSA-Lyon
-                                                             3 July 2023
+                                                             4 July 2023
 
 
         Support of Versioning in YANG Notifications Subscription
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 January 2024.
+   This Internet-Draft will expire on 5 January 2024.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Graf, et al.             Expires 4 January 2024                 [Page 1]
+Graf, et al.             Expires 5 January 2024                 [Page 1]
 
 Internet-Draft        YANG Notifications Versioning            July 2023
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Graf, et al.             Expires 4 January 2024                 [Page 2]
+Graf, et al.             Expires 5 January 2024                 [Page 2]
 
 Internet-Draft        YANG Notifications Versioning            July 2023
 
@@ -149,6 +149,10 @@ Internet-Draft        YANG Notifications Versioning            July 2023
    The YANG notifications subscription OPTIONALLY can be restricted to
    the following YANG module revision for future capabilities:
 
+   module:  Restricts the subscription to one or more YANG module names
+      with revision and revision-label together for the related streamed
+      content.
+
    revision:  Restricts the subscription to a specific YANG module
       revision.  Example: "2014-05-08".
 
@@ -161,11 +165,7 @@ Internet-Draft        YANG Notifications Versioning            July 2023
 
 
 
-
-
-
-
-Graf, et al.             Expires 4 January 2024                 [Page 3]
+Graf, et al.             Expires 5 January 2024                 [Page 3]
 
 Internet-Draft        YANG Notifications Versioning            July 2023
 
@@ -177,6 +177,9 @@ Internet-Draft        YANG Notifications Versioning            July 2023
    metadata objects are part of a "subscription-started" or
    "subscription-modified" subscription state change notification.
 
+   module:  Describes the YANG module names for the related streamed
+      content.
+
    revision:  Describes the YANG module revision as specified in
       Section 7.1.9 of [RFC6020] for the related streamed content.
 
@@ -185,12 +188,12 @@ Internet-Draft        YANG Notifications Versioning            July 2023
       streamed content.
 
    Figure 1 provides an example of a "subscription-modified"
-   subscription state change notification message with the YANG
-   revision, revision label and datastore-xpath-filter for tracking the
-   operational status of a single Ethernet interface (per [RFC8343]).
-   This subscription state change notification message is encoded XML
-   [W3C.REC-xml-20081126] over the Network Configuration Protocol
-   (NETCONF) as per [RFC8640].
+   subscription state change notification message with the YANG module
+   name, revision, revision label and datastore-xpath-filter for
+   tracking the operational status of a single Ethernet interface (per
+   [RFC8343]).  This subscription state change notification message is
+   encoded XML [W3C.REC-xml-20081126] over the Network Configuration
+   Protocol (NETCONF) as per [RFC8640].
 
 <notification xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
   <eventTime>2023-01-03T10:00:00Z</eventTime>
@@ -214,17 +217,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
         Figure 1: XML Push Example for a subscription-modified
                          notification message
 
+
+
+
+
+Graf, et al.             Expires 5 January 2024                 [Page 4]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
    Figure 2 provides an example of a JSON encoded, [RFC8259],
    subscription state change notification message over HTTPS-based
    [I-D.ietf-netconf-https-notif] or UDP-based
    [I-D.ietf-netconf-udp-notif] transport for the same subscription.
-
-
-
-Graf, et al.             Expires 4 January 2024                 [Page 4]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
 
    {
      "ietf-restconf:notification" : {
@@ -250,11 +255,11 @@ Internet-Draft        YANG Notifications Versioning            July 2023
 4.1.  Data Model Overview
 
    This YANG module augments the "ietf-yang-push" module with the
-   revision and revision-label in the "subscription-started" and
-   "subscription-modified" subscription state change notifications and
-   the ability to define the "revision" and "revision-label" in the
-   "establish-subscription" and "modify-subscription" RPCs in the
-   datastore push subscription.
+   module-name, revision and revision-label in the "subscription-
+   started" and "subscription-modified" subscription state change
+   notifications and the ability to define the "revision" and "revision-
+   label" in the "establish-subscription" and "modify-subscription" RPCs
+   in the datastore push subscription.
 
 4.1.1.  Tree View
 
@@ -269,19 +274,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
           +--rw revision?         rev:revision-date-or-label
           +--rw revision-label?   ysver:version
      augment /sn:filters/yp:selection-filter:
+
+
+
+Graf, et al.             Expires 5 January 2024                 [Page 5]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
        +--rw module-version* [module-name]
           +--rw module-name       string
           +--rw revision?         rev:revision-date-or-label
           +--rw revision-label?   ysver:version
      augment /sn:establish-subscription/sn:input/sn:target/sn:stream
-
-
-
-Graf, et al.             Expires 4 January 2024                 [Page 5]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
                /sn:stream-filter/sn:within-subscription:
        +-- module-version* [module-name]
           +-- module-name       string
@@ -325,19 +330,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
           +--ro revision-label?   ysver:version
      augment /sn:subscription-modified/sn:target/yp:datastore
                /yp:selection-filter/yp:within-subscription:
+
+
+
+Graf, et al.             Expires 5 January 2024                 [Page 6]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
        +--ro module-version* [module-name]
           +--ro module-name       string
           +--ro revision          rev:revision-date-or-label
           +--ro revision-label?   ysver:version
      augment /sn:subscriptions/sn:subscription/sn:target/sn:stream
-
-
-
-Graf, et al.             Expires 4 January 2024                 [Page 6]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
                /sn:stream-filter/sn:within-subscription:
        +--rw module-version* [module-name]
           +--rw module-name       string
@@ -381,19 +386,19 @@ module: ietf-yang-push
        |        +--ro target       target-resource-offset
        |        +--ro point?       target-resource-offset
        |        +--ro where?       enumeration
+
+
+
+Graf, et al.             Expires 5 January 2024                 [Page 7]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
        |        +--ro value?       <anydata>
        +--ro incomplete-update?   empty
 
 module: ietf-subscribed-notifications
   +--ro streams
-
-
-
-Graf, et al.             Expires 4 January 2024                 [Page 7]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
   |  +--ro stream* [name]
   |     +--ro name                        string
   |     +--ro description?                string
@@ -437,19 +442,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
         |  |  |  |          stream-filter-ref
         |  |  |  +--:(within-subscription)
         |  |  |     +--rw (filter-spec)?
+
+
+
+Graf, et al.             Expires 5 January 2024                 [Page 8]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
         |  |  |     |  +--:(stream-subtree-filter)
         |  |  |     |  |  +--rw stream-subtree-filter?
         |  |  |     |  |          <anydata> {subtree}?
         |  |  |     |  +--:(stream-xpath-filter)
         |  |  |     |     +--rw stream-xpath-filter?
-
-
-
-Graf, et al.             Expires 4 January 2024                 [Page 8]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
         |  |  |     |             yang:xpath1.0 {xpath}?
         |  |  |     +--rw ypr:module-version* [module-name]
         |  |  |        +--rw ypr:module-name       string
@@ -493,19 +498,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
         +--rw transport?
         |       transport {configured}?
         +--rw encoding?
+
+
+
+Graf, et al.             Expires 5 January 2024                 [Page 9]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
         |       encoding
         +--rw purpose?                                         string
         |       {configured}?
         +--rw (notification-message-origin)? {configured}?
         |  +--:(interface-originated)
-
-
-
-Graf, et al.             Expires 4 January 2024                 [Page 9]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
         |  |  +--rw source-interface?
         |  |          if:interface-ref {interface-designation}?
         |  +--:(address-originated)
@@ -549,19 +554,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
     |  |  |  |  |  |          stream-filter-ref
     |  |  |  |  |  +--:(within-subscription)
     |  |  |  |  |     +---w (filter-spec)?
+
+
+
+Graf, et al.             Expires 5 January 2024                [Page 10]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
     |  |  |  |  |     |  +--:(stream-subtree-filter)
     |  |  |  |  |     |  |  +---w stream-subtree-filter?
     |  |  |  |  |     |  |          <anydata> {subtree}?
     |  |  |  |  |     |  +--:(stream-xpath-filter)
     |  |  |  |  |     |     +---w stream-xpath-filter?
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 10]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
     |  |  |  |  |     |             yang:xpath1.0 {xpath}?
     |  |  |  |  |     +---w ypr:module-version* [module-name]
     |  |  |  |  |        +---w ypr:module-name       string
@@ -605,19 +610,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
     |  |  +---w (yp:update-trigger)?
     |  |     +--:(yp:periodic)
     |  |     |  +---w yp:periodic!
+
+
+
+Graf, et al.             Expires 5 January 2024                [Page 11]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
     |  |     |     +---w yp:period         centiseconds
     |  |     |     +---w yp:anchor-time?   yang:date-and-time
     |  |     +--:(yp:on-change) {on-change}?
     |  |        +---w yp:on-change!
     |  |           +---w yp:dampening-period?   centiseconds
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 11]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
     |  |           +---w yp:sync-on-start?      boolean
     |  |           +---w yp:excluded-change*    change-type
     |  +--ro output
@@ -661,19 +666,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
     |     |           |  |          <anydata> {sn:subtree}?
     |     |           |  +--:(yp:datastore-xpath-filter)
     |     |           |     +---w yp:datastore-xpath-filter?
+
+
+
+Graf, et al.             Expires 5 January 2024                [Page 12]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
     |     |           |             yang:xpath1.0 {sn:xpath}?
     |     |           +---w ypr:module-version* [module-name]
     |     |              +---w ypr:module-name       string
     |     |              +---w ypr:revision?
     |     |              |       rev:revision-date-or-label
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 12]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
     |     |              +---w ypr:revision-label?   ysver:version
     |     +---w stop-time?
     |     |       yang:date-and-time
@@ -717,19 +722,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
     |  |  |  |     +--ro ypr:module-version* [module-name]
     |  |  |  |        +--ro ypr:module-name       string
     |  |  |  |        +--ro ypr:revision
+
+
+
+Graf, et al.             Expires 5 January 2024                [Page 13]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
     |  |  |  |        |       rev:revision-date-or-label
     |  |  |  |        +--ro ypr:revision-label?   ysver:version
     |  |  |  +--ro stream
     |  |  |  |       stream-ref
     |  |  |  +--ro replay-start-time?
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 13]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
     |  |  |          yang:date-and-time {replay}?
     |  |  +--:(yp:datastore)
     |  |     +--ro yp:datastore
@@ -773,19 +778,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
     |        +--ro yp:on-change!
     |           +--ro yp:dampening-period?   centiseconds
     |           +--ro yp:sync-on-start?      boolean
+
+
+
+Graf, et al.             Expires 5 January 2024                [Page 14]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
     |           +--ro yp:excluded-change*    change-type
     +---n subscription-resumed
     |  +--ro id    subscription-id
     +---n subscription-started {configured}?
     |  +--ro id
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 14]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
     |  |       subscription-id
     |  +--ro (target)
     |  |  +--:(stream)
@@ -829,19 +834,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
     |  |           |             yang:xpath1.0 {sn:xpath}?
     |  |           +--ro ypr:module-version* [module-name]
     |  |              +--ro ypr:module-name       string
+
+
+
+Graf, et al.             Expires 5 January 2024                [Page 15]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
     |  |              +--ro ypr:revision
     |  |              |       rev:revision-date-or-label
     |  |              +--ro ypr:revision-label?   ysver:version
     |  +--ro stop-time?
     |  |       yang:date-and-time
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 15]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
     |  +--ro dscp?
     |  |       inet:dscp {dscp}?
     |  +--ro weighting?                                       uint8
@@ -885,19 +890,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
        prefix sn;
        reference
          "RFC 8639: Subscription to YANG Notifications";
+
+
+
+Graf, et al.             Expires 5 January 2024                [Page 16]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
      }
      import ietf-yang-push {
        prefix yp;
        reference
          "RFC 8641: Subscriptions to YANG Datastores";
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 16]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
      }
      import ietf-yang-revisions {
        prefix rev;
@@ -941,19 +946,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
        This version of this YANG module is part of RFC XXXX; see the RFC
        itself for full legal notices.";
 
+
+
+
+Graf, et al.             Expires 5 January 2024                [Page 17]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
      revision 2023-07-03 {
        description
          "First revision";
        reference
          "RFC XXXX: Support of Versioning in YANG Notifications
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 17]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
          Subscription";
      }
 
@@ -997,19 +1002,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
          config false;
          mandatory true;
          description
+
+
+
+Graf, et al.             Expires 5 January 2024                [Page 18]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
            "This references the YANG module name.";
        }
        leaf revision {
          type rev:revision-date-or-label;
          config false;
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 18]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
          mandatory true;
          description
            "This references the YANG module revision of the sent
@@ -1053,19 +1058,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
      // Filters
      augment "/sn:filters/sn:stream-filter" {
        description
+
+
+
+Graf, et al.             Expires 5 January 2024                [Page 19]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
          "Augment the filters from subscribed notifications with a list
          of yang-push-module-version-config grouping.";
        uses ypr:yang-push-module-version-config-list;
      }
      augment "/sn:filters/yp:selection-filter" {
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 19]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
        description
          "Augment the filters from YANG push with a list of
          yang-push-module-version grouping.";
@@ -1109,19 +1114,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
      // Subscription notifications
      augment "/sn:subscription-started/sn:target/sn:stream"
            + "/sn:stream-filter/sn:within-subscription" {
+
+
+
+Graf, et al.             Expires 5 January 2024                [Page 20]
+
+Internet-Draft        YANG Notifications Versioning            July 2023
+
+
        description
          "Augment the subscription-started notification from the
          ietf-subscribed-notifications YANG module with the
          yang-push-module-version-list grouping.";
        uses ypr:yang-push-module-version-list;
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 20]
-
-Internet-Draft        YANG Notifications Versioning            July 2023
-
-
      }
      augment "/sn:subscription-started/sn:target/yp:datastore"
            + "/yp:selection-filter/yp:within-subscription" {
@@ -1165,18 +1170,15 @@ Internet-Draft        YANG Notifications Versioning            July 2023
        uses ypr:yang-push-module-version-config-list;
      }
    }
-   <CODE ENDS>
 
 
 
-
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 21]
+Graf, et al.             Expires 5 January 2024                [Page 21]
 
 Internet-Draft        YANG Notifications Versioning            July 2023
 
+
+   <CODE ENDS>
 
 5.  Security Considerations
 
@@ -1222,17 +1224,19 @@ Internet-Draft        YANG Notifications Versioning            July 2023
               DOI 10.17487/RFC6020, October 2010,
               <https://www.rfc-editor.org/info/rfc6020>.
 
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
 
 
 
-Graf, et al.             Expires 4 January 2024                [Page 22]
+
+Graf, et al.             Expires 5 January 2024                [Page 22]
 
 Internet-Draft        YANG Notifications Versioning            July 2023
 
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
    [RFC8639]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., and A. Tripathy, "Subscription to YANG Notifications",
@@ -1279,17 +1283,16 @@ Internet-Draft        YANG Notifications Versioning            July 2023
               DOI 10.17487/RFC8640, September 2019,
               <https://www.rfc-editor.org/info/rfc8640>.
 
-   [W3C.REC-xml-20081126]
-              Bray, T., Paoli, J., Sperberg-McQueen, M., Maler, E., and
-              F. Yergeau, "Extensible Markup Language (XML) 1.0 (Fifth
 
 
-
-Graf, et al.             Expires 4 January 2024                [Page 23]
+Graf, et al.             Expires 5 January 2024                [Page 23]
 
 Internet-Draft        YANG Notifications Versioning            July 2023
 
 
+   [W3C.REC-xml-20081126]
+              Bray, T., Paoli, J., Sperberg-McQueen, M., Maler, E., and
+              F. Yergeau, "Extensible Markup Language (XML) 1.0 (Fifth
               Edition)", World Wide Web Consortium Recommendation REC-
               xml-20081126, November 2008,
               <https://www.w3.org/TR/2008/REC-xml-20081126>.
@@ -1338,7 +1341,4 @@ Authors' Addresses
 
 
 
-
-
-
-Graf, et al.             Expires 4 January 2024                [Page 24]
+Graf, et al.             Expires 5 January 2024                [Page 24]

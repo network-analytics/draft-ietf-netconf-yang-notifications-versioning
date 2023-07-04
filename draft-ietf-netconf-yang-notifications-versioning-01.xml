@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="03" month="July" year="2023"/>
+    <date day="04" month="July" year="2023"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -143,6 +143,14 @@
       the following YANG module revision for future capabilities:</t>
 
       <dl>
+        <dt>module:</dt>
+
+        <dd>Restricts the subscription to one or more YANG module names with
+        revision and revision-label together for the related streamed
+        content.</dd>
+      </dl>
+
+      <dl>
         <dt>revision:</dt>
 
         <dd>Restricts the subscription to a specific YANG module revision.
@@ -167,6 +175,13 @@
       "subscription-modified" subscription state change notification.</t>
 
       <dl>
+        <dt>module:</dt>
+
+        <dd>Describes the YANG module names for the related streamed
+        content.</dd>
+      </dl>
+
+      <dl>
         <dt>revision:</dt>
 
         <dd>Describes the YANG module revision as specified in Section 7.1.9
@@ -183,10 +198,10 @@
 
       <t><xref target="subscription_modified_example_xml_fig"/> provides an
       example of a "subscription-modified" subscription state change
-      notification message with the YANG revision, revision label and
-      datastore-xpath-filter for tracking the operational status of a single
-      Ethernet interface (per <xref target="RFC8343"/>). This subscription
-      state change notification message is encoded XML <xref
+      notification message with the YANG module name, revision, revision label
+      and datastore-xpath-filter for tracking the operational status of a
+      single Ethernet interface (per <xref target="RFC8343"/>). This
+      subscription state change notification message is encoded XML <xref
       target="W3C.REC-xml-20081126"/> over the Network Configuration Protocol
       (NETCONF) as per <xref target="RFC8640"/>.</t>
 
@@ -247,9 +262,9 @@
              title="The &quot;ietf-yang-push-revision&quot; Module">
       <section anchor="YANG-revision-model" title="Data Model Overview">
         <t>This YANG module augments the "ietf-yang-push" module with the
-        revision and revision-label in the "subscription-started" and
-        "subscription-modified" subscription state change notifications and
-        the ability to define the "revision" and "revision-label" in the
+        module-name, revision and revision-label in the "subscription-started"
+        and "subscription-modified" subscription state change notifications
+        and the ability to define the "revision" and "revision-label" in the
         "establish-subscription" and "modify-subscription" RPCs in the
         datastore push subscription.</t>
 
