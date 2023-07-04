@@ -19,6 +19,12 @@ module ietf-yang-push-revision {
       "RFC XXXX: draft-ietf-netmod-yang-module-versioning-06,
       Updated YANG Module Revision Handling";
   }
+  import ietf-yang-types {
+    prefix yang;
+    rev:recommended-min "2013-07-15";
+    reference
+      "RFC 6991: Common YANG Data Types.";
+  }
   import ietf-yang-semver {
     prefix ysver;
     reference
@@ -75,7 +81,7 @@ module ietf-yang-push-revision {
       "This grouping combines the module name, the revision and
       revision-label leaves, with the revision being configurable.";
     leaf module-name {
-      type string;
+      type yang:yang-identifier;
       description
         "This references the YANG module name.";
     }
@@ -99,7 +105,7 @@ module ietf-yang-push-revision {
       revision-label leaves, with the revision being non
       configurable.";
     leaf module-name {
-      type string;
+      type yang:yang-identifier;
       config false;
       mandatory true;
       description
