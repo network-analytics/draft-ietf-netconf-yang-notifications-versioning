@@ -911,6 +911,7 @@ Internet-Draft        YANG Notifications Versioning            July 2023
      }
      import ietf-yang-push {
        prefix yp;
+       rev:recommended-min "2019-09-09";
        reference
          "RFC 8641: Subscriptions to YANG Datastores";
      }
@@ -945,7 +946,6 @@ Internet-Draft        YANG Notifications Versioning            July 2023
                   Alex Huang Feng
                   <mailto:alex.huang-feng@insa-lyon.fr>";
 
-     description
 
 
 
@@ -954,6 +954,7 @@ Graf, et al.             Expires 7 January 2024                [Page 17]
 Internet-Draft        YANG Notifications Versioning            July 2023
 
 
+     description
        "Defines YANG push event notification header with the revision and
        the revision-label. Adds the support of the revision and
        revision-label selection in the YANG push subscription RPCs.
@@ -1001,7 +1002,6 @@ Internet-Draft        YANG Notifications Versioning            July 2023
            subscription.";
        }
        leaf revision-label {
-         type ysver:version;
 
 
 
@@ -1010,6 +1010,7 @@ Graf, et al.             Expires 7 January 2024                [Page 18]
 Internet-Draft        YANG Notifications Versioning            July 2023
 
 
+         type ysver:version;
          description
            "This references the YANG module semversion to be sent in the
            subscription.";
@@ -1057,7 +1058,6 @@ Internet-Draft        YANG Notifications Versioning            July 2023
          uses ypr:yang-push-module-version;
        }
      }
-
 
 
 

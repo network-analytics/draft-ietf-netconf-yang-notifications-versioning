@@ -829,6 +829,7 @@ module ietf-yang-push-revision {
   }
   import ietf-yang-push {
     prefix yp;
+    rev:recommended-min "2019-09-09";
     reference
       "RFC 8641: Subscriptions to YANG Datastores";
   }
