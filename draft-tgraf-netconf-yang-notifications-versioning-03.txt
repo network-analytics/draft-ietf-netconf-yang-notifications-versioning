@@ -5,10 +5,10 @@
 Network Working Group                                            T. Graf
 Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
-Expires: 21 July 2023                                             Huawei
+Expires: 20 March 2024                                            Huawei
                                                            A. Huang Feng
                                                                INSA-Lyon
-                                                         17 January 2023
+                                                       17 September 2023
 
 
         Support of Versioning in YANG Notifications Subscription
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 July 2023.
+   This Internet-Draft will expire on 20 March 2024.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Graf, et al.              Expires 21 July 2023                  [Page 1]
+Graf, et al.              Expires 20 March 2024                 [Page 1]
 
-Internet-Draft        YANG Notifications Versioning         January 2023
+Internet-Draft        YANG Notifications Versioning       September 2023
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -71,17 +71,17 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Extend the Datastore Selection  . . . . . . . . . . . . . . .   3
-   3.  Extend the Subscription State Change Notifications  . . . . .   4
-   4.  The "ietf-yang-push-revision" Module  . . . . . . . . . . . .   5
-     4.1.  Data Model Overview . . . . . . . . . . . . . . . . . . .   5
-     4.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  10
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  13
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  13
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  14
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  15
+   3.  Extend the Subscription State Change Notifications  . . . . .   5
+   4.  The "ietf-yang-push-revision" Module  . . . . . . . . . . . .   6
+     4.1.  Data Model Overview . . . . . . . . . . . . . . . . . . .   7
+     4.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  18
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  24
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  24
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  24
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  24
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  24
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  25
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  26
 
 1.  Introduction
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Graf, et al.              Expires 21 July 2023                  [Page 2]
+Graf, et al.              Expires 20 March 2024                 [Page 2]
 
-Internet-Draft        YANG Notifications Versioning         January 2023
+Internet-Draft        YANG Notifications Versioning       September 2023
 
 
    This semantic reference is available when the subscription is being
@@ -165,10 +165,84 @@ Internet-Draft        YANG Notifications Versioning         January 2023
 
 
 
-Graf, et al.              Expires 21 July 2023                  [Page 3]
+Graf, et al.              Expires 20 March 2024                 [Page 3]
 
-Internet-Draft        YANG Notifications Versioning         January 2023
+Internet-Draft        YANG Notifications Versioning       September 2023
 
+
+   Figure 1 provides an example of a "establish-subscription" RPC call
+   with YANG revision and datastore-xpath-filter for periodical
+   subscription and with Figure 2 its positive and with Figure 3 its
+   error reponse when the revision is unsupported.
+
+ <netconf:rpc message-id="101"
+     xmlns:netconf="urn:ietf:params:xml:ns:netconf:base:1.0">
+   <establish-subscription
+       xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications"
+       xmlns:yp="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+     <yp:datastore
+          xmlns:ds="urn:ietf:params:xml:ns:yang:ietf-datastores">
+       ds:operational
+     </yp:datastore>
+     <yp:datastore-xpath-filter
+         xmlns:ex="https://example.com/sample-data/1.0">
+       /ex:foo
+     </yp:datastore-xpath-filter>
+     <ypr:module-version>
+       <ypr:module-name>ex:foo</ypr:module-name>
+       <ypr:revision>2023-09-17</ypr:revision>
+     </ypr:module-version>
+     <yp:periodic>
+       <yp:period>500</yp:period>
+     </yp:periodic>
+   </establish-subscription>
+ </netconf:rpc>
+
+          Figure 1: RPC Example for an establish-subscription
+
+ <rpc-reply message-id="101"
+    xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <id
+      xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications">
+       52
+    </id>
+ </rpc-reply>
+
+  Figure 2: RPC Example for a positive establish-subscription response
+
+
+
+
+
+
+
+
+
+
+
+
+Graf, et al.              Expires 20 March 2024                 [Page 4]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+ <rpc-reply message-id="101"
+   xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
+   xmlns:yp="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications">
+   <rpc-error>
+     <error-type>application</error-type>
+     <error-tag>operation-failed</error-tag>
+     <error-severity>error</error-severity>
+     <error-path>/ypr:module-version/ypr:revision</error-path>
+     <error-info>
+       <yp:establish-subscription-error-datastore>
+         <yp:reason>ypr:revision-unsupported</yp:reason>
+       </yp:establish-subscription-error-datastore>
+     </error-info>
+   </rpc-error>
+ </rpc-reply>
+
+   Figure 3: RPC Example for an error establish-subscription response
 
 3.  Extend the Subscription State Change Notifications
 
@@ -184,13 +258,29 @@ Internet-Draft        YANG Notifications Versioning         January 2023
       specified in [I-D.ietf-netmod-yang-semver] for the related
       streamed content.
 
-   Figure 1 provides an example of a "subscription-modified"
+   Figure 4 provides an example of a "subscription-modified"
    subscription state change notification message with the YANG
    revision, revision label and datastore-xpath-filter for tracking the
    operational status of a single Ethernet interface (per [RFC8343]).
    This subscription state change notification message is encoded XML
    [W3C.REC-xml-20081126] over the Network Configuration Protocol
    (NETCONF) as per [RFC8640].
+
+
+
+
+
+
+
+
+
+
+
+
+Graf, et al.              Expires 20 March 2024                 [Page 5]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
 
 <notification xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
   <eventTime>2023-01-03T10:00:00Z</eventTime>
@@ -206,25 +296,13 @@ Internet-Draft        YANG Notifications Versioning         January 2023
   </subscription-modified>
 </notification>
 
-        Figure 1: XML Push Example for a subscription-modified
+        Figure 4: XML Push Example for a subscription-modified
                          notification message
 
-   Figure 2 provides an example of a JSON encoded, [RFC8259],
+   Figure 5 provides an example of a JSON encoded, [RFC8259],
    subscription state change notification message over HTTPS-based
    [I-D.ietf-netconf-https-notif] or UDP-based
    [I-D.ietf-netconf-udp-notif] transport for the same subscription.
-
-
-
-
-
-
-
-
-Graf, et al.              Expires 21 July 2023                  [Page 4]
-
-Internet-Draft        YANG Notifications Versioning         January 2023
-
 
    {
      "ietf-restconf:notification" : {
@@ -241,10 +319,24 @@ Internet-Draft        YANG Notifications Versioning         January 2023
      }
    }
 
-          Figure 2: JSON Push Example for a subscription-modified
+          Figure 5: JSON Push Example for a subscription-modified
                             notification message
 
 4.  The "ietf-yang-push-revision" Module
+
+
+
+
+
+
+
+
+
+
+Graf, et al.              Expires 20 March 2024                 [Page 6]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
 
 4.1.  Data Model Overview
 
@@ -260,45 +352,86 @@ Internet-Draft        YANG Notifications Versioning         January 2023
    The following is the YANG tree diagram [RFC8340] for the ietf-yang-
    push-revision YANG module
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Graf, et al.              Expires 21 July 2023                  [Page 5]
-
-Internet-Draft        YANG Notifications Versioning         January 2023
-
-
    module: ietf-yang-push-revision
 
-     augment /sn:establish-subscription/sn:input/sn:target:
-       +--rw revision?         rev:revision-date-or-label
-       +-- revision-label?   ysver:version
-     augment /sn:modify-subscription/sn:input/sn:target:
-       +--rw revision?         rev:revision-date-or-label
-       +-- revision-label?   ysver:version
-     augment /sn:subscription-started/sn:target:
-       +--ro revision          rev:revision-date-or-label
-       +-- revision-label?   ysver:version
-     augment /sn:subscription-modified/sn:target:
-       +--ro revision          rev:revision-date-or-label
-       +-- revision-label?   ysver:version
-     augment /sn:subscriptions/sn:subscription/sn:target:
-       +--ro revision          rev:revision-date-or-label
-       +--rw revision-label?   ysver:version
+     augment /sn:filters/sn:stream-filter:
+       +--rw module-version* [module-name]
+          +--rw module-name       yang:yang-identifier
+          +--rw revision?         rev:revision-date-or-label
+          +--rw revision-label?   ysver:version
+     augment /sn:filters/yp:selection-filter:
+       +--rw module-version* [module-name]
+          +--rw module-name       yang:yang-identifier
+          +--rw revision?         rev:revision-date-or-label
+          +--rw revision-label?   ysver:version
+     augment /sn:establish-subscription/sn:input/sn:target/sn:stream
+               /sn:stream-filter/sn:within-subscription:
+       +-- module-version* [module-name]
+          +-- module-name       yang:yang-identifier
+          +-- revision?         rev:revision-date-or-label
+          +-- revision-label?   ysver:version
+     augment /sn:establish-subscription/sn:input/sn:target/yp:datastore
+               /yp:selection-filter/yp:within-subscription:
+       +-- module-version* [module-name]
+          +-- module-name       yang:yang-identifier
+          +-- revision?         rev:revision-date-or-label
+          +-- revision-label?   ysver:version
+     augment /sn:modify-subscription/sn:input/sn:target/sn:stream
+               /sn:stream-filter/sn:within-subscription:
+       +-- module-version* [module-name]
+          +-- module-name       yang:yang-identifier
+          +-- revision?         rev:revision-date-or-label
+          +-- revision-label?   ysver:version
+     augment /sn:modify-subscription/sn:input/sn:target/yp:datastore
+               /yp:selection-filter/yp:within-subscription:
+       +-- module-version* [module-name]
+          +-- module-name       yang:yang-identifier
+
+
+
+Graf, et al.              Expires 20 March 2024                 [Page 7]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+          +-- revision?         rev:revision-date-or-label
+          +-- revision-label?   ysver:version
+     augment /sn:subscription-started/sn:target/sn:stream
+               /sn:stream-filter/sn:within-subscription:
+       +--ro module-version* [module-name]
+          +--ro module-name       yang:yang-identifier
+          +--ro revision          rev:revision-date-or-label
+          +--ro revision-label?   ysver:version
+     augment /sn:subscription-started/sn:target/yp:datastore
+               /yp:selection-filter/yp:within-subscription:
+       +--ro module-version* [module-name]
+          +--ro module-name       yang:yang-identifier
+          +--ro revision          rev:revision-date-or-label
+          +--ro revision-label?   ysver:version
+     augment /sn:subscription-modified/sn:target/sn:stream
+               /sn:stream-filter/sn:within-subscription:
+       +--ro module-version* [module-name]
+          +--ro module-name       yang:yang-identifier
+          +--ro revision          rev:revision-date-or-label
+          +--ro revision-label?   ysver:version
+     augment /sn:subscription-modified/sn:target/yp:datastore
+               /yp:selection-filter/yp:within-subscription:
+       +--ro module-version* [module-name]
+          +--ro module-name       yang:yang-identifier
+          +--ro revision          rev:revision-date-or-label
+          +--ro revision-label?   ysver:version
+     augment /sn:subscriptions/sn:subscription/sn:target/sn:stream
+               /sn:stream-filter/sn:within-subscription:
+       +--rw module-version* [module-name]
+          +--rw module-name       yang:yang-identifier
+          +--rw revision?         rev:revision-date-or-label
+          +--rw revision-label?   ysver:version
+     augment /sn:subscriptions/sn:subscription/sn:target/yp:datastore
+               /yp:selection-filter/yp:within-subscription:
+       +--rw module-version* [module-name]
+          +--rw module-name       yang:yang-identifier
+          +--rw revision?         rev:revision-date-or-label
+          +--rw revision-label?   ysver:version
 
 4.1.2.  Full Tree View
 
@@ -306,261 +439,589 @@ Internet-Draft        YANG Notifications Versioning         January 2023
    push-revision augmentation within the ietf-subscribed-notifications,
    including the RPCs and notifications.
 
-pyang -f tree ietf-yang-push-revision.yang ietf-yang-revisions.yang ietf-subscribed-notifications@2019-09-09.yang
-ietf-yang-push-revision.yang:118 (at ietf-yang-push-revision.yang:88): error: cannot augment with mandatory node "revision"
-module: ietf-subscribed-notifications
-  +--ro streams
-  |  +--ro stream* [name]
-  |     +--ro name                        string
-  |     +--ro description?                string
-  |     +--ro replay-support?             empty {replay}?
-  |     +--ro replay-log-creation-time    yang:date-and-time {replay}?
-  |     +--ro replay-log-aged-time?       yang:date-and-time {replay}?
-  +--rw filters
-  |  +--rw stream-filter* [name]
-  |     +--rw name                           string
-  |     +--rw (filter-spec)?
-  |        +--:(stream-subtree-filter)
-  |        |  +--rw stream-subtree-filter?   <anydata> {subtree}?
-  |        +--:(stream-xpath-filter)
-  |           +--rw stream-xpath-filter?     yang:xpath1.0 {xpath}?
-  +--rw subscriptions
-     +--rw subscription* [id]
-        +--rw id                                         subscription-id
-        +--rw (target)
-        |  +--:(stream)
-        |  |  +--rw (stream-filter)?
 
 
 
-Graf, et al.              Expires 21 July 2023                  [Page 6]
+
+
+
+Graf, et al.              Expires 20 March 2024                 [Page 8]
 
-Internet-Draft        YANG Notifications Versioning         January 2023
+Internet-Draft        YANG Notifications Versioning       September 2023
 
 
-        |  |  |  +--:(by-reference)
-        |  |  |  |  +--rw stream-filter-name             stream-filter-ref
-        |  |  |  +--:(within-subscription)
-        |  |  |     +--rw (filter-spec)?
-        |  |  |        +--:(stream-subtree-filter)
-        |  |  |        |  +--rw stream-subtree-filter?   <anydata> {subtree}?
-        |  |  |        +--:(stream-xpath-filter)
-        |  |  |           +--rw stream-xpath-filter?     yang:xpath1.0 {xpath}?
-        |  |  +--rw stream                               stream-ref
-        |  |  +--ro replay-start-time?                   yang:date-and-time {replay}?
-        |  |  +--rw configured-replay?                   empty {configured,replay}?
-        |  +--:(ypm:revision)
-        |  |  +--ro ypm:revision                         rev:revision-date-or-label
-        |  +--:(ypm:revision-label)
-        |     +--rw ypm:revision-label?                  ysver:version
-        +--rw stop-time?                                 yang:date-and-time
-        +--rw dscp?                                      inet:dscp {dscp}?
-        +--rw weighting?                                 uint8 {qos}?
-        +--rw dependency?                                subscription-id {qos}?
-        +--rw transport?                                 transport {configured}?
-        +--rw encoding?                                  encoding
-        +--rw purpose?                                   string {configured}?
-        +--rw (notification-message-origin)? {configured}?
-        |  +--:(interface-originated)
-        |  |  +--rw source-interface?                    if:interface-ref {interface-designation}?
-        |  +--:(address-originated)
-        |     +--rw source-vrf?                          -> /ni:network-instances/network-instance/name {supports-vrf}?
-        |     +--rw source-address?                      inet:ip-address-no-zone
-        +--ro configured-subscription-state?             enumeration {configured}?
-        +--rw receivers
-           +--rw receiver* [name]
-              +--rw name                      string
-              +--ro sent-event-records?       yang:zero-based-counter64
-              +--ro excluded-event-records?   yang:zero-based-counter64
-              +--ro state                     enumeration
-              +---x reset {configured}?
-                 +--ro output
-                    +--ro time    yang:date-and-time
+  module: ietf-yang-push
 
-  rpcs:
-    +---x establish-subscription
-    |  +---w input
-    |  |  +---w (target)
-    |  |  |  +--:(stream)
-    |  |  |  |  +---w (stream-filter)?
-    |  |  |  |  |  +--:(by-reference)
-    |  |  |  |  |  |  +---w stream-filter-name             stream-filter-ref
-    |  |  |  |  |  +--:(within-subscription)
+    rpcs:
+      +---x resync-subscription {on-change}?
+         +---w input
+            +---w id    sn:subscription-id
+
+    notifications:
+      +---n push-update
+      |  +--ro id?                   sn:subscription-id
+      |  +--ro datastore-contents?   <anydata>
+      |  +--ro incomplete-update?    empty
+      +---n push-change-update {on-change}?
+         +--ro id?                  sn:subscription-id
+         +--ro datastore-changes
+         |  +--ro yang-patch
+         |     +--ro patch-id    string
+         |     +--ro comment?    string
+         |     +--ro edit* [edit-id]
+         |        +--ro edit-id      string
+         |        +--ro operation    enumeration
+         |        +--ro target       target-resource-offset
+         |        +--ro point?       target-resource-offset
+         |        +--ro where?       enumeration
+         |        +--ro value?       <anydata>
+         +--ro incomplete-update?   empty
+
+  module: ietf-subscribed-notifications
+    +--ro streams
+    |  +--ro stream* [name]
+    |     +--ro name                        string
+    |     +--ro description?                string
+    |     +--ro replay-support?             empty {replay}?
+    |     +--ro replay-log-creation-time    yang:date-and-time {replay}?
+    |     +--ro replay-log-aged-time?       yang:date-and-time {replay}?
+    +--rw filters
+    |  +--rw stream-filter* [name]
+    |  |  +--rw name                           string
+    |  |  +--rw (filter-spec)?
+    |  |  |  +--:(stream-subtree-filter)
+    |  |  |  |  +--rw stream-subtree-filter?   <anydata> {subtree}?
+    |  |  |  +--:(stream-xpath-filter)
+    |  |  |     +--rw stream-xpath-filter?     yang:xpath1.0 {xpath}?
+    |  |  +--rw ypr:module-version* [module-name]
+    |  |     +--rw ypr:module-name       yang:yang-identifier
+    |  |     +--rw ypr:revision?         rev:revision-date-or-label
+    |  |     +--rw ypr:revision-label?   ysver:version
+    |  +--rw yp:selection-filter* [filter-id]
 
 
 
-Graf, et al.              Expires 21 July 2023                  [Page 7]
+Graf, et al.              Expires 20 March 2024                 [Page 9]
 
-Internet-Draft        YANG Notifications Versioning         January 2023
+Internet-Draft        YANG Notifications Versioning       September 2023
 
 
-    |  |  |  |  |     +---w (filter-spec)?
-    |  |  |  |  |        +--:(stream-subtree-filter)
-    |  |  |  |  |        |  +---w stream-subtree-filter?   <anydata> {subtree}?
-    |  |  |  |  |        +--:(stream-xpath-filter)
-    |  |  |  |  |           +---w stream-xpath-filter?     yang:xpath1.0 {xpath}?
-    |  |  |  |  +---w stream                               stream-ref
-    |  |  |  |  +---w replay-start-time?                   yang:date-and-time {replay}?
-    |  |  |  +--:(ypm:revision)
-    |  |  |  |  +---w ypm:revision?                        rev:revision-date-or-label
-    |  |  |  +--:(ypm:revision-label)
-    |  |  |     +---w ypm:revision-label?                  ysver:version
-    |  |  +---w stop-time?                                 yang:date-and-time
-    |  |  +---w dscp?                                      inet:dscp {dscp}?
-    |  |  +---w weighting?                                 uint8 {qos}?
-    |  |  +---w dependency?                                subscription-id {qos}?
-    |  |  +---w encoding?                                  encoding
-    |  +--ro output
-    |     +--ro id                            subscription-id
-    |     +--ro replay-start-time-revision?   yang:date-and-time {replay}?
-    +---x modify-subscription
-    |  +---w input
-    |     +---w id                                         subscription-id
-    |     +---w (target)
-    |     |  +--:(stream)
-    |     |  |  +---w (stream-filter)?
-    |     |  |     +--:(by-reference)
-    |     |  |     |  +---w stream-filter-name             stream-filter-ref
-    |     |  |     +--:(within-subscription)
-    |     |  |        +---w (filter-spec)?
-    |     |  |           +--:(stream-subtree-filter)
-    |     |  |           |  +---w stream-subtree-filter?   <anydata> {subtree}?
-    |     |  |           +--:(stream-xpath-filter)
-    |     |  |              +---w stream-xpath-filter?     yang:xpath1.0 {xpath}?
-    |     |  +--:(ypm:revision)
-    |     |  |  +---w ypm:revision?                        rev:revision-date-or-label
-    |     |  +--:(ypm:revision-label)
-    |     |     +---w ypm:revision-label?                  ysver:version
-    |     +---w stop-time?                                 yang:date-and-time
-    +---x delete-subscription
-    |  +---w input
-    |     +---w id    subscription-id
-    +---x kill-subscription
-       +---w input
-          +---w id    subscription-id
+    |     +--rw yp:filter-id                         string
+    |     +--rw (yp:filter-spec)?
+    |     |  +--:(yp:datastore-subtree-filter)
+    |     |  |  +--rw yp:datastore-subtree-filter?   <anydata>
+    |     |  |          {sn:subtree}?
+    |     |  +--:(yp:datastore-xpath-filter)
+    |     |     +--rw yp:datastore-xpath-filter?     yang:xpath1.0
+    |     |             {sn:xpath}?
+    |     +--rw ypr:module-version* [module-name]
+    |        +--rw ypr:module-name       yang:yang-identifier
+    |        +--rw ypr:revision?         rev:revision-date-or-label
+    |        +--rw ypr:revision-label?   ysver:version
+    +--rw subscriptions
+       +--rw subscription* [id]
+          +--rw id
+          |       subscription-id
+          +--rw (target)
+          |  +--:(stream)
+          |  |  +--rw (stream-filter)?
+          |  |  |  +--:(by-reference)
+          |  |  |  |  +--rw stream-filter-name
+          |  |  |  |          stream-filter-ref
+          |  |  |  +--:(within-subscription)
+          |  |  |     +--rw (filter-spec)?
+          |  |  |     |  +--:(stream-subtree-filter)
+          |  |  |     |  |  +--rw stream-subtree-filter?
+          |  |  |     |  |          <anydata> {subtree}?
+          |  |  |     |  +--:(stream-xpath-filter)
+          |  |  |     |     +--rw stream-xpath-filter?
+          |  |  |     |             yang:xpath1.0 {xpath}?
+          |  |  |     +--rw ypr:module-version* [module-name]
+          |  |  |        +--rw ypr:module-name
+          |  |  |        |       yang:yang-identifier
+          |  |  |        +--rw ypr:revision?
+          |  |  |        |       rev:revision-date-or-label
+          |  |  |        +--rw ypr:revision-label?   ysver:version
+          |  |  +--rw stream
+          |  |  |       stream-ref
+          |  |  +--ro replay-start-time?
+          |  |  |       yang:date-and-time {replay}?
+          |  |  +--rw configured-replay?                         empty
+          |  |          {configured,replay}?
+          |  +--:(yp:datastore)
+          |     +--rw yp:datastore
+          |     |       identityref
+          |     +--rw (yp:selection-filter)?
+          |        +--:(yp:by-reference)
+          |        |  +--rw yp:selection-filter-ref
 
-  notifications:
-    +---n replay-completed {replay}?
-    |  +--ro id    subscription-id
 
 
-
-Graf, et al.              Expires 21 July 2023                  [Page 8]
+Graf, et al.              Expires 20 March 2024                [Page 10]
 
-Internet-Draft        YANG Notifications Versioning         January 2023
+Internet-Draft        YANG Notifications Versioning       September 2023
 
 
-    +---n subscription-completed {configured}?
-    |  +--ro id    subscription-id
-    +---n subscription-modified
-    |  +--ro id                                         subscription-id
-    |  +--ro (target)
-    |  |  +--:(stream)
-    |  |  |  +--ro (stream-filter)?
-    |  |  |  |  +--:(by-reference)
-    |  |  |  |  |  +--ro stream-filter-name             stream-filter-ref
-    |  |  |  |  +--:(within-subscription)
-    |  |  |  |     +--ro (filter-spec)?
-    |  |  |  |        +--:(stream-subtree-filter)
-    |  |  |  |        |  +--ro stream-subtree-filter?   <anydata> {subtree}?
-    |  |  |  |        +--:(stream-xpath-filter)
-    |  |  |  |           +--ro stream-xpath-filter?     yang:xpath1.0 {xpath}?
-    |  |  |  +--ro stream                               stream-ref
-    |  |  |  +--ro replay-start-time?                   yang:date-and-time {replay}?
-    |  |  +--:(ypm:revision)
-    |  |  |  +--ro ypm:revision                         rev:revision-date-or-label
-    |  |  +--:(ypm:revision-label)
-    |  |     +--ro ypm:revision-label?                  ysver:version
-    |  +--ro stop-time?                                 yang:date-and-time
-    |  +--ro dscp?                                      inet:dscp {dscp}?
-    |  +--ro weighting?                                 uint8 {qos}?
-    |  +--ro dependency?                                subscription-id {qos}?
-    |  +--ro transport?                                 transport {configured}?
-    |  +--ro encoding?                                  encoding
-    |  +--ro purpose?                                   string {configured}?
-    +---n subscription-resumed
-    |  +--ro id    subscription-id
-    +---n subscription-started {configured}?
-    |  +--ro id                                         subscription-id
-    |  +--ro (target)
-    |  |  +--:(stream)
-    |  |  |  +--ro (stream-filter)?
-    |  |  |  |  +--:(by-reference)
-    |  |  |  |  |  +--ro stream-filter-name             stream-filter-ref
-    |  |  |  |  +--:(within-subscription)
-    |  |  |  |     +--ro (filter-spec)?
-    |  |  |  |        +--:(stream-subtree-filter)
-    |  |  |  |        |  +--ro stream-subtree-filter?   <anydata> {subtree}?
-    |  |  |  |        +--:(stream-xpath-filter)
-    |  |  |  |           +--ro stream-xpath-filter?     yang:xpath1.0 {xpath}?
-    |  |  |  +--ro stream                               stream-ref
-    |  |  |  +--ro replay-start-time?                   yang:date-and-time {replay}?
-    |  |  |  +--ro replay-previous-event-time?          yang:date-and-time {replay}?
-    |  |  +--:(ypm:revision)
-    |  |  |  +--ro ypm:revision                         rev:revision-date-or-label
+          |        |          selection-filter-ref
+          |        +--:(yp:within-subscription)
+          |           +--rw (yp:filter-spec)?
+          |           |  +--:(yp:datastore-subtree-filter)
+          |           |  |  +--rw yp:datastore-subtree-filter?
+          |           |  |          <anydata> {sn:subtree}?
+          |           |  +--:(yp:datastore-xpath-filter)
+          |           |     +--rw yp:datastore-xpath-filter?
+          |           |             yang:xpath1.0 {sn:xpath}?
+          |           +--rw ypr:module-version* [module-name]
+          |              +--rw ypr:module-name
+          |              |       yang:yang-identifier
+          |              +--rw ypr:revision?
+          |              |       rev:revision-date-or-label
+          |              +--rw ypr:revision-label?   ysver:version
+          +--rw stop-time?
+          |       yang:date-and-time
+          +--rw dscp?
+          |       inet:dscp {dscp}?
+          +--rw weighting?                                       uint8
+          |       {qos}?
+          +--rw dependency?
+          |       subscription-id {qos}?
+          +--rw transport?
+          |       transport {configured}?
+          +--rw encoding?
+          |       encoding
+          +--rw purpose?                                         string
+          |       {configured}?
+          +--rw (notification-message-origin)? {configured}?
+          |  +--:(interface-originated)
+          |  |  +--rw source-interface?
+          |  |          if:interface-ref {interface-designation}?
+          |  +--:(address-originated)
+          |     +--rw source-vrf?
+          |     |       -> /ni:network-instances/network-instance/name
+          |     |       {supports-vrf}?
+          |     +--rw source-address?
+          |             inet:ip-address-no-zone
+          +--ro configured-subscription-state?
+          |       enumeration {configured}?
+          +--rw receivers
+          |  +--rw receiver* [name]
+          |     +--rw name                      string
+          |     +--ro sent-event-records?
+          |     |       yang:zero-based-counter64
+          |     +--ro excluded-event-records?
+          |     |       yang:zero-based-counter64
 
 
 
-Graf, et al.              Expires 21 July 2023                  [Page 9]
+Graf, et al.              Expires 20 March 2024                [Page 11]
 
-Internet-Draft        YANG Notifications Versioning         January 2023
+Internet-Draft        YANG Notifications Versioning       September 2023
 
 
-    |  |  +--:(ypm:revision-label)
-    |  |     +--ro ypm:revision-label?                  ysver:version
-    |  +--ro stop-time?                                 yang:date-and-time
-    |  +--ro dscp?                                      inet:dscp {dscp}?
-    |  +--ro weighting?                                 uint8 {qos}?
-    |  +--ro dependency?                                subscription-id {qos}?
-    |  +--ro transport?                                 transport {configured}?
-    |  +--ro encoding?                                  encoding
-    |  +--ro purpose?                                   string {configured}?
-    +---n subscription-suspended
-    |  +--ro id        subscription-id
-    |  +--ro reason    identityref
-    +---n subscription-terminated
-       +--ro id        subscription-id
-       +--ro reason    identityref
+          |     +--ro state                     enumeration
+          |     +---x reset {configured}?
+          |        +--ro output
+          |           +--ro time    yang:date-and-time
+          +--rw (yp:update-trigger)?
+             +--:(yp:periodic)
+             |  +--rw yp:periodic!
+             |     +--rw yp:period         centiseconds
+             |     +--rw yp:anchor-time?   yang:date-and-time
+             +--:(yp:on-change) {on-change}?
+                +--rw yp:on-change!
+                   +--rw yp:dampening-period?   centiseconds
+                   +--rw yp:sync-on-start?      boolean
+                   +--rw yp:excluded-change*    change-type
+
+    rpcs:
+      +---x establish-subscription
+      |  +---w input
+      |  |  +---w (target)
+      |  |  |  +--:(stream)
+      |  |  |  |  +---w (stream-filter)?
+      |  |  |  |  |  +--:(by-reference)
+      |  |  |  |  |  |  +---w stream-filter-name
+      |  |  |  |  |  |          stream-filter-ref
+      |  |  |  |  |  +--:(within-subscription)
+      |  |  |  |  |     +---w (filter-spec)?
+      |  |  |  |  |     |  +--:(stream-subtree-filter)
+      |  |  |  |  |     |  |  +---w stream-subtree-filter?
+      |  |  |  |  |     |  |          <anydata> {subtree}?
+      |  |  |  |  |     |  +--:(stream-xpath-filter)
+      |  |  |  |  |     |     +---w stream-xpath-filter?
+      |  |  |  |  |     |             yang:xpath1.0 {xpath}?
+      |  |  |  |  |     +---w ypr:module-version* [module-name]
+      |  |  |  |  |        +---w ypr:module-name
+      |  |  |  |  |        |       yang:yang-identifier
+      |  |  |  |  |        +---w ypr:revision?
+      |  |  |  |  |        |       rev:revision-date-or-label
+      |  |  |  |  |        +---w ypr:revision-label?   ysver:version
+      |  |  |  |  +---w stream
+      |  |  |  |  |       stream-ref
+      |  |  |  |  +---w replay-start-time?
+      |  |  |  |          yang:date-and-time {replay}?
+      |  |  |  +--:(yp:datastore)
+      |  |  |     +---w yp:datastore
+      |  |  |     |       identityref
+      |  |  |     +---w (yp:selection-filter)?
+      |  |  |        +--:(yp:by-reference)
+      |  |  |        |  +---w yp:selection-filter-ref
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 12]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+      |  |  |        |          selection-filter-ref
+      |  |  |        +--:(yp:within-subscription)
+      |  |  |           +---w (yp:filter-spec)?
+      |  |  |           |  +--:(yp:datastore-subtree-filter)
+      |  |  |           |  |  +---w yp:datastore-subtree-filter?
+      |  |  |           |  |          <anydata> {sn:subtree}?
+      |  |  |           |  +--:(yp:datastore-xpath-filter)
+      |  |  |           |     +---w yp:datastore-xpath-filter?
+      |  |  |           |             yang:xpath1.0 {sn:xpath}?
+      |  |  |           +---w ypr:module-version* [module-name]
+      |  |  |              +---w ypr:module-name
+      |  |  |              |       yang:yang-identifier
+      |  |  |              +---w ypr:revision?
+      |  |  |              |       rev:revision-date-or-label
+      |  |  |              +---w ypr:revision-label?   ysver:version
+      |  |  +---w stop-time?
+      |  |  |       yang:date-and-time
+      |  |  +---w dscp?
+      |  |  |       inet:dscp {dscp}?
+      |  |  +---w weighting?                                       uint8
+      |  |  |       {qos}?
+      |  |  +---w dependency?
+      |  |  |       subscription-id {qos}?
+      |  |  +---w encoding?
+      |  |  |       encoding
+      |  |  +---w (yp:update-trigger)?
+      |  |     +--:(yp:periodic)
+      |  |     |  +---w yp:periodic!
+      |  |     |     +---w yp:period         centiseconds
+      |  |     |     +---w yp:anchor-time?   yang:date-and-time
+      |  |     +--:(yp:on-change) {on-change}?
+      |  |        +---w yp:on-change!
+      |  |           +---w yp:dampening-period?   centiseconds
+      |  |           +---w yp:sync-on-start?      boolean
+      |  |           +---w yp:excluded-change*    change-type
+      |  +--ro output
+      |     +--ro id                            subscription-id
+      |     +--ro replay-start-time-revision?   yang:date-and-time
+      |             {replay}?
+      +---x modify-subscription
+      |  +---w input
+      |     +---w id
+      |     |       subscription-id
+      |     +---w (target)
+      |     |  +--:(stream)
+      |     |  |  +---w (stream-filter)?
+      |     |  |     +--:(by-reference)
+      |     |  |     |  +---w stream-filter-name
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 13]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+      |     |  |     |          stream-filter-ref
+      |     |  |     +--:(within-subscription)
+      |     |  |        +---w (filter-spec)?
+      |     |  |        |  +--:(stream-subtree-filter)
+      |     |  |        |  |  +---w stream-subtree-filter?
+      |     |  |        |  |          <anydata> {subtree}?
+      |     |  |        |  +--:(stream-xpath-filter)
+      |     |  |        |     +---w stream-xpath-filter?
+      |     |  |        |             yang:xpath1.0 {xpath}?
+      |     |  |        +---w ypr:module-version* [module-name]
+      |     |  |           +---w ypr:module-name
+      |     |  |           |       yang:yang-identifier
+      |     |  |           +---w ypr:revision?
+      |     |  |           |       rev:revision-date-or-label
+      |     |  |           +---w ypr:revision-label?   ysver:version
+      |     |  +--:(yp:datastore)
+      |     |     +---w yp:datastore
+      |     |     |       identityref
+      |     |     +---w (yp:selection-filter)?
+      |     |        +--:(yp:by-reference)
+      |     |        |  +---w yp:selection-filter-ref
+      |     |        |          selection-filter-ref
+      |     |        +--:(yp:within-subscription)
+      |     |           +---w (yp:filter-spec)?
+      |     |           |  +--:(yp:datastore-subtree-filter)
+      |     |           |  |  +---w yp:datastore-subtree-filter?
+      |     |           |  |          <anydata> {sn:subtree}?
+      |     |           |  +--:(yp:datastore-xpath-filter)
+      |     |           |     +---w yp:datastore-xpath-filter?
+      |     |           |             yang:xpath1.0 {sn:xpath}?
+      |     |           +---w ypr:module-version* [module-name]
+      |     |              +---w ypr:module-name
+      |     |              |       yang:yang-identifier
+      |     |              +---w ypr:revision?
+      |     |              |       rev:revision-date-or-label
+      |     |              +---w ypr:revision-label?   ysver:version
+      |     +---w stop-time?
+      |     |       yang:date-and-time
+      |     +---w (yp:update-trigger)?
+      |        +--:(yp:periodic)
+      |        |  +---w yp:periodic!
+      |        |     +---w yp:period         centiseconds
+      |        |     +---w yp:anchor-time?   yang:date-and-time
+      |        +--:(yp:on-change) {on-change}?
+      |           +---w yp:on-change!
+      |              +---w yp:dampening-period?   centiseconds
+      +---x delete-subscription
+      |  +---w input
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 14]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+      |     +---w id    subscription-id
+      +---x kill-subscription
+         +---w input
+            +---w id    subscription-id
+
+    notifications:
+      +---n replay-completed {replay}?
+      |  +--ro id    subscription-id
+      +---n subscription-completed {configured}?
+      |  +--ro id    subscription-id
+      +---n subscription-modified
+      |  +--ro id
+      |  |       subscription-id
+      |  +--ro (target)
+      |  |  +--:(stream)
+      |  |  |  +--ro (stream-filter)?
+      |  |  |  |  +--:(by-reference)
+      |  |  |  |  |  +--ro stream-filter-name
+      |  |  |  |  |          stream-filter-ref
+      |  |  |  |  +--:(within-subscription)
+      |  |  |  |     +--ro (filter-spec)?
+      |  |  |  |     |  +--:(stream-subtree-filter)
+      |  |  |  |     |  |  +--ro stream-subtree-filter?
+      |  |  |  |     |  |          <anydata> {subtree}?
+      |  |  |  |     |  +--:(stream-xpath-filter)
+      |  |  |  |     |     +--ro stream-xpath-filter?
+      |  |  |  |     |             yang:xpath1.0 {xpath}?
+      |  |  |  |     +--ro ypr:module-version* [module-name]
+      |  |  |  |        +--ro ypr:module-name       yang:yang-identifier
+      |  |  |  |        +--ro ypr:revision
+      |  |  |  |        |       rev:revision-date-or-label
+      |  |  |  |        +--ro ypr:revision-label?   ysver:version
+      |  |  |  +--ro stream
+      |  |  |  |       stream-ref
+      |  |  |  +--ro replay-start-time?
+      |  |  |          yang:date-and-time {replay}?
+      |  |  +--:(yp:datastore)
+      |  |     +--ro yp:datastore
+      |  |     |       identityref
+      |  |     +--ro (yp:selection-filter)?
+      |  |        +--:(yp:by-reference)
+      |  |        |  +--ro yp:selection-filter-ref
+      |  |        |          selection-filter-ref
+      |  |        +--:(yp:within-subscription)
+      |  |           +--ro (yp:filter-spec)?
+      |  |           |  +--:(yp:datastore-subtree-filter)
+      |  |           |  |  +--ro yp:datastore-subtree-filter?
+      |  |           |  |          <anydata> {sn:subtree}?
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 15]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+      |  |           |  +--:(yp:datastore-xpath-filter)
+      |  |           |     +--ro yp:datastore-xpath-filter?
+      |  |           |             yang:xpath1.0 {sn:xpath}?
+      |  |           +--ro ypr:module-version* [module-name]
+      |  |              +--ro ypr:module-name       yang:yang-identifier
+      |  |              +--ro ypr:revision
+      |  |              |       rev:revision-date-or-label
+      |  |              +--ro ypr:revision-label?   ysver:version
+      |  +--ro stop-time?
+      |  |       yang:date-and-time
+      |  +--ro dscp?
+      |  |       inet:dscp {dscp}?
+      |  +--ro weighting?                                       uint8
+      |  |       {qos}?
+      |  +--ro dependency?
+      |  |       subscription-id {qos}?
+      |  +--ro transport?
+      |  |       transport {configured}?
+      |  +--ro encoding?                                        encoding
+      |  +--ro purpose?                                         string
+      |  |       {configured}?
+      |  +--ro (yp:update-trigger)?
+      |     +--:(yp:periodic)
+      |     |  +--ro yp:periodic!
+      |     |     +--ro yp:period         centiseconds
+      |     |     +--ro yp:anchor-time?   yang:date-and-time
+      |     +--:(yp:on-change) {on-change}?
+      |        +--ro yp:on-change!
+      |           +--ro yp:dampening-period?   centiseconds
+      |           +--ro yp:sync-on-start?      boolean
+      |           +--ro yp:excluded-change*    change-type
+      +---n subscription-resumed
+      |  +--ro id    subscription-id
+      +---n subscription-started {configured}?
+      |  +--ro id
+      |  |       subscription-id
+      |  +--ro (target)
+      |  |  +--:(stream)
+      |  |  |  +--ro (stream-filter)?
+      |  |  |  |  +--:(by-reference)
+      |  |  |  |  |  +--ro stream-filter-name
+      |  |  |  |  |          stream-filter-ref
+      |  |  |  |  +--:(within-subscription)
+      |  |  |  |     +--ro (filter-spec)?
+      |  |  |  |     |  +--:(stream-subtree-filter)
+      |  |  |  |     |  |  +--ro stream-subtree-filter?
+      |  |  |  |     |  |          <anydata> {subtree}?
+      |  |  |  |     |  +--:(stream-xpath-filter)
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 16]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+      |  |  |  |     |     +--ro stream-xpath-filter?
+      |  |  |  |     |             yang:xpath1.0 {xpath}?
+      |  |  |  |     +--ro ypr:module-version* [module-name]
+      |  |  |  |        +--ro ypr:module-name       yang:yang-identifier
+      |  |  |  |        +--ro ypr:revision
+      |  |  |  |        |       rev:revision-date-or-label
+      |  |  |  |        +--ro ypr:revision-label?   ysver:version
+      |  |  |  +--ro stream
+      |  |  |  |       stream-ref
+      |  |  |  +--ro replay-start-time?
+      |  |  |  |       yang:date-and-time {replay}?
+      |  |  |  +--ro replay-previous-event-time?
+      |  |  |          yang:date-and-time {replay}?
+      |  |  +--:(yp:datastore)
+      |  |     +--ro yp:datastore
+      |  |     |       identityref
+      |  |     +--ro (yp:selection-filter)?
+      |  |        +--:(yp:by-reference)
+      |  |        |  +--ro yp:selection-filter-ref
+      |  |        |          selection-filter-ref
+      |  |        +--:(yp:within-subscription)
+      |  |           +--ro (yp:filter-spec)?
+      |  |           |  +--:(yp:datastore-subtree-filter)
+      |  |           |  |  +--ro yp:datastore-subtree-filter?
+      |  |           |  |          <anydata> {sn:subtree}?
+      |  |           |  +--:(yp:datastore-xpath-filter)
+      |  |           |     +--ro yp:datastore-xpath-filter?
+      |  |           |             yang:xpath1.0 {sn:xpath}?
+      |  |           +--ro ypr:module-version* [module-name]
+      |  |              +--ro ypr:module-name       yang:yang-identifier
+      |  |              +--ro ypr:revision
+      |  |              |       rev:revision-date-or-label
+      |  |              +--ro ypr:revision-label?   ysver:version
+      |  +--ro stop-time?
+      |  |       yang:date-and-time
+      |  +--ro dscp?
+      |  |       inet:dscp {dscp}?
+      |  +--ro weighting?                                       uint8
+      |  |       {qos}?
+      |  +--ro dependency?
+      |  |       subscription-id {qos}?
+      |  +--ro transport?
+      |  |       transport {configured}?
+      |  +--ro encoding?                                        encoding
+      |  +--ro purpose?                                         string
+      |  |       {configured}?
+      |  +--ro (yp:update-trigger)?
+      |     +--:(yp:periodic)
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 17]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+      |     |  +--ro yp:periodic!
+      |     |     +--ro yp:period         centiseconds
+      |     |     +--ro yp:anchor-time?   yang:date-and-time
+      |     +--:(yp:on-change) {on-change}?
+      |        +--ro yp:on-change!
+      |           +--ro yp:dampening-period?   centiseconds
+      |           +--ro yp:sync-on-start?      boolean
+      |           +--ro yp:excluded-change*    change-type
+      +---n subscription-suspended
+      |  +--ro id        subscription-id
+      |  +--ro reason    identityref
+      +---n subscription-terminated
+         +--ro id        subscription-id
+         +--ro reason    identityref
 
 4.2.  YANG Module
 
    The YANG module has two leaves augmenting the model of Subscription
    to YANG Notifications [RFC8639].
 
-   <CODE BEGINS> file "ietf-yang-push-revision@2023-01-12.yang"
+   <CODE BEGINS> file "ietf-yang-push-revision@2023-09-17.yang"
    module ietf-yang-push-revision {
      yang-version 1.1;
      namespace
        "urn:ietf:params:xml:ns:yang:ietf-yang-push-revision";
-     prefix ypm;
+     prefix ypr;
      import ietf-subscribed-notifications {
        prefix sn;
        reference
          "RFC 8639: Subscription to YANG Notifications";
      }
+     import ietf-yang-push {
+       prefix yp;
+       rev:recommended-min "2019-09-09";
+       reference
+         "RFC 8641: Subscriptions to YANG Datastores";
+     }
      import ietf-yang-revisions {
        prefix rev;
        reference
-         "RFC XXXX: draft-ietf-netmod-yang-module-versioning-06, Updated YANG
-         Module Revision Handling";
+         "RFC XXXX: draft-ietf-netmod-yang-module-versioning-06,
+         Updated YANG Module Revision Handling";
+     }
+     import ietf-yang-types {
+       prefix yang;
+       rev:recommended-min "2013-07-15";
+       reference
+         "RFC 6991: Common YANG Data Types.";
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 18]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
      }
      import ietf-yang-semver {
        prefix ysver;
        reference
-         "RFC XXXX: draft-ietf-netmod-yang-semver-08, YANG Semantic Versioning";
+         "RFC XXXX: draft-ietf-netmod-yang-semver-08, YANG Semantic
+         Versioning";
      }
 
      organization "IETF NETCONF (Network Configuration) Working Group";
      contact
        "WG Web:   <http:/tools.ietf.org/wg/netconf/>
         WG List:  <mailto:netconf@ietf.org>
-
-
-
-Graf, et al.              Expires 21 July 2023                 [Page 10]
-
-Internet-Draft        YANG Notifications Versioning         January 2023
-
 
         Authors:  Thomas Graf
                   <mailto:thomas.graf@swisscom.com>
@@ -586,103 +1047,253 @@ Internet-Draft        YANG Notifications Versioning         January 2023
        This version of this YANG module is part of RFC XXXX; see the RFC
        itself for full legal notices.";
 
-     revision 2023-01-12 {
+     revision 2023-09-17 {
        description
          "First revision";
        reference
-         "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
+         "RFC XXXX: Support of Versioning in YANG Notifications
+         Subscription";
      }
 
      feature yang-push-revision-supported {
        description
-         "This feature indicates the YANG Subscription Notifications supports
-         the revision and revision-label defined in this YANG module.";
+         "This feature indicates the YANG Subscription Notifications
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 19]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+         supports specifying the list of modules, revisions and
+         revision-label in the YANG subscription.";
+     }
+
+     // Identities
+     identity revision-unsupported {
+       base sn:establish-subscription-error;
+       base sn:modify-subscription-error;
+       description
+         "Revision not supported.  This failure can be due to subscribing
+          to a specific revision not supported by the publisher.";
+     }
+
+     identity revision-label-unsupported {
+       base sn:establish-subscription-error;
+       base sn:modify-subscription-error;
+       description
+         "Revision-label not supported.  This failure can be due to subscribing
+          to a specific revision-label not supported by the publisher.";
      }
 
      grouping yang-push-module-version-config {
        description
-         "This grouping combines the revision and revision-label leaves, with
-          the revison being configurable.";
+         "This grouping combines the module name, the revision and
+         revision-label leaves, with the revision being configurable.";
+       leaf module-name {
+         type yang:yang-identifier;
+         description
+           "This references the YANG module name.";
+       }
        leaf revision {
          type rev:revision-date-or-label;
          description
-           "This references the YANG module revision to be sent in the subscription.";
+           "This references the YANG module revision to be sent in the
+           subscription.";
        }
        leaf revision-label {
          type ysver:version;
-
-
-
-Graf, et al.              Expires 21 July 2023                 [Page 11]
-
-Internet-Draft        YANG Notifications Versioning         January 2023
-
-
          description
-           "This references the YANG module semversion to be sent in the subscription.";
+           "This references the YANG module semversion to be sent in the
+           subscription.";
        }
      }
 
      grouping yang-push-module-version {
        description
-         "This grouping combines the revision and revision-label leaves, with
-          the revison being non configurable.";
+         "This grouping combines the module name, the revision and
+         revision-label leaves, with the revision being non
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 20]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+         configurable.";
+       leaf module-name {
+         type yang:yang-identifier;
+         config false;
+         mandatory true;
+         description
+           "This references the YANG module name.";
+       }
        leaf revision {
          type rev:revision-date-or-label;
          config false;
          mandatory true;
          description
-           "This references the YANG module revision of the sent notification message.";
+           "This references the YANG module revision of the sent
+           notification message.";
        }
        leaf revision-label {
          type ysver:version;
          description
-           "This references the YANG module semversion of the sent notification message.";
+           "This references the YANG module semversion of the sent
+           notification message.";
        }
      }
 
-     // Subscription parameters
-     augment "/sn:establish-subscription/sn:input/sn:target" {
+     grouping yang-push-module-version-list {
        description
-         "Augment the establish-subscription RPC from the ietf-subscribed-notifications
-         YANG module with the yang-push-module-version-config grouping.";
-       uses ypm:yang-push-module-version-config;
+         "This grouping defines a list of yang-push-module-version
+         grouping.";
+       list module-version {
+         key "module-name";
+         config false;
+         description
+           "List of yang-push-module-version grouping. The revision is
+           not configurable.";
+         uses ypr:yang-push-module-version;
+       }
      }
-     augment "/sn:modify-subscription/sn:input/sn:target" {
-     description
-         "Augment the modify-subscription RPC from the ietf-subscribed-notifications
-         YANG module with the yang-push-module-version-config grouping.";
-             uses ypm:yang-push-module-version-config;
+
+     grouping yang-push-module-version-config-list {
+       description
+         "This grouping defines a list of yang-push-module-version-config
+         grouping.";
+       list module-version {
+         key "module-name";
+         description
+           "List of yang-push-module-version-config grouping. The revision
+           is configurable.";
+         uses ypr:yang-push-module-version-config;
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 21]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+       }
+     }
+
+     // Filters
+     augment "/sn:filters/sn:stream-filter" {
+       description
+         "Augment the filters from subscribed notifications with a list
+         of yang-push-module-version-config grouping.";
+       uses ypr:yang-push-module-version-config-list;
+     }
+     augment "/sn:filters/yp:selection-filter" {
+       description
+         "Augment the filters from YANG push with a list of
+         yang-push-module-version grouping.";
+       uses ypr:yang-push-module-version-config-list;
+     }
+
+     // Subscription parameters
+     augment "/sn:establish-subscription/sn:input/sn:target/sn:stream"
+           + "/sn:stream-filter/sn:within-subscription" {
+       description
+         "Augment the establish-subscription RPC from the
+         ietf-subscribed-notifications YANG module with the
+         yang-push-module-version-config-list grouping.";
+       uses ypr:yang-push-module-version-config-list;
+     }
+     augment "/sn:establish-subscription/sn:input/sn:target"
+           + "/yp:datastore/yp:selection-filter/yp:within-subscription" {
+       description
+         "Augment the establish-subscription RPC from the ietf-yang-push
+         YANG module with the yang-push-module-version-config-list
+         grouping.";
+       uses ypr:yang-push-module-version-config-list;
+     }
+     augment "/sn:modify-subscription/sn:input/sn:target/sn:stream"
+           + "/sn:stream-filter/sn:within-subscription" {
+       description
+         "Augment the modify-subscription RPC from the
+         ietf-subscribed-notifications YANG module with the
+         yang-push-module-version-config-list grouping.";
+       uses ypr:yang-push-module-version-config-list;
+     }
+     augment "/sn:modify-subscription/sn:input/sn:target/yp:datastore"
+           + "/yp:selection-filter/yp:within-subscription" {
+       description
+         "Augment the modify-subscription RPC from the ietf-yang-push
+         YANG module with the yang-push-module-version-config-list
+         grouping.";
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 22]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+       uses ypr:yang-push-module-version-config-list;
      }
 
      // Subscription notifications
-     augment "/sn:subscription-started/sn:target" {
-     description
-         "Augment the subscription-started RPC from the ietf-subscribed-notifications
-         YANG module with the yang-push-module-version grouping.";
-       uses ypm:yang-push-module-version;
+     augment "/sn:subscription-started/sn:target/sn:stream"
+           + "/sn:stream-filter/sn:within-subscription" {
+       description
+         "Augment the subscription-started notification from the
+         ietf-subscribed-notifications YANG module with the
+         yang-push-module-version-list grouping.";
+       uses ypr:yang-push-module-version-list;
      }
-     augment "/sn:subscription-modified/sn:target" {
-     description
-         "Augment the subscription-modified RPC from the ietf-subscribed-notifications
-         YANG module with the yang-push-module-version grouping.";
-
-
-
-Graf, et al.              Expires 21 July 2023                 [Page 12]
-
-Internet-Draft        YANG Notifications Versioning         January 2023
-
-
-       uses ypm:yang-push-module-version;
+     augment "/sn:subscription-started/sn:target/yp:datastore"
+           + "/yp:selection-filter/yp:within-subscription" {
+       description
+         "Augment the subscription-started notification from the
+         ietf-yang-push YANG module with the
+         yang-push-module-version-list grouping.";
+       uses ypr:yang-push-module-version-list;
+     }
+     augment "/sn:subscription-modified/sn:target/sn:stream"
+           + "/sn:stream-filter/sn:within-subscription" {
+       description
+         "Augment the subscription-modified notification from the
+         ietf-subscribed-notifications YANG module with the
+         yang-push-module-version-list grouping.";
+       uses ypr:yang-push-module-version-list;
+     }
+     augment "/sn:subscription-modified/sn:target/yp:datastore"
+           + "/yp:selection-filter/yp:within-subscription" {
+       description
+         "Augment the subscription-modified notification from the
+         ietf-yang-push YANG module with the
+         yang-push-module-version-list grouping.";
+       uses ypr:yang-push-module-version-list;
      }
 
      // Subscription container
-     augment "/sn:subscriptions/sn:subscription/sn:target" {
-     description
-         "Augment the subscriptions RPC from the ietf-subscribed-notifications
-         YANG module with the yang-push-module-version grouping.";
-       uses ypm:yang-push-module-version;
+     augment "/sn:subscriptions/sn:subscription/sn:target/sn:stream"
+           + "/sn:stream-filter/sn:within-subscription" {
+       description
+         "Augment the subscriptions RPC container from the
+         ietf-subscribed-notifications YANG module with the
+         yang-push-module-version-config-list grouping.";
+       uses ypr:yang-push-module-version-config-list;
+     }
+     augment "/sn:subscriptions/sn:subscription/sn:target/yp:datastore"
+           + "/yp:selection-filter/yp:within-subscription" {
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 23]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
+       description
+         "Augment the subscription RPC container from ietf-yang-push
+         YANG module with the yang-push-module-version-config-list grouping.";
+       uses ypr:yang-push-module-version-config-list;
      }
    }
    <CODE ENDS>
@@ -710,30 +1321,30 @@ Internet-Draft        YANG Notifications Versioning         January 2023
               Wilton, R., Rahman, R., Lengyel, B., Clarke, J., and J.
               Sterne, "Updated YANG Module Revision Handling", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-module-
-              versioning-08, 12 January 2023,
-              <https://www.ietf.org/archive/id/draft-ietf-netmod-yang-
-              module-versioning-08.txt>.
+              versioning-09, 17 April 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
+              yang-module-versioning-09>.
 
    [I-D.ietf-netmod-yang-semver]
               Clarke, J., Wilton, R., Rahman, R., Lengyel, B., Sterne,
               J., and B. Claise, "YANG Semantic Versioning", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-semver-
-              09, 12 January 2023, <https://www.ietf.org/archive/id/
-              draft-ietf-netmod-yang-semver-09.txt>.
-
-
-
-
-
-Graf, et al.              Expires 21 July 2023                 [Page 13]
-
-Internet-Draft        YANG Notifications Versioning         January 2023
-
+              11, 10 April 2023, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-netmod-yang-semver-11>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
+
+
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 24]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
 
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
@@ -759,16 +1370,16 @@ Internet-Draft        YANG Notifications Versioning         January 2023
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
               for YANG Notifications", Work in Progress, Internet-Draft,
               draft-ietf-netconf-https-notif-13, 4 November 2022,
-              <https://www.ietf.org/archive/id/draft-ietf-netconf-https-
-              notif-13.txt>.
+              <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
+              https-notif-13>.
 
    [I-D.ietf-netconf-udp-notif]
               Zheng, G., Zhou, T., Graf, T., Francois, P., Feng, A. H.,
               and P. Lucente, "UDP-based Transport for Configured
               Subscriptions", Work in Progress, Internet-Draft, draft-
-              ietf-netconf-udp-notif-08, 12 September 2022,
-              <https://www.ietf.org/archive/id/draft-ietf-netconf-udp-
-              notif-08.txt>.
+              ietf-netconf-udp-notif-10, 7 July 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
+              udp-notif-10>.
 
    [RFC8259]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", STD 90, RFC 8259,
@@ -779,16 +1390,17 @@ Internet-Draft        YANG Notifications Versioning         January 2023
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
               <https://www.rfc-editor.org/info/rfc8340>.
 
-
-
-Graf, et al.              Expires 21 July 2023                 [Page 14]
-
-Internet-Draft        YANG Notifications Versioning         January 2023
-
-
    [RFC8343]  Bjorklund, M., "A YANG Data Model for Interface
               Management", RFC 8343, DOI 10.17487/RFC8343, March 2018,
               <https://www.rfc-editor.org/info/rfc8343>.
+
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 25]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
 
    [RFC8640]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., and A. Tripathy, "Dynamic Subscription to YANG Events
@@ -837,4 +1449,8 @@ Authors' Addresses
 
 
 
-Graf, et al.              Expires 21 July 2023                 [Page 15]
+
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 26]
