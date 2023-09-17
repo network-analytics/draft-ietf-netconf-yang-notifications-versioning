@@ -12,7 +12,7 @@ Expires: 20 March 2024                                            Huawei
 
 
         Support of Versioning in YANG Notifications Subscription
-          draft-tgraf-netconf-yang-notifications-versioning-03
+          draft-ietf-netconf-yang-notifications-versioning-02
 
 Abstract
 
@@ -75,7 +75,7 @@ Table of Contents
    4.  The "ietf-yang-push-revision" Module  . . . . . . . . . . . .   6
      4.1.  Data Model Overview . . . . . . . . . . . . . . . . . . .   7
      4.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  18
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  24
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  23
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  24
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  24
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  24
@@ -149,15 +149,15 @@ Internet-Draft        YANG Notifications Versioning       September 2023
    The YANG notifications subscription OPTIONALLY can be restricted to
    the following YANG module revision for future capabilities:
 
-   latest:  Restricts the subscription to the latest YANG module
-      revision.
+   module:  Restricts the subscription to one or more YANG module names
+      with revision and revision-label together for the related streamed
+      content.
 
    revision:  Restricts the subscription to a specific YANG module
       revision.  Example: "2014-05-08".
 
-   latest-compatible-semversion:  Restricts the subscription to the
-      latest compatible YANG module semantic version referenced to.
-      Example: "2.0.0".
+   revision-label:  Restricts the subscription to the latest compatible
+      YANG module semantic version referenced to.  Example: "2.0.0".
 
    If nothing is specified, latest YANG module version is implied.
 
@@ -251,6 +251,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
    metadata objects are part of a "subscription-started" or
    "subscription-modified" subscription state change notification.
 
+   module:  Describes the YANG module names for the related streamed
+      content.
+
    revision:  Describes the YANG module revision as specified in
       Section 7.1.9 of [RFC6020] for the related streamed content.
 
@@ -259,15 +262,12 @@ Internet-Draft        YANG Notifications Versioning       September 2023
       streamed content.
 
    Figure 4 provides an example of a "subscription-modified"
-   subscription state change notification message with the YANG
-   revision, revision label and datastore-xpath-filter for tracking the
-   operational status of a single Ethernet interface (per [RFC8343]).
-   This subscription state change notification message is encoded XML
-   [W3C.REC-xml-20081126] over the Network Configuration Protocol
-   (NETCONF) as per [RFC8640].
-
-
-
+   subscription state change notification message with the YANG module
+   name, revision, revision label and datastore-xpath-filter for
+   tracking the operational status of a single Ethernet interface (per
+   [RFC8343]).  This subscription state change notification message is
+   encoded XML [W3C.REC-xml-20081126] over the Network Configuration
+   Protocol (NETCONF) as per [RFC8640].
 
 
 
@@ -287,12 +287,17 @@ Internet-Draft        YANG Notifications Versioning       September 2023
   <subscription-modified
       xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications">
     <id>101</id>
-    <revision>2014-05-08</revision>
-    <revision-label>1.0.0</revision-label>
-    <stream-xpath-filter xmlns:int="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+    <stream-xpath-filter
+      xmlns:int="urn:ietf:params:xml:ns:yang:ietf-interfaces">
       /int:interfaces
     </stream-xpath-filter>
     <stream>NETCONF</stream>
+    <module-version
+      xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push-revision">
+      <module-name>ietf-interfaces</module-name>
+      <revision>2014-05-08</revision>
+      <revision-label>1.0.0</revision-label>
+    </module-version>
   </subscription-modified>
 </notification>
 
@@ -309,12 +314,13 @@ Internet-Draft        YANG Notifications Versioning       September 2023
        "eventTime": "2023-01-03T10:00:00Z",
        "ietf-subscribed-notifications:subscription-modified": {
          "id": 101,
-         "revision": "2014-05-08",
-         "revision-label": "1.0.0",
          "stream-xpath-filter": "/ietf-interfaces:interfaces",
-         "stream": {
-            "ietf-netconf-subscribed-notifications" : "NETCONF"
-         }
+         "stream": "NETCONF",
+         "ietf-yang-push-revision:module-version": [{
+           "module-name": "ietf-interfaces"
+           "revision": "2014-05-08",
+           "revision-label": "1.0.0",
+         }],
        }
      }
    }
@@ -327,12 +333,6 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-
-
-
-
-
-
 Graf, et al.              Expires 20 March 2024                 [Page 6]
 
 Internet-Draft        YANG Notifications Versioning       September 2023
@@ -341,11 +341,11 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 4.1.  Data Model Overview
 
    This YANG module augments the "ietf-yang-push" module with the
-   revision and revision-label in the "subscription-started" and
-   "subscription-modified" subscription state change notifications and
-   the ability to define the "revision" and "revision-label" in the
-   "establish-subscription" and "modify-subscription" RPCs in the
-   datastore push subscription.
+   module-name, revision and revision-label in the "subscription-
+   started" and "subscription-modified" subscription state change
+   notifications and the ability to define the "revision" and "revision-
+   label" in the "establish-subscription" and "modify-subscription" RPCs
+   in the datastore push subscription.
 
 4.1.1.  Tree View
 
@@ -974,7 +974,7 @@ Internet-Draft        YANG Notifications Versioning       September 2023
    The YANG module has two leaves augmenting the model of Subscription
    to YANG Notifications [RFC8639].
 
-   <CODE BEGINS> file "ietf-yang-push-revision@2023-09-17.yang"
+   <CODE BEGINS> file "ietf-yang-push-revision@2023-07-03.yang"
    module ietf-yang-push-revision {
      yang-version 1.1;
      namespace
@@ -1047,7 +1047,7 @@ Internet-Draft        YANG Notifications Versioning       September 2023
        This version of this YANG module is part of RFC XXXX; see the RFC
        itself for full legal notices.";
 
-     revision 2023-09-17 {
+     revision 2023-07-03 {
        description
          "First revision";
        reference
@@ -1068,23 +1068,6 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
          supports specifying the list of modules, revisions and
          revision-label in the YANG subscription.";
-     }
-
-     // Identities
-     identity revision-unsupported {
-       base sn:establish-subscription-error;
-       base sn:modify-subscription-error;
-       description
-         "Revision not supported.  This failure can be due to subscribing
-          to a specific revision not supported by the publisher.";
-     }
-
-     identity revision-label-unsupported {
-       base sn:establish-subscription-error;
-       base sn:modify-subscription-error;
-       description
-         "Revision-label not supported.  This failure can be due to subscribing
-          to a specific revision-label not supported by the publisher.";
      }
 
      grouping yang-push-module-version-config {
@@ -1114,14 +1097,6 @@ Internet-Draft        YANG Notifications Versioning       September 2023
        description
          "This grouping combines the module name, the revision and
          revision-label leaves, with the revision being non
-
-
-
-Graf, et al.              Expires 20 March 2024                [Page 20]
-
-Internet-Draft        YANG Notifications Versioning       September 2023
-
-
          configurable.";
        leaf module-name {
          type yang:yang-identifier;
@@ -1139,6 +1114,14 @@ Internet-Draft        YANG Notifications Versioning       September 2023
            notification message.";
        }
        leaf revision-label {
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 20]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
          type ysver:version;
          description
            "This references the YANG module semversion of the sent
@@ -1170,14 +1153,6 @@ Internet-Draft        YANG Notifications Versioning       September 2023
            "List of yang-push-module-version-config grouping. The revision
            is configurable.";
          uses ypr:yang-push-module-version-config;
-
-
-
-Graf, et al.              Expires 20 March 2024                [Page 21]
-
-Internet-Draft        YANG Notifications Versioning       September 2023
-
-
        }
      }
 
@@ -1194,6 +1169,14 @@ Internet-Draft        YANG Notifications Versioning       September 2023
          yang-push-module-version grouping.";
        uses ypr:yang-push-module-version-config-list;
      }
+
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 21]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
 
      // Subscription parameters
      augment "/sn:establish-subscription/sn:input/sn:target/sn:stream"
@@ -1226,14 +1209,6 @@ Internet-Draft        YANG Notifications Versioning       September 2023
          "Augment the modify-subscription RPC from the ietf-yang-push
          YANG module with the yang-push-module-version-config-list
          grouping.";
-
-
-
-Graf, et al.              Expires 20 March 2024                [Page 22]
-
-Internet-Draft        YANG Notifications Versioning       September 2023
-
-
        uses ypr:yang-push-module-version-config-list;
      }
 
@@ -1251,6 +1226,14 @@ Internet-Draft        YANG Notifications Versioning       September 2023
        description
          "Augment the subscription-started notification from the
          ietf-yang-push YANG module with the
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 22]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
+
          yang-push-module-version-list grouping.";
        uses ypr:yang-push-module-version-list;
      }
@@ -1282,14 +1265,6 @@ Internet-Draft        YANG Notifications Versioning       September 2023
      }
      augment "/sn:subscriptions/sn:subscription/sn:target/yp:datastore"
            + "/yp:selection-filter/yp:within-subscription" {
-
-
-
-Graf, et al.              Expires 20 March 2024                [Page 23]
-
-Internet-Draft        YANG Notifications Versioning       September 2023
-
-
        description
          "Augment the subscription RPC container from ietf-yang-push
          YANG module with the yang-push-module-version-config-list grouping.";
@@ -1303,6 +1278,17 @@ Internet-Draft        YANG Notifications Versioning       September 2023
    The security considerations for the YANG notifications subscription
    mechanism are described in [RFC8641].  This documents adds no
    additional security considerations.
+
+
+
+
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 23]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
 
 6.  IANA Considerations
 
@@ -1337,15 +1323,6 @@ Internet-Draft        YANG Notifications Versioning       September 2023
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-
-
-
-
-Graf, et al.              Expires 20 March 2024                [Page 24]
-
-Internet-Draft        YANG Notifications Versioning       September 2023
-
-
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
               DOI 10.17487/RFC6020, October 2010,
@@ -1359,6 +1336,15 @@ Internet-Draft        YANG Notifications Versioning       September 2023
               E., and A. Tripathy, "Subscription to YANG Notifications",
               RFC 8639, DOI 10.17487/RFC8639, September 2019,
               <https://www.rfc-editor.org/info/rfc8639>.
+
+
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 24]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
 
    [RFC8641]  Clemm, A. and E. Voit, "Subscription to YANG Notifications
               for Datastore Updates", RFC 8641, DOI 10.17487/RFC8641,
@@ -1394,14 +1380,6 @@ Internet-Draft        YANG Notifications Versioning       September 2023
               Management", RFC 8343, DOI 10.17487/RFC8343, March 2018,
               <https://www.rfc-editor.org/info/rfc8343>.
 
-
-
-
-Graf, et al.              Expires 20 March 2024                [Page 25]
-
-Internet-Draft        YANG Notifications Versioning       September 2023
-
-
    [RFC8640]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., and A. Tripathy, "Dynamic Subscription to YANG Events
               and Datastores over NETCONF", RFC 8640,
@@ -1414,6 +1392,15 @@ Internet-Draft        YANG Notifications Versioning       September 2023
               Edition)", World Wide Web Consortium Recommendation REC-
               xml-20081126, November 2008,
               <https://www.w3.org/TR/2008/REC-xml-20081126>.
+
+
+
+
+
+Graf, et al.              Expires 20 March 2024                [Page 25]
+
+Internet-Draft        YANG Notifications Versioning       September 2023
+
 
 Authors' Addresses
 
@@ -1435,6 +1422,19 @@ Authors' Addresses
    Lyon
    France
    Email: alex.huang-feng@insa-lyon.fr
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

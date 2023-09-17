@@ -11,7 +11,7 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 <rfc category="std"
-     docName="draft-tgraf-netconf-yang-notifications-versioning-03"
+     docName="draft-ietf-netconf-yang-notifications-versioning-02"
      ipr="trust200902">
   <front>
     <title abbrev="YANG Notifications Versioning">Support of Versioning in
@@ -143,10 +143,11 @@
       the following YANG module revision for future capabilities:</t>
 
       <dl>
-        <dt>latest:</dt>
+        <dt>module:</dt>
 
-        <dd>Restricts the subscription to the latest YANG module
-        revision.</dd>
+        <dd>Restricts the subscription to one or more YANG module names with
+        revision and revision-label together for the related streamed
+        content.</dd>
       </dl>
 
       <dl>
@@ -157,7 +158,7 @@
       </dl>
 
       <dl>
-        <dt>latest-compatible-semversion:</dt>
+        <dt>revision-label:</dt>
 
         <dd>Restricts the subscription to the latest compatible YANG module
         semantic version referenced to. Example: "2.0.0".</dd>
@@ -165,15 +166,15 @@
 
       <t>If nothing is specified, latest YANG module version is implied.</t>
 
-      <t><xref target="subscription_modified_sub_example_xml_fig"/> provides
+      <t><xref target="subscription_establish_sub_example_xml_fig"/> provides
       an example of a "establish-subscription" RPC call with YANG revision and
       datastore-xpath-filter for periodical subscription and with <xref
-      target="subscription_modified_sub_positive_response_example_xml_fig"/>
+      target="subscription_establish_sub_positive_response_example_xml_fig"/>
       its positive and with <xref
-      target="subscription_modified_sub_error_response_example_xml_fig"/> its
+      target="subscription_establish_sub_error_response_example_xml_fig"/> its
       error reponse when the revision is unsupported.</t>
 
-      <figure anchor="subscription_modified_sub_example_xml_fig"
+      <figure anchor="subscription_establish_sub_example_xml_fig"
               title="RPC Example for an establish-subscription">
         <artwork><![CDATA[
 <netconf:rpc message-id="101"
@@ -201,7 +202,7 @@
         ]]></artwork>
       </figure>
 
-      <figure anchor="subscription_modified_sub_positive_response_example_xml_fig"
+      <figure anchor="subscription_establish_sub_positive_response_example_xml_fig"
               title="RPC Example for a positive establish-subscription response">
         <artwork><![CDATA[
 <rpc-reply message-id="101"
@@ -214,7 +215,7 @@
         ]]></artwork>
       </figure>
 
-      <figure anchor="subscription_modified_sub_error_response_example_xml_fig"
+      <figure anchor="subscription_establish_sub_error_response_example_xml_fig"
               title="RPC Example for an error establish-subscription response">
         <artwork><![CDATA[
 <rpc-reply message-id="101"
@@ -244,6 +245,13 @@
       "subscription-modified" subscription state change notification.</t>
 
       <dl>
+        <dt>module:</dt>
+
+        <dd>Describes the YANG module names for the related streamed
+        content.</dd>
+      </dl>
+
+      <dl>
         <dt>revision:</dt>
 
         <dd>Describes the YANG module revision as specified in Section 7.1.9
@@ -260,10 +268,10 @@
 
       <t><xref target="subscription_modified_notif_example_xml_fig"/> provides
       an example of a "subscription-modified" subscription state change
-      notification message with the YANG revision, revision label and
-      datastore-xpath-filter for tracking the operational status of a single
-      Ethernet interface (per <xref target="RFC8343"/>). This subscription
-      state change notification message is encoded XML <xref
+      notification message with the YANG module name, revision, revision label
+      and datastore-xpath-filter for tracking the operational status of a
+      single Ethernet interface (per <xref target="RFC8343"/>). This
+      subscription state change notification message is encoded XML <xref
       target="W3C.REC-xml-20081126"/> over the Network Configuration Protocol
       (NETCONF) as per <xref target="RFC8640"/>.</t>
 
@@ -275,12 +283,17 @@
   <subscription-modified
       xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications">
     <id>101</id>
-    <revision>2014-05-08</revision>
-    <revision-label>1.0.0</revision-label>
-    <stream-xpath-filter xmlns:int="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+    <stream-xpath-filter 
+      xmlns:int="urn:ietf:params:xml:ns:yang:ietf-interfaces">
       /int:interfaces
     </stream-xpath-filter>
     <stream>NETCONF</stream>
+    <module-version
+      xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push-revision">
+      <module-name>ietf-interfaces</module-name>
+      <revision>2014-05-08</revision>
+      <revision-label>1.0.0</revision-label>
+    </module-version>
   </subscription-modified>
 </notification>
         ]]></artwork>
@@ -301,12 +314,13 @@
     "eventTime": "2023-01-03T10:00:00Z",
     "ietf-subscribed-notifications:subscription-modified": {
       "id": 101,
-      "revision": "2014-05-08",
-      "revision-label": "1.0.0",
       "stream-xpath-filter": "/ietf-interfaces:interfaces",
-      "stream": {
-         "ietf-netconf-subscribed-notifications" : "NETCONF"
-      }
+      "stream": "NETCONF",
+      "ietf-yang-push-revision:module-version": [{
+        "module-name": "ietf-interfaces"
+        "revision": "2014-05-08",
+        "revision-label": "1.0.0",
+      }],
     }
   }
 } 
@@ -318,9 +332,9 @@
              title="The &quot;ietf-yang-push-revision&quot; Module">
       <section anchor="YANG-revision-model" title="Data Model Overview">
         <t>This YANG module augments the "ietf-yang-push" module with the
-        revision and revision-label in the "subscription-started" and
-        "subscription-modified" subscription state change notifications and
-        the ability to define the "revision" and "revision-label" in the
+        module-name, revision and revision-label in the "subscription-started"
+        and "subscription-modified" subscription state change notifications
+        and the ability to define the "revision" and "revision-label" in the
         "establish-subscription" and "modify-subscription" RPCs in the
         datastore push subscription.</t>
 
@@ -860,7 +874,6 @@ module: ietf-subscribed-notifications
     +---n subscription-terminated
        +--ro id        subscription-id
        +--ro reason    identityref
-
 ]]></artwork>
             </figure></t>
         </section>
@@ -872,7 +885,7 @@ module: ietf-subscribed-notifications
 
         <t><figure>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-yang-push-revision@2023-09-17.yang"
+<CODE BEGINS> file "ietf-yang-push-revision@2023-07-03.yang"
 module ietf-yang-push-revision {
   yang-version 1.1;
   namespace
@@ -937,7 +950,7 @@ module ietf-yang-push-revision {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2023-09-17 {
+  revision 2023-07-03 {
     description
       "First revision";
     reference
@@ -950,23 +963,6 @@ module ietf-yang-push-revision {
       "This feature indicates the YANG Subscription Notifications
       supports specifying the list of modules, revisions and
       revision-label in the YANG subscription.";
-  }
-
-  // Identities
-  identity revision-unsupported {
-    base sn:establish-subscription-error;
-    base sn:modify-subscription-error;
-    description
-      "Revision not supported.  This failure can be due to subscribing
-       to a specific revision not supported by the publisher.";
-  }
-
-  identity revision-label-unsupported {
-    base sn:establish-subscription-error;
-    base sn:modify-subscription-error;
-    description
-      "Revision-label not supported.  This failure can be due to subscribing
-       to a specific revision-label not supported by the publisher.";
   }
 
   grouping yang-push-module-version-config {
