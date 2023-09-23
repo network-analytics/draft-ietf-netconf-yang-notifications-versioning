@@ -829,9 +829,9 @@ Internet-Draft        YANG Notifications Versioning         January 2023
               Wilton, R., Rahman, R., Lengyel, B., Clarke, J., and J.
               Sterne, "Updated YANG Module Revision Handling", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-module-
-              versioning-07, 24 October 2022,
-              <https://www.ietf.org/archive/id/draft-ietf-netmod-yang-
-              module-versioning-07.txt>.
+              versioning-09, 17 April 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
+              yang-module-versioning-09>.
 
 
 
@@ -846,23 +846,22 @@ Internet-Draft        YANG Notifications Versioning         January 2023
               Clarke, J., Wilton, R., Rahman, R., Lengyel, B., Sterne,
               J., and B. Claise, "YANG Semantic Versioning", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-semver-
-              08, 24 October 2022, <https://www.ietf.org/archive/id/
-              draft-ietf-netmod-yang-semver-08.txt>.
+              11, 10 April 2023, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-netmod-yang-semver-11>.
 
-   [RFC2119]  Bradner, S. and RFC Publisher, "Key words for use in RFCs
-              to Indicate Requirement Levels", BCP 14, RFC 2119,
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-   [RFC6020]  Bjorklund, M., Ed. and RFC Publisher, "YANG - A Data
-              Modeling Language for the Network Configuration Protocol
-              (NETCONF)", RFC 6020, DOI 10.17487/RFC6020, October 2010,
+   [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
+              the Network Configuration Protocol (NETCONF)", RFC 6020,
+              DOI 10.17487/RFC6020, October 2010,
               <https://www.rfc-editor.org/info/rfc6020>.
 
-   [RFC8174]  Leiba, B. and RFC Publisher, "Ambiguity of Uppercase vs
-              Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174,
-              DOI 10.17487/RFC8174, May 2017,
-              <https://www.rfc-editor.org/info/rfc8174>.
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
    [RFC8639]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., and A. Tripathy, "Subscription to YANG Notifications",
@@ -879,16 +878,17 @@ Internet-Draft        YANG Notifications Versioning         January 2023
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
               for YANG Notifications", Work in Progress, Internet-Draft,
               draft-ietf-netconf-https-notif-13, 4 November 2022,
-              <https://www.ietf.org/archive/id/draft-ietf-netconf-https-
-              notif-13.txt>.
+              <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
+              https-notif-13>.
 
    [I-D.ietf-netconf-udp-notif]
               Zheng, G., Zhou, T., Graf, T., Francois, P., Feng, A. H.,
               and P. Lucente, "UDP-based Transport for Configured
               Subscriptions", Work in Progress, Internet-Draft, draft-
-              ietf-netconf-udp-notif-08, 12 September 2022,
-              <https://www.ietf.org/archive/id/draft-ietf-netconf-udp-
-              notif-08.txt>.
+              ietf-netconf-udp-notif-10, 7 July 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
+              udp-notif-10>.
+
 
 
 
@@ -903,13 +903,13 @@ Internet-Draft        YANG Notifications Versioning         January 2023
               DOI 10.17487/RFC8259, December 2017,
               <https://www.rfc-editor.org/info/rfc8259>.
 
-   [RFC8340]  Bjorklund, M., Berger, L., Ed., and RFC Publisher, "YANG
-              Tree Diagrams", BCP 215, RFC 8340, DOI 10.17487/RFC8340,
-              March 2018, <https://www.rfc-editor.org/info/rfc8340>.
+   [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
+              BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
+              <https://www.rfc-editor.org/info/rfc8340>.
 
-   [RFC8343]  Bjorklund, M. and RFC Publisher, "A YANG Data Model for
-              Interface Management", RFC 8343, DOI 10.17487/RFC8343,
-              March 2018, <https://www.rfc-editor.org/info/rfc8343>.
+   [RFC8343]  Bjorklund, M., "A YANG Data Model for Interface
+              Management", RFC 8343, DOI 10.17487/RFC8343, March 2018,
+              <https://www.rfc-editor.org/info/rfc8343>.
 
    [RFC8640]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., and A. Tripathy, "Dynamic Subscription to YANG Events
