@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="17" month="September" year="2023"/>
+    <date day="23" month="September" year="2023"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -166,6 +166,47 @@
 
       <t>If nothing is specified, latest YANG module version is implied.</t>
 
+      <t>When an RPC error in establish-subscription or modify-subscription
+      due to revision or revision-label is not supported occurs, the NETCONF
+      RPC reply MUST include an &lt;rpc-error&gt; element per Section 4.3 of
+      <xref target="RFC6241"/> with the error information populated as
+      follows:</t>
+
+      <ul bare="false" empty="false" spacing="normal">
+        <li>an "error-type" node of "application".</li>
+
+        <li>an "error-tag" node whose value is a string that corresponds to an
+        identity associated with the error.</li>
+      </ul>
+
+      <table align="center" anchor="gen-sub-errors">
+        <name slugifiedName="name-general-subscription-error-">General
+        Subscription Error Identities and Associated "error-tag" Use</name>
+
+        <thead>
+          <tr>
+            <th align="left" colspan="1" rowspan="1">Error identity</th>
+
+            <th align="left" colspan="1" rowspan="1">Uses "error-tag"</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td align="left" colspan="1" rowspan="1">revision-unsupported</td>
+
+            <td align="left" colspan="1" rowspan="1">invalid-value</td>
+          </tr>
+
+          <tr>
+            <td align="left" colspan="1"
+            rowspan="1">revision-label-unsupported</td>
+
+            <td align="left" colspan="1" rowspan="1">invalid-value</td>
+          </tr>
+        </tbody>
+      </table>
+
       <t><xref target="subscription_establish_sub_example_xml_fig"/> provides
       an example of a "establish-subscription" RPC call with YANG revision and
       datastore-xpath-filter for periodical subscription and with <xref
@@ -182,6 +223,7 @@
   <establish-subscription
       xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications"
       xmlns:yp="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+      xmlns:ypr="urn:ietf:params:xml:ns:yang:ietf-yang-push-revision">
     <yp:datastore
          xmlns:ds="urn:ietf:params:xml:ns:yang:ietf-datastores">
       ds:operational
@@ -225,10 +267,12 @@
     <error-type>application</error-type>
     <error-tag>operation-failed</error-tag>
     <error-severity>error</error-severity>
-    <error-path>/ypr:module-version/ypr:revision</error-path>
+    <error-path xmlns:ypr="urn:ietf:params:xml:ns:yang:ietf-yang-push-revision">
     <error-info>
       <yp:establish-subscription-error-datastore>
-        <yp:reason>ypr:revision-unsupported</yp:reason>
+        <yp:reason xmlns:ypr="urn:ietf:params:xml:ns:yang:ietf-yang-push-revision">
+          ypr:revision-unsupported
+        </yp:reason>
       </yp:establish-subscription-error-datastore>
     </error-info>
   </rpc-error>
@@ -885,7 +929,7 @@ module: ietf-subscribed-notifications
 
         <t><figure>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-yang-push-revision@2023-07-03.yang"
+<CODE BEGINS> file "ietf-yang-push-revision@2023-09-17.yang"
 module ietf-yang-push-revision {
   yang-version 1.1;
   namespace
@@ -950,7 +994,7 @@ module ietf-yang-push-revision {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2023-07-03 {
+  revision 2023-09-17 {
     description
       "First revision";
     reference
@@ -963,6 +1007,23 @@ module ietf-yang-push-revision {
       "This feature indicates the YANG Subscription Notifications
       supports specifying the list of modules, revisions and
       revision-label in the YANG subscription.";
+  }
+
+  // Identities
+  identity revision-unsupported {
+    base sn:establish-subscription-error;
+    base sn:modify-subscription-error;
+    description
+      "Revision not supported.  This failure can be due to subscribing
+       to a specific revision not supported by the publisher.";
+  }
+
+  identity revision-label-unsupported {
+    base sn:establish-subscription-error;
+    base sn:modify-subscription-error;
+    description
+      "Revision-label not supported.  This failure can be due to subscribing
+       to a specific revision-label not supported by the publisher.";
   }
 
   grouping yang-push-module-version-config {
@@ -1147,19 +1208,29 @@ module ietf-yang-push-revision {
       </section>
     </section>
 
+    <section anchor="IANA_Considerations" title="IANA Considerations">
+      <t>This document has no IANA actions.</t>
+    </section>
+
+    <section anchor="Operational" title="Operational Considerations">
+      <t>A YANG package <xref target="I-D.ietf-netmod-yang-packages"/>,
+      specifies a versioned organizational structure used to manage a set of
+      YANG modules that collectively defines a package schema. For example, a
+      YANG package could contain a set of YANG modules required to implement a
+      L3VPN service on a network node. It offers therefore a complementary
+      information to the solution in this draft by describing how one specific
+      YANG module revision is part of a set of YANG modules.</t>
+    </section>
+
     <section anchor="Security" title="Security Considerations">
       <t>The security considerations for the YANG notifications subscription
       mechanism are described in <xref target="RFC8641"/>. This documents adds
       no additional security considerations.</t>
     </section>
 
-    <section anchor="IANA_Considerations" title="IANA Considerations">
-      <t>This document has no IANA actions.</t>
-    </section>
-
     <section anchor="Acknowledgements" title="Acknowledgements">
-      <t>The authors would like to thank xxx for their review and valuable
-      comments.</t>
+      <t>The authors would like to thank Qiufang Ma and Robert Wilton for
+      their review and valuable comments.</t>
     </section>
   </middle>
 
@@ -1168,6 +1239,8 @@ module ietf-yang-push-revision {
       <?rfc include='reference.RFC.2119'?>
 
       <?rfc include='reference.RFC.6020'?>
+
+      <?rfc include='reference.RFC.6241'?>
 
       <?rfc include='reference.RFC.8174'?>
 
@@ -1192,6 +1265,8 @@ module ietf-yang-push-revision {
       <?rfc include='reference.I-D.ietf-netconf-https-notif'?>
 
       <?rfc include='reference.I-D.ietf-netconf-udp-notif'?>
+
+      <?rfc include='reference.I-D.ietf-netmod-yang-packages'?>
 
       <reference anchor="W3C.REC-xml-20081126"
                  derivedAnchor="W3C.REC-xml-20081126" quoteTitle="true"
