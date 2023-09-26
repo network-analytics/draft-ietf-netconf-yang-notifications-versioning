@@ -104,8 +104,8 @@
       subscriber YANG-related information, which it has to know in order to
       configure the subscription.</t>
 
-      <t>This semantic reference is available when the subscription is being
-      establish as described in Section 3.6 of <xref target="RFC8641"/> and
+      <t>This semantic reference is available when the subscription is 
+      established as described in Section 3.6 of <xref target="RFC8641"/> and
       being streamed from the publisher to receiver with the subscription
       state change notifications described in Section 2.7 of <xref
       target="RFC8639"/> where for each subscription a locally unique
@@ -166,11 +166,12 @@
 
       <t>If nothing is specified, latest YANG module version is implied.</t>
 
-      <t>When an RPC error in establish-subscription or modify-subscription
-      due to revision or revision-label is not supported occurs, the NETCONF
-      RPC reply MUST include an &lt;rpc-error&gt; element per Section 4.3 of
-      <xref target="RFC6241"/> with the error information populated as
-      follows:</t>
+      <t>When the NETCONF client creates or modifies the subscription using the 
+      RPCs establish-subscription and modify-subscription and the NETCONF server
+      does not support the revision or revision-label specified in the RPC request,
+      the NETCONF server MUST return an RPC reply including an &lt;rpc-error&gt;
+      element as defined in Section 4.3 of <xref target="RFC6241"/> with the error
+      information populated as follows:</t>
 
       <ul bare="false" empty="false" spacing="normal">
         <li>an "error-type" node of "application".</li>
@@ -209,11 +210,11 @@
 
       <t><xref target="subscription_establish_sub_example_xml_fig"/> provides
       an example of a "establish-subscription" RPC call with YANG revision and
-      datastore-xpath-filter for periodical subscription and with <xref
+      datastore-xpath-filter for periodical subscription. <xref
       target="subscription_establish_sub_positive_response_example_xml_fig"/>
-      its positive and with <xref
-      target="subscription_establish_sub_error_response_example_xml_fig"/> its
-      error reponse when the revision is unsupported.</t>
+      shows the response when the RPC has been accepted by the NETCONF server
+      and <xref target="subscription_establish_sub_error_response_example_xml_fig"/>
+      the error sent by the NETCONF server when the revision is not supported.</t>
 
       <figure anchor="subscription_establish_sub_example_xml_fig"
               title="RPC Example for an establish-subscription">
@@ -1209,7 +1210,30 @@ module ietf-yang-push-revision {
     </section>
 
     <section anchor="IANA_Considerations" title="IANA Considerations">
-      <t>This document has no IANA actions.</t>
+      <section title="IETF XML Registry">
+        <t>This document registers the following URIs in the "IETF XML
+        Registry" <xref target="RFC3688"/>:</t>
+
+        <t><figure>
+            <artwork align="left"><![CDATA[
+  URI: urn:ietf:params:xml:ns:yang:ietf-yang-push-revision
+  Registrant Contact: The IESG.
+  XML: N/A; the requested URI is an XML namespace.]]></artwork>
+          </figure></t>
+      </section>
+
+      <section title="YANG Module Name">
+        <t>This document registers the following YANG modules in the "YANG
+        Module Names" registry <xref target="RFC6020"/>:</t>
+
+        <t><figure>
+            <artwork align="left"><![CDATA[
+  name: ietf-yang-push-revision
+  namespace: urn:ietf:params:xml:ns:yang:ietf-yang-push-revision
+  prefix: ypr
+  reference: RFC-to-be]]></artwork>
+          </figure></t>
+      </section>
     </section>
 
     <section anchor="Operational" title="Operational Considerations">
@@ -1237,6 +1261,8 @@ module ietf-yang-push-revision {
   <back>
     <references title="Normative References">
       <?rfc include='reference.RFC.2119'?>
+
+      <?rfc include='reference.RFC.3688'?>
 
       <?rfc include='reference.RFC.6020'?>
 
