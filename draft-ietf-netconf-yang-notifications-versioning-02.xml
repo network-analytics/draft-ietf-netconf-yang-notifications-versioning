@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="23" month="September" year="2023"/>
+    <date day="30" month="September" year="2023"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -164,13 +164,12 @@
         semantic version referenced to. Example: "2.0.0".</dd>
       </dl>
 
-      <t>If nothing is specified, latest YANG module version is implied.</t>
-
-      <t>When an RPC error in establish-subscription or modify-subscription
-      due to revision or revision-label is not supported occurs, the NETCONF
-      RPC reply MUST include an &lt;rpc-error&gt; element per Section 4.3 of
-      <xref target="RFC6241"/> with the error information populated as
-      follows:</t>
+      <t>When the NETCONF client creates or modifies the subscription using
+      the RPCs establish-subscription and modify-subscription and the NETCONF
+      server does not support the revision or revision-label specified in the
+      RPC request, the NETCONF server MUST return an RPC reply including an
+      &lt;rpc-error&gt; element as defined in Section 4.3 of <xref
+      target="RFC6241"/> with the error information populated as follows:</t>
 
       <ul bare="false" empty="false" spacing="normal">
         <li>an "error-type" node of "application".</li>
@@ -335,8 +334,8 @@
     <module-version
       xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push-revision">
       <module-name>ietf-interfaces</module-name>
-      <revision>2014-05-08</revision>
-      <revision-label>1.0.0</revision-label>
+      <revision>2018-02-20</revision>
+      <revision-label>2.0.0</revision-label>
     </module-version>
   </subscription-modified>
 </notification>
@@ -362,8 +361,8 @@
       "stream": "NETCONF",
       "ietf-yang-push-revision:module-version": [{
         "module-name": "ietf-interfaces"
-        "revision": "2014-05-08",
-        "revision-label": "1.0.0",
+        "revision": "2018-02-20",
+        "revision-label": "2.0.0",
       }],
     }
   }
