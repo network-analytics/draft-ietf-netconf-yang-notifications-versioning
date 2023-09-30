@@ -89,11 +89,13 @@
 
   <middle>
     <section anchor="Introduction" title="Introduction">
-      <t>In order to process the received YANG push notification messages
-      described in section 3.7 of <xref target="RFC8641"/> at the YANG push
-      receiver, a semantic reference to the YANG module and the XPath or
-      subtree is needed to determine the data types for each field and which
-      part of the YANG module the metrics are expose from.</t>
+      <t>In order to process the newly received YANG push notification
+      messages described in section 3.7 of <xref target="RFC8641"/> without
+      querying the Publisher IETF-YANG-LIBRARY each time to understand whether
+      the YANG module(s) semantic has changed at the YANG push receiver, a
+      semantic reference to the YANG module and the XPath or subtree is needed
+      to determine the data types for each field and which part of the YANG
+      module the metrics are expose from.</t>
 
       <t>This specification applies to the YANG push configured subscriptions
       defined in Section 2.5 of <xref target="RFC8639"/>, where a publisher is

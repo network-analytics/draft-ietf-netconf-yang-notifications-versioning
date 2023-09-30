@@ -88,11 +88,13 @@ Table of Contents
 
 1.  Introduction
 
-   In order to process the received YANG push notification messages
-   described in section 3.7 of [RFC8641] at the YANG push receiver, a
-   semantic reference to the YANG module and the XPath or subtree is
-   needed to determine the data types for each field and which part of
-   the YANG module the metrics are expose from.
+   In order to process the newly received YANG push notification
+   messages described in section 3.7 of [RFC8641] without querying the
+   Publisher IETF-YANG-LIBRARY each time to understand whether the YANG
+   module(s) semantic has changed at the YANG push receiver, a semantic
+   reference to the YANG module and the XPath or subtree is needed to
+   determine the data types for each field and which part of the YANG
+   module the metrics are expose from.
 
    This specification applies to the YANG push configured subscriptions
    defined in Section 2.5 of [RFC8639], where a publisher is configured
@@ -103,9 +105,7 @@ Table of Contents
    subscriber YANG-related information, which it has to know in order to
    configure the subscription.
 
-   This semantic reference is available when the subscription is
-   established as described in Section 3.6 of [RFC8641] and being
-   streamed from the publisher to receiver with the subscription state
+
 
 
 
@@ -114,6 +114,9 @@ Graf, et al.              Expires 2 April 2024                  [Page 2]
 Internet-Draft        YANG Notifications Versioning       September 2023
 
 
+   This semantic reference is available when the subscription is
+   established as described in Section 3.6 of [RFC8641] and being
+   streamed from the publisher to receiver with the subscription state
    change notifications described in Section 2.7 of [RFC8639] where for
    each subscription a locally unique subscription ID described in
    Section 4.3.2 of [RFC8641] is being issued and streamed as metadata
@@ -159,9 +162,6 @@ Internet-Draft        YANG Notifications Versioning       September 2023
       Restricts the subscription to the latest compatible YANG module
       semantic version referenced to.  Example: "2.0.0".
 
-   If nothing is specified, latest YANG module version is implied.
-
-
 
 
 
@@ -169,6 +169,8 @@ Graf, et al.              Expires 2 April 2024                  [Page 3]
 
 Internet-Draft        YANG Notifications Versioning       September 2023
 
+
+   If nothing is specified, latest YANG module version is implied.
 
    When the NETCONF client creates or modifies the subscription using
    the RPCs establish-subscription and modify-subscription and the
@@ -198,8 +200,6 @@ Internet-Draft        YANG Notifications Versioning       September 2023
    subscription.  Figure 2 shows the response when the RPC has been
    accepted by the NETCONF server and Figure 3 the error sent by the
    NETCONF server when the revision is not supported.
-
-
 
 
 
