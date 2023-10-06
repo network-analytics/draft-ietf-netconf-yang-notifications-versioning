@@ -5,10 +5,10 @@
 Network Working Group                                            T. Graf
 Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
-Expires: 2 April 2024                                             Huawei
+Expires: 8 April 2024                                             Huawei
                                                            A. Huang Feng
                                                                INSA-Lyon
-                                                       30 September 2023
+                                                          6 October 2023
 
 
         Support of Versioning in YANG Notifications Subscription
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 April 2024.
+   This Internet-Draft will expire on 8 April 2024.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Graf, et al.              Expires 2 April 2024                  [Page 1]
+Graf, et al.              Expires 8 April 2024                  [Page 1]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Graf, et al.              Expires 2 April 2024                  [Page 2]
+Graf, et al.              Expires 8 April 2024                  [Page 2]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
    This semantic reference is available when the subscription is
@@ -165,12 +165,10 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                  [Page 3]
+Graf, et al.              Expires 8 April 2024                  [Page 3]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
-
-   If nothing is specified, latest YANG module version is implied.
 
    When the NETCONF client creates or modifies the subscription using
    the RPCs establish-subscription and modify-subscription and the
@@ -221,9 +219,11 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                  [Page 4]
+
+
+Graf, et al.              Expires 8 April 2024                  [Page 4]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
  <netconf:rpc message-id="101"
@@ -277,9 +277,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                  [Page 5]
+Graf, et al.              Expires 8 April 2024                  [Page 5]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
 <rpc-reply message-id="101"
@@ -333,9 +333,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                  [Page 6]
+Graf, et al.              Expires 8 April 2024                  [Page 6]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
 <notification xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
@@ -389,9 +389,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                  [Page 7]
+Graf, et al.              Expires 8 April 2024                  [Page 7]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
 4.1.  Data Model Overview
@@ -445,9 +445,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                  [Page 8]
+Graf, et al.              Expires 8 April 2024                  [Page 8]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
           +-- revision?         rev:revision-date-or-label
@@ -501,9 +501,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                  [Page 9]
+Graf, et al.              Expires 8 April 2024                  [Page 9]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
   module: ietf-yang-push
@@ -557,9 +557,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 10]
+Graf, et al.              Expires 8 April 2024                 [Page 10]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
     |     +--rw yp:filter-id                         string
@@ -613,9 +613,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 11]
+Graf, et al.              Expires 8 April 2024                 [Page 11]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
           |        |          selection-filter-ref
@@ -669,9 +669,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 12]
+Graf, et al.              Expires 8 April 2024                 [Page 12]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
           |     +--ro state                     enumeration
@@ -725,9 +725,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 13]
+Graf, et al.              Expires 8 April 2024                 [Page 13]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
       |  |  |        |          selection-filter-ref
@@ -781,9 +781,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 14]
+Graf, et al.              Expires 8 April 2024                 [Page 14]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
       |     |  |     |          stream-filter-ref
@@ -837,9 +837,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 15]
+Graf, et al.              Expires 8 April 2024                 [Page 15]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
       |     +---w id    subscription-id
@@ -893,9 +893,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 16]
+Graf, et al.              Expires 8 April 2024                 [Page 16]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
       |  |           |  +--:(yp:datastore-xpath-filter)
@@ -949,9 +949,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 17]
+Graf, et al.              Expires 8 April 2024                 [Page 17]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
       |  |  |  |     |     +--ro stream-xpath-filter?
@@ -1005,9 +1005,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 18]
+Graf, et al.              Expires 8 April 2024                 [Page 18]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
       |     |  +--ro yp:periodic!
@@ -1061,9 +1061,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 19]
+Graf, et al.              Expires 8 April 2024                 [Page 19]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
      }
@@ -1117,9 +1117,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 20]
+Graf, et al.              Expires 8 April 2024                 [Page 20]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
          supports specifying the list of modules, revisions and
@@ -1173,9 +1173,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 21]
+Graf, et al.              Expires 8 April 2024                 [Page 21]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
          configurable.";
@@ -1229,9 +1229,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 22]
+Graf, et al.              Expires 8 April 2024                 [Page 22]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
        }
@@ -1285,9 +1285,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 23]
+Graf, et al.              Expires 8 April 2024                 [Page 23]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
        uses ypr:yang-push-module-version-config-list;
@@ -1341,9 +1341,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 24]
+Graf, et al.              Expires 8 April 2024                 [Page 24]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
        description
@@ -1397,9 +1397,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 25]
+Graf, et al.              Expires 8 April 2024                 [Page 25]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
 8.  Acknowledgements
@@ -1423,8 +1423,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
               Clarke, J., Wilton, R., Rahman, R., Lengyel, B., Sterne,
               J., and B. Claise, "YANG Semantic Versioning", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-semver-
-              11, 10 April 2023, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-netmod-yang-semver-11>.
+              12, 2 October 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
+              yang-semver-12>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1452,10 +1453,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-
-Graf, et al.              Expires 2 April 2024                 [Page 26]
+Graf, et al.              Expires 8 April 2024                 [Page 26]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
    [RFC8639]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
@@ -1509,9 +1509,9 @@ Internet-Draft        YANG Notifications Versioning       September 2023
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 27]
+Graf, et al.              Expires 8 April 2024                 [Page 27]
 
-Internet-Draft        YANG Notifications Versioning       September 2023
+Internet-Draft        YANG Notifications Versioning         October 2023
 
 
    [RFC8640]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
@@ -1565,4 +1565,4 @@ Authors' Addresses
 
 
 
-Graf, et al.              Expires 2 April 2024                 [Page 28]
+Graf, et al.              Expires 8 April 2024                 [Page 28]

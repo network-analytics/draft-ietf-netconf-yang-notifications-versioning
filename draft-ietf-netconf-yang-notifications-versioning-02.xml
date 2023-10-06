@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="30" month="September" year="2023"/>
+    <date day="06" month="October" year="2023"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -165,8 +165,6 @@
         <dd>Restricts the subscription to the latest compatible YANG module
         semantic version referenced to. Example: "2.0.0".</dd>
       </dl>
-
-      <t>If nothing is specified, latest YANG module version is implied.</t>
 
       <t>When the NETCONF client creates or modifies the subscription using
       the RPCs establish-subscription and modify-subscription and the NETCONF
