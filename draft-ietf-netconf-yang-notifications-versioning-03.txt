@@ -1030,7 +1030,7 @@ Internet-Draft        YANG Notifications Versioning         October 2023
    The YANG module has two leaves augmenting the model of Subscription
    to YANG Notifications [RFC8639].
 
-   <CODE BEGINS> file "ietf-yang-push-revision@2023-10-16.yang"
+   <CODE BEGINS> file "ietf-yang-push-revision@2023-10-17.yang"
    module ietf-yang-push-revision {
      yang-version 1.1;
      namespace
@@ -1103,7 +1103,7 @@ Internet-Draft        YANG Notifications Versioning         October 2023
        This version of this YANG module is part of RFC XXXX; see the RFC
        itself for full legal notices.";
 
-     revision 2023-10-16 {
+     revision 2023-10-17 {
        description
          "First revision";
        reference
@@ -1156,7 +1156,8 @@ Internet-Draft        YANG Notifications Versioning         October 2023
      grouping yang-push-module-version-config {
        description
          "This grouping combines the module name, the revision and
-         revision-label leaves. This grouping can be used for configuration.";
+         revision-label leaves. This grouping is to be used for configuration and the
+         leaves are not mandatory.";
        leaf module-name {
          type yang:yang-identifier;
          description
@@ -1169,7 +1170,6 @@ Internet-Draft        YANG Notifications Versioning         October 2023
            subscription.";
        }
        leaf revision-label {
-         type ysver:version;
 
 
 
@@ -1178,6 +1178,7 @@ Graf, et al.              Expires 18 April 2024                [Page 21]
 Internet-Draft        YANG Notifications Versioning         October 2023
 
 
+         type ysver:version;
          description
            "This references the YANG module semversion to be sent in the
            subscription.";
@@ -1187,8 +1188,9 @@ Internet-Draft        YANG Notifications Versioning         October 2023
      grouping yang-push-module-version {
        description
          "This grouping combines the module name, the revision and
-         revision-label leaves. The module-name and revision are
-         mandatory. This grouping can be used for read-only cases.";
+         revision-label leaves. This grouping is to be used for read-only cases such
+         as the content of YANG push Notifications. The module-name and revision are
+         mandatory and MUST be present in the data.";
        leaf module-name {
          type yang:yang-identifier;
          config false;
@@ -1224,8 +1226,6 @@ Internet-Draft        YANG Notifications Versioning         October 2023
            not configurable.";
          uses ypr:yang-push-module-version;
        }
-     }
-
 
 
 
@@ -1233,6 +1233,8 @@ Graf, et al.              Expires 18 April 2024                [Page 22]
 
 Internet-Draft        YANG Notifications Versioning         October 2023
 
+
+     }
 
      grouping yang-push-module-version-config-list {
        description
@@ -1280,8 +1282,6 @@ Internet-Draft        YANG Notifications Versioning         October 2023
      }
      augment "/sn:modify-subscription/sn:input/sn:target/sn:stream"
            + "/sn:stream-filter/sn:within-subscription" {
-       description
-         "Augment the modify-subscription RPC from the
 
 
 
@@ -1290,6 +1290,8 @@ Graf, et al.              Expires 18 April 2024                [Page 23]
 Internet-Draft        YANG Notifications Versioning         October 2023
 
 
+       description
+         "Augment the modify-subscription RPC from the
          ietf-subscribed-notifications YANG module with the
          yang-push-module-version-config-list grouping.";
        uses ypr:yang-push-module-version-config-list;
@@ -1337,8 +1339,6 @@ Internet-Draft        YANG Notifications Versioning         October 2023
        uses ypr:yang-push-module-version-list;
      }
 
-     // Subscription container
-
 
 
 Graf, et al.              Expires 18 April 2024                [Page 24]
@@ -1346,6 +1346,7 @@ Graf, et al.              Expires 18 April 2024                [Page 24]
 Internet-Draft        YANG Notifications Versioning         October 2023
 
 
+     // Subscription container
      augment "/sn:subscriptions/sn:subscription/sn:target/sn:stream"
            + "/sn:stream-filter/sn:within-subscription" {
        description
@@ -1393,7 +1394,6 @@ Internet-Draft        YANG Notifications Versioning         October 2023
    could contain a set of YANG modules required to implement a L3VPN
    service on a network node.  It offers therefore a complementary
    information to the solution in this draft by describing how one
-   specific YANG module revision is part of a set of YANG modules.
 
 
 
@@ -1401,6 +1401,8 @@ Graf, et al.              Expires 18 April 2024                [Page 25]
 
 Internet-Draft        YANG Notifications Versioning         October 2023
 
+
+   specific YANG module revision is part of a set of YANG modules.
 
 7.  Security Considerations
 
@@ -1446,8 +1448,6 @@ Internet-Draft        YANG Notifications Versioning         October 2023
               the Network Configuration Protocol (NETCONF)", RFC 6020,
               DOI 10.17487/RFC6020, October 2010,
               <https://www.rfc-editor.org/info/rfc6020>.
-
-
 
 
 
