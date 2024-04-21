@@ -62,7 +62,7 @@ module ietf-yang-push-revision {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2023-10-16 {
+  revision 2024-04-21 {
     description
       "First revision";
     reference
@@ -107,7 +107,8 @@ module ietf-yang-push-revision {
   grouping yang-push-module-version-config {
     description
       "This grouping combines the module name, the revision and
-      revision-label leaves. This grouping can be used for configuration.";
+      revision-label leaves. This grouping is to be used for configuration and the
+      leaves are not mandatory.";
     leaf module-name {
       type yang:yang-identifier;
       description
@@ -130,8 +131,9 @@ module ietf-yang-push-revision {
   grouping yang-push-module-version {
     description
       "This grouping combines the module name, the revision and
-      revision-label leaves. The module-name and revision are
-      mandatory. This grouping can be used for read-only cases.";
+      revision-label leaves. This grouping is to be used for read-only cases such
+      as the content of YANG push Notifications. The module-name and revision are
+      mandatory and MUST be present in the data.";
     leaf module-name {
       type yang:yang-identifier;
       config false;
@@ -173,7 +175,7 @@ module ietf-yang-push-revision {
     description
       "This grouping defines a list of yang-push-module-version-config
       grouping.";
-    list module-version {
+    list module-version-config {
       key "module-name";
       description
         "List of yang-push-module-version-config grouping. The revision
