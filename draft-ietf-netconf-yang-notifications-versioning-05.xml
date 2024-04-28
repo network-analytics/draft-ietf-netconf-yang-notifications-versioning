@@ -11,7 +11,7 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 <rfc category="std"
-     docName="draft-ietf-netconf-yang-notifications-versioning-04"
+     docName="draft-ietf-netconf-yang-notifications-versioning-05"
      ipr="trust200902">
   <front>
     <title abbrev="YANG Notifications Versioning">Support of Versioning in
@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="14" month="April" year="2024"/>
+    <date day="21" month="April" year="2024"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -1004,7 +1004,7 @@ module ietf-yang-push-revision {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2023-10-17 {
+  revision 2024-04-21 {
     description
       "First revision";
     reference
@@ -1117,7 +1117,7 @@ module ietf-yang-push-revision {
     description
       "This grouping defines a list of yang-push-module-version-config
       grouping.";
-    list module-version {
+    list module-version-config {
       key "module-name";
       description
         "List of yang-push-module-version-config grouping. The revision
