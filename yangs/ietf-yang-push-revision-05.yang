@@ -8,12 +8,6 @@ module ietf-yang-push-revision {
     reference
       "RFC 8639: Subscription to YANG Notifications";
   }
-  import ietf-yang-push {
-    prefix yp;
-    rev:recommended-min "2019-09-09";
-    reference
-      "RFC 8641: Subscriptions to YANG Datastores";
-  }
   import ietf-yang-revisions {
     prefix rev;
     reference
@@ -184,102 +178,44 @@ module ietf-yang-push-revision {
     }
   }
 
-  // Filters
-  augment "/sn:filters/sn:stream-filter" {
-    description 
-      "Augment the filters from subscribed notifications with a list
-      of yang-push-module-version-config grouping.";
-    uses ypr:yang-push-module-version-config-list;
-  }
-  augment "/sn:filters/yp:selection-filter" {
-    description
-      "Augment the filters from YANG push with a list of
-      yang-push-module-version grouping.";
-    uses ypr:yang-push-module-version-config-list;
-  }
-
   // Subscription parameters
-  augment "/sn:establish-subscription/sn:input/sn:target/sn:stream"
-        + "/sn:stream-filter/sn:within-subscription" {
+  augment "/sn:establish-subscription/sn:input" {
     description
       "Augment the establish-subscription RPC from the
       ietf-subscribed-notifications YANG module with the
       yang-push-module-version-config-list grouping.";
     uses ypr:yang-push-module-version-config-list;
   }
-  augment "/sn:establish-subscription/sn:input/sn:target"
-        + "/yp:datastore/yp:selection-filter/yp:within-subscription" {
-    description
-      "Augment the establish-subscription RPC from the ietf-yang-push
-      YANG module with the yang-push-module-version-config-list
-      grouping.";
-    uses ypr:yang-push-module-version-config-list;
-  }
-  augment "/sn:modify-subscription/sn:input/sn:target/sn:stream"
-        + "/sn:stream-filter/sn:within-subscription" {
+  augment "/sn:modify-subscription/sn:input" {
     description
       "Augment the modify-subscription RPC from the
       ietf-subscribed-notifications YANG module with the
       yang-push-module-version-config-list grouping.";
     uses ypr:yang-push-module-version-config-list;
   }
-  augment "/sn:modify-subscription/sn:input/sn:target/yp:datastore"
-        + "/yp:selection-filter/yp:within-subscription" {
-    description
-      "Augment the modify-subscription RPC from the ietf-yang-push 
-      YANG module with the yang-push-module-version-config-list
-      grouping.";
-    uses ypr:yang-push-module-version-config-list;
-  }
 
   // Subscription notifications
-  augment "/sn:subscription-started/sn:target/sn:stream"
-        + "/sn:stream-filter/sn:within-subscription" {
+  augment "/sn:subscription-started" {
     description
       "Augment the subscription-started notification from the
       ietf-subscribed-notifications YANG module with the
       yang-push-module-version-list grouping.";
     uses ypr:yang-push-module-version-list;
   }
-  augment "/sn:subscription-started/sn:target/yp:datastore"
-        + "/yp:selection-filter/yp:within-subscription" {
-    description
-      "Augment the subscription-started notification from the
-      ietf-yang-push YANG module with the
-      yang-push-module-version-list grouping.";
-    uses ypr:yang-push-module-version-list;
-  }
-  augment "/sn:subscription-modified/sn:target/sn:stream"
-        + "/sn:stream-filter/sn:within-subscription" {
+  augment "/sn:subscription-modified" {
     description
       "Augment the subscription-modified notification from the
       ietf-subscribed-notifications YANG module with the
-      yang-push-module-version-list grouping.";
-    uses ypr:yang-push-module-version-list;
-  }
-  augment "/sn:subscription-modified/sn:target/yp:datastore"
-        + "/yp:selection-filter/yp:within-subscription" {
-    description
-      "Augment the subscription-modified notification from the
-      ietf-yang-push YANG module with the
       yang-push-module-version-list grouping.";
     uses ypr:yang-push-module-version-list;
   }
 
   // Subscription container
-  augment "/sn:subscriptions/sn:subscription/sn:target/sn:stream"
-        + "/sn:stream-filter/sn:within-subscription" {
+  augment "/sn:subscriptions/sn:subscription" {
     description
       "Augment the subscriptions RPC container from the
       ietf-subscribed-notifications YANG module with the
       yang-push-module-version-config-list grouping.";
-    uses ypr:yang-push-module-version-config-list;
-  }
-  augment "/sn:subscriptions/sn:subscription/sn:target/yp:datastore"
-        + "/yp:selection-filter/yp:within-subscription" {
-    description
-      "Augment the subscription RPC container from ietf-yang-push
-      YANG module with the yang-push-module-version-config-list grouping.";
     uses ypr:yang-push-module-version-config-list;
   }
 }
