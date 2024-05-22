@@ -5,10 +5,10 @@
 Network Working Group                                            T. Graf
 Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
-Expires: 23 October 2024                                          Huawei
+Expires: 23 November 2024                                         Huawei
                                                            A. Huang Feng
                                                                INSA-Lyon
-                                                           21 April 2024
+                                                             22 May 2024
 
 
         Support of Versioning in YANG Notifications Subscription
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 October 2024.
+   This Internet-Draft will expire on 23 November 2024.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Graf, et al.             Expires 23 October 2024                [Page 1]
+Graf, et al.            Expires 23 November 2024                [Page 1]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Graf, et al.             Expires 23 October 2024                [Page 2]
+Graf, et al.            Expires 23 November 2024                [Page 2]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
    This semantic reference is available when the subscription is
@@ -165,9 +165,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024                [Page 3]
+Graf, et al.            Expires 23 November 2024                [Page 3]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
    the combination of revision and revision-label specified in the RPC
@@ -221,9 +221,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024                [Page 4]
+Graf, et al.            Expires 23 November 2024                [Page 4]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
  <netconf:rpc message-id="101"
@@ -277,9 +277,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024                [Page 5]
+Graf, et al.            Expires 23 November 2024                [Page 5]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
 <rpc-reply message-id="101"
@@ -333,9 +333,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024                [Page 6]
+Graf, et al.            Expires 23 November 2024                [Page 6]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
 <notification xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
@@ -389,9 +389,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024                [Page 7]
+Graf, et al.            Expires 23 November 2024                [Page 7]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
 4.1.  Data Model Overview
@@ -413,27 +413,27 @@ Internet-Draft        YANG Notifications Versioning           April 2024
      augment /sn:establish-subscription/sn:input:
        +---w module-version-config* [module-name]
           +---w module-name       yang:yang-identifier
-          +---w revision?         rev:revision-date-or-label
+          +---w revision?         rev:revision-date
           +---w revision-label?   ysver:version
      augment /sn:modify-subscription/sn:input:
        +---w module-version-config* [module-name]
           +---w module-name       yang:yang-identifier
-          +---w revision?         rev:revision-date-or-label
+          +---w revision?         rev:revision-date
           +---w revision-label?   ysver:version
      augment /sn:subscription-started:
        +--ro module-version* [module-name]
           +--ro module-name       yang:yang-identifier
-          +--ro revision          rev:revision-date-or-label
+          +--ro revision          rev:revision-date
           +--ro revision-label?   ysver:version
      augment /sn:subscription-modified:
        +--ro module-version* [module-name]
           +--ro module-name       yang:yang-identifier
-          +--ro revision          rev:revision-date-or-label
+          +--ro revision          rev:revision-date
           +--ro revision-label?   ysver:version
      augment /sn:subscriptions/sn:subscription:
        +--rw module-version-config* [module-name]
           +--rw module-name       yang:yang-identifier
-          +--rw revision?         rev:revision-date-or-label
+          +--rw revision?         rev:revision-date
           +--rw revision-label?   ysver:version
 
 4.1.2.  Full Tree View
@@ -445,9 +445,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024                [Page 8]
+Graf, et al.            Expires 23 November 2024                [Page 8]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
   module: ietf-yang-push
@@ -477,7 +477,7 @@ Internet-Draft        YANG Notifications Versioning           April 2024
          |        +--ro value?       <anydata>
          +--ro incomplete-update?   empty
 
-
+  module: ietf-subscribed-notifications
     +--ro streams
     |  +--ro stream* [name]
     |     +--ro name                        string
@@ -501,9 +501,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024                [Page 9]
+Graf, et al.            Expires 23 November 2024                [Page 9]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
     |        |          {sn:subtree}?
@@ -557,9 +557,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024               [Page 10]
+Graf, et al.            Expires 23 November 2024               [Page 10]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
           |       {qos}?
@@ -596,7 +596,7 @@ Internet-Draft        YANG Notifications Versioning           April 2024
           |           +--ro time    yang:date-and-time
           +--rw ypr:module-version-config* [module-name]
           |  +--rw ypr:module-name       yang:yang-identifier
-          |  +--rw ypr:revision?         rev:revision-date-or-label
+          |  +--rw ypr:revision?         rev:revision-date
           |  +--rw ypr:revision-label?   ysver:version
           +--rw (yp:update-trigger)?
              +--:(yp:periodic)
@@ -613,9 +613,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024               [Page 11]
+Graf, et al.            Expires 23 November 2024               [Page 11]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
       +---x establish-subscription
@@ -665,13 +665,13 @@ Internet-Draft        YANG Notifications Versioning           April 2024
       |  |  |       encoding
       |  |  +---w ypr:module-version-config* [module-name]
       |  |  |  +---w ypr:module-name       yang:yang-identifier
-      |  |  |  +---w ypr:revision?         rev:revision-date-or-label
+      |  |  |  +---w ypr:revision?         rev:revision-date
 
 
 
-Graf, et al.             Expires 23 October 2024               [Page 12]
+Graf, et al.            Expires 23 November 2024               [Page 12]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
       |  |  |  +---w ypr:revision-label?   ysver:version
@@ -725,16 +725,16 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024               [Page 13]
+Graf, et al.            Expires 23 November 2024               [Page 13]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
       |     +---w stop-time?
       |     |       yang:date-and-time
       |     +---w ypr:module-version-config* [module-name]
       |     |  +---w ypr:module-name       yang:yang-identifier
-      |     |  +---w ypr:revision?         rev:revision-date-or-label
+      |     |  +---w ypr:revision?         rev:revision-date
       |     |  +---w ypr:revision-label?   ysver:version
       |     +---w (yp:update-trigger)?
       |        +--:(yp:periodic)
@@ -781,9 +781,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024               [Page 14]
+Graf, et al.            Expires 23 November 2024               [Page 14]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
       |  |     +--ro yp:datastore
@@ -815,7 +815,7 @@ Internet-Draft        YANG Notifications Versioning           April 2024
       |  |       {configured}?
       |  +--ro ypr:module-version* [module-name]
       |  |  +--ro ypr:module-name       yang:yang-identifier
-      |  |  +--ro ypr:revision          rev:revision-date-or-label
+      |  |  +--ro ypr:revision          rev:revision-date
       |  |  +--ro ypr:revision-label?   ysver:version
       |  +--ro (yp:update-trigger)?
       |     +--:(yp:periodic)
@@ -837,9 +837,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024               [Page 15]
+Graf, et al.            Expires 23 November 2024               [Page 15]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
       |  |  |  +--ro (stream-filter)?
@@ -893,12 +893,12 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024               [Page 16]
+Graf, et al.            Expires 23 November 2024               [Page 16]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
-      |  |  +--ro ypr:revision          rev:revision-date-or-label
+      |  |  +--ro ypr:revision          rev:revision-date
       |  |  +--ro ypr:revision-label?   ysver:version
       |  +--ro (yp:update-trigger)?
       |     +--:(yp:periodic)
@@ -922,7 +922,7 @@ Internet-Draft        YANG Notifications Versioning           April 2024
    The YANG module has two leaves augmenting the model of Subscription
    to YANG Notifications [RFC8639].
 
-   <CODE BEGINS> file "ietf-yang-push-revision@2024-05-21.yang"
+   <CODE BEGINS> file "ietf-yang-push-revision@2024-05-22.yang"
    module ietf-yang-push-revision {
      yang-version 1.1;
      namespace
@@ -933,36 +933,30 @@ Internet-Draft        YANG Notifications Versioning           April 2024
        reference
          "RFC 8639: Subscription to YANG Notifications";
      }
-     import ietf-yang-push {
-       prefix yp;
-       rev:recommended-min "2019-09-09";
-       reference
-         "RFC 8641: Subscriptions to YANG Datastores";
-     }
      import ietf-yang-revisions {
        prefix rev;
        reference
-         "RFC XXXX: draft-ietf-netmod-yang-module-versioning-06,
+         "RFC YYYY: draft-ietf-netmod-yang-module-versioning-11,
          Updated YANG Module Revision Handling";
      }
      import ietf-yang-types {
-
-
-
-Graf, et al.             Expires 23 October 2024               [Page 17]
-
-Internet-Draft        YANG Notifications Versioning           April 2024
-
-
        prefix yang;
-       rev:recommended-min "2013-07-15";
+       rev:recommended-min-date "2013-07-15";
        reference
          "RFC 6991: Common YANG Data Types.";
      }
      import ietf-yang-semver {
+
+
+
+Graf, et al.            Expires 23 November 2024               [Page 17]
+
+Internet-Draft        YANG Notifications Versioning             May 2024
+
+
        prefix ysver;
        reference
-         "RFC XXXX: draft-ietf-netmod-yang-semver-08, YANG Semantic
+         "RFC ZZZZ: draft-ietf-netmod-yang-semver-15, YANG Semantic
          Versioning";
      }
 
@@ -995,7 +989,7 @@ Internet-Draft        YANG Notifications Versioning           April 2024
        This version of this YANG module is part of RFC XXXX; see the RFC
        itself for full legal notices.";
 
-     revision 2024-05-21 {
+     revision 2024-05-22 {
        description
          "First revision";
        reference
@@ -1003,18 +997,19 @@ Internet-Draft        YANG Notifications Versioning           April 2024
          Subscription";
      }
 
-
-
-Graf, et al.             Expires 23 October 2024               [Page 18]
-
-Internet-Draft        YANG Notifications Versioning           April 2024
-
-
      feature yang-push-revision-supported {
        description
          "This feature indicates the YANG Subscription Notifications
          supports specifying the list of modules, revisions and
          revision-label in the YANG subscription.";
+
+
+
+Graf, et al.            Expires 23 November 2024               [Page 18]
+
+Internet-Draft        YANG Notifications Versioning             May 2024
+
+
      }
 
      // Identities
@@ -1023,55 +1018,56 @@ Internet-Draft        YANG Notifications Versioning           April 2024
        base sn:modify-subscription-error;
        description
          "Revision not supported.  This failure can be due to subscribing
-          to a specific revision not supported by the publisher.";
+         to a specific revision not supported by the publisher.";
      }
 
      identity revision-label-unsupported {
        base sn:establish-subscription-error;
        base sn:modify-subscription-error;
        description
-         "Revision-label not supported.  This failure can be due to subscribing
-          to a specific revision-label not supported by the publisher.";
+         "Revision-label not supported.  This failure can be due to
+         subscribing to a specific revision-label not supported by the publisher.";
      }
 
      identity incompatible-revision-and-revision-label {
        base sn:establish-subscription-error;
        base sn:modify-subscription-error;
        description
-       "The combination of revision and the revision-label are incompatible.
-       This failure happens when the revision and the revision-label are both specified
-       in the RPC and the YANG module supported by the publisher does not support one of
-       the revision or the revision-label.";
+         "The combination of revision and the revision-label are
+         incompatible. This failure happens when the revision and the
+         revision-label are both specified in the RPC and the YANG
+         module supported by the publisher does not support one of the
+         revision or the revision-label.";
      }
 
      grouping yang-push-module-version-config {
        description
          "This grouping combines the module name, the revision and
-         revision-label leaves. This grouping is to be used for configuration and the
-         leaves are not mandatory.";
+         revision-label leaves. This grouping is to be used for
+         configuration and the leaves are not mandatory.";
        leaf module-name {
          type yang:yang-identifier;
          description
            "This references the YANG module name.";
        }
        leaf revision {
-         type rev:revision-date-or-label;
+         type rev:revision-date;
          description
            "This references the YANG module revision to be sent in the
-
-
-
-Graf, et al.             Expires 23 October 2024               [Page 19]
-
-Internet-Draft        YANG Notifications Versioning           April 2024
-
-
            subscription.";
        }
        leaf revision-label {
          type ysver:version;
+
+
+
+Graf, et al.            Expires 23 November 2024               [Page 19]
+
+Internet-Draft        YANG Notifications Versioning             May 2024
+
+
          description
-           "This references the YANG module semversion to be sent in the
+           "This references the YANG module semantic version to be sent in the
            subscription.";
        }
      }
@@ -1079,9 +1075,10 @@ Internet-Draft        YANG Notifications Versioning           April 2024
      grouping yang-push-module-version {
        description
          "This grouping combines the module name, the revision and
-         revision-label leaves. This grouping is to be used for read-only cases such
-         as the content of YANG push Notifications. The module-name and revision are
-         mandatory and MUST be present in the data.";
+         revision-label leaves. This grouping is to be used for
+         read-only cases such as the content of YANG push Notifications.
+         The module-name and revision are mandatory and MUST be present
+         in the data.";
        leaf module-name {
          type yang:yang-identifier;
          config false;
@@ -1090,7 +1087,7 @@ Internet-Draft        YANG Notifications Versioning           April 2024
            "This references the YANG module name.";
        }
        leaf revision {
-         type rev:revision-date-or-label;
+         type rev:revision-date;
          config false;
          mandatory true;
          description
@@ -1100,7 +1097,7 @@ Internet-Draft        YANG Notifications Versioning           April 2024
        leaf revision-label {
          type ysver:version;
          description
-           "This references the YANG module semversion of the sent
+           "This references the YANG module semantic version of the sent
            notification message.";
        }
      }
@@ -1114,17 +1111,17 @@ Internet-Draft        YANG Notifications Versioning           April 2024
          config false;
          description
            "List of yang-push-module-version grouping. The revision is
-
-
-
-Graf, et al.             Expires 23 October 2024               [Page 20]
-
-Internet-Draft        YANG Notifications Versioning           April 2024
-
-
            not configurable.";
          uses ypr:yang-push-module-version;
        }
+
+
+
+Graf, et al.            Expires 23 November 2024               [Page 20]
+
+Internet-Draft        YANG Notifications Versioning             May 2024
+
+
      }
 
      grouping yang-push-module-version-config-list {
@@ -1170,17 +1167,17 @@ Internet-Draft        YANG Notifications Versioning           April 2024
          ietf-subscribed-notifications YANG module with the
          yang-push-module-version-list grouping.";
        uses ypr:yang-push-module-version-list;
-
-
-
-Graf, et al.             Expires 23 October 2024               [Page 21]
-
-Internet-Draft        YANG Notifications Versioning           April 2024
-
-
      }
 
      // Subscription container
+
+
+
+Graf, et al.            Expires 23 November 2024               [Page 21]
+
+Internet-Draft        YANG Notifications Versioning             May 2024
+
+
      augment "/sn:subscriptions/sn:subscription" {
        description
          "Augment the subscriptions RPC container from the
@@ -1229,9 +1226,12 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024               [Page 22]
+
+
+
+Graf, et al.            Expires 23 November 2024               [Page 22]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
 7.1.  Huawei VRP
@@ -1285,9 +1285,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024               [Page 23]
+Graf, et al.            Expires 23 November 2024               [Page 23]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
@@ -1341,9 +1341,9 @@ Internet-Draft        YANG Notifications Versioning           April 2024
 
 
 
-Graf, et al.             Expires 23 October 2024               [Page 24]
+Graf, et al.            Expires 23 November 2024               [Page 24]
 
-Internet-Draft        YANG Notifications Versioning           April 2024
+Internet-Draft        YANG Notifications Versioning             May 2024
 
 
    [RFC8259]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
@@ -1397,4 +1397,4 @@ Authors' Addresses
 
 
 
-Graf, et al.             Expires 23 October 2024               [Page 25]
+Graf, et al.            Expires 23 November 2024               [Page 25]
