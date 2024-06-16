@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="16" month="June" year="2024"/>
+    <date day="22" month="May" year="2024"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -402,28 +402,33 @@ module: ietf-yang-push-revision
 
   augment /sn:establish-subscription/sn:input:
     +---w module-version-config* [module-name]
+            {yang-push-revision-supported}?
        +---w module-name       yang:yang-identifier
-       +---w revision?         rev:revision-date-or-label
+       +---w revision?         rev:revision-date
        +---w revision-label?   ysver:version
   augment /sn:modify-subscription/sn:input:
     +---w module-version-config* [module-name]
+            {yang-push-revision-supported}?
        +---w module-name       yang:yang-identifier
-       +---w revision?         rev:revision-date-or-label
+       +---w revision?         rev:revision-date
        +---w revision-label?   ysver:version
   augment /sn:subscription-started:
     +--ro module-version* [module-name]
+            {yang-push-revision-supported}?
        +--ro module-name       yang:yang-identifier
-       +--ro revision          rev:revision-date-or-label
+       +--ro revision          rev:revision-date
        +--ro revision-label?   ysver:version
   augment /sn:subscription-modified:
     +--ro module-version* [module-name]
+            {yang-push-revision-supported}?
        +--ro module-name       yang:yang-identifier
-       +--ro revision          rev:revision-date-or-label
+       +--ro revision          rev:revision-date
        +--ro revision-label?   ysver:version
   augment /sn:subscriptions/sn:subscription:
     +--rw module-version-config* [module-name]
+            {yang-push-revision-supported}?
        +--rw module-name       yang:yang-identifier
-       +--rw revision?         rev:revision-date-or-label
+       +--rw revision?         rev:revision-date
        +--rw revision-label?   ysver:version
 ]]></artwork>
             </figure></t>
@@ -464,7 +469,7 @@ module: ietf-yang-push
        |        +--ro value?       <anydata>
        +--ro incomplete-update?   empty
 
-
+module: ietf-subscribed-notifications
   +--ro streams
   |  +--ro stream* [name]
   |     +--ro name                        string
@@ -566,8 +571,9 @@ module: ietf-yang-push
         |        +--ro output
         |           +--ro time    yang:date-and-time
         +--rw ypr:module-version-config* [module-name]
+        |       {yang-push-revision-supported}?
         |  +--rw ypr:module-name       yang:yang-identifier
-        |  +--rw ypr:revision?         rev:revision-date-or-label
+        |  +--rw ypr:revision?         rev:revision-date
         |  +--rw ypr:revision-label?   ysver:version
         +--rw (yp:update-trigger)?
            +--:(yp:periodic)
@@ -627,8 +633,9 @@ module: ietf-yang-push
     |  |  +---w encoding?
     |  |  |       encoding
     |  |  +---w ypr:module-version-config* [module-name]
+    |  |  |       {yang-push-revision-supported}?
     |  |  |  +---w ypr:module-name       yang:yang-identifier
-    |  |  |  +---w ypr:revision?         rev:revision-date-or-label
+    |  |  |  +---w ypr:revision?         rev:revision-date
     |  |  |  +---w ypr:revision-label?   ysver:version
     |  |  +---w (yp:update-trigger)?
     |  |     +--:(yp:periodic)
@@ -680,8 +687,9 @@ module: ietf-yang-push
     |     +---w stop-time?
     |     |       yang:date-and-time
     |     +---w ypr:module-version-config* [module-name]
+    |     |       {yang-push-revision-supported}?
     |     |  +---w ypr:module-name       yang:yang-identifier
-    |     |  +---w ypr:revision?         rev:revision-date-or-label
+    |     |  +---w ypr:revision?         rev:revision-date
     |     |  +---w ypr:revision-label?   ysver:version
     |     +---w (yp:update-trigger)?
     |        +--:(yp:periodic)
@@ -753,8 +761,9 @@ module: ietf-yang-push
     |  +--ro purpose?                                         string
     |  |       {configured}?
     |  +--ro ypr:module-version* [module-name]
+    |  |       {yang-push-revision-supported}?
     |  |  +--ro ypr:module-name       yang:yang-identifier
-    |  |  +--ro ypr:revision          rev:revision-date-or-label
+    |  |  +--ro ypr:revision          rev:revision-date
     |  |  +--ro ypr:revision-label?   ysver:version
     |  +--ro (yp:update-trigger)?
     |     +--:(yp:periodic)
@@ -820,8 +829,9 @@ module: ietf-yang-push
     |  +--ro purpose?                                         string
     |  |       {configured}?
     |  +--ro ypr:module-version* [module-name]
+    |  |       {yang-push-revision-supported}?
     |  |  +--ro ypr:module-name       yang:yang-identifier
-    |  |  +--ro ypr:revision          rev:revision-date-or-label
+    |  |  +--ro ypr:revision          rev:revision-date
     |  |  +--ro ypr:revision-label?   ysver:version
     |  +--ro (yp:update-trigger)?
     |     +--:(yp:periodic)
@@ -850,7 +860,7 @@ module: ietf-yang-push
 
         <t><figure>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-yang-push-revision@2024-05-21.yang"
+<CODE BEGINS> file "ietf-yang-push-revision@2024-05-28.yang"
 module ietf-yang-push-revision {
   yang-version 1.1;
   namespace
@@ -861,28 +871,22 @@ module ietf-yang-push-revision {
     reference
       "RFC 8639: Subscription to YANG Notifications";
   }
-  import ietf-yang-push {
-    prefix yp;
-    rev:recommended-min "2019-09-09";
-    reference
-      "RFC 8641: Subscriptions to YANG Datastores";
-  }
   import ietf-yang-revisions {
     prefix rev;
     reference
-      "RFC XXXX: draft-ietf-netmod-yang-module-versioning-06,
+      "RFC YYYY: draft-ietf-netmod-yang-module-versioning-11,
       Updated YANG Module Revision Handling";
   }
   import ietf-yang-types {
     prefix yang;
-    rev:recommended-min "2013-07-15";
+    rev:recommended-min-date "2013-07-15";
     reference
       "RFC 6991: Common YANG Data Types.";
   }
   import ietf-yang-semver {
     prefix ysver;
     reference
-      "RFC XXXX: draft-ietf-netmod-yang-semver-08, YANG Semantic
+      "RFC ZZZZ: draft-ietf-netmod-yang-semver-15, YANG Semantic
       Versioning";
   }
 
@@ -915,7 +919,7 @@ module ietf-yang-push-revision {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2024-06-16 {
+  revision 2024-05-28 {
     description
       "First revision";
     reference
@@ -936,39 +940,40 @@ module ietf-yang-push-revision {
     base sn:modify-subscription-error;
     description
       "Revision not supported.  This failure can be due to subscribing
-       to a specific revision not supported by the publisher.";
+      to a specific revision not supported by the publisher.";
   }
 
   identity revision-label-unsupported {
     base sn:establish-subscription-error;
     base sn:modify-subscription-error;
     description
-      "Revision-label not supported.  This failure can be due to subscribing
-       to a specific revision-label not supported by the publisher.";
+      "Revision-label not supported.  This failure can be due to 
+      subscribing to a specific revision-label not supported by the publisher.";
   }
 
   identity incompatible-revision-and-revision-label {
     base sn:establish-subscription-error;
     base sn:modify-subscription-error;
     description
-    "The combination of revision and the revision-label are incompatible.
-    This failure happens when the revision and the revision-label are both specified
-    in the RPC and the YANG module supported by the publisher does not support one of
-    the revision or the revision-label.";
+      "The combination of revision and the revision-label are
+      incompatible. This failure happens when the revision and the
+      revision-label are both specified in the RPC and the YANG
+      module supported by the publisher does not support one of the
+      revision or the revision-label.";
   }
 
   grouping yang-push-module-version-config {
     description
       "This grouping combines the module name, the revision and
-      revision-label leaves. This grouping is to be used for configuration and the
-      leaves are not mandatory.";
+      revision-label leaves. This grouping is to be used for
+      configuration and the leaves are not mandatory.";
     leaf module-name {
       type yang:yang-identifier;
       description
         "This references the YANG module name.";
     }
     leaf revision {
-      type rev:revision-date-or-label;
+      type rev:revision-date;
       description
         "This references the YANG module revision to be sent in the
         subscription.";
@@ -976,7 +981,7 @@ module ietf-yang-push-revision {
     leaf revision-label {
       type ysver:version;
       description
-        "This references the YANG module semversion to be sent in the
+        "This references the YANG module semantic version to be sent in the
         subscription.";
     }
   }
@@ -984,9 +989,10 @@ module ietf-yang-push-revision {
   grouping yang-push-module-version {
     description
       "This grouping combines the module name, the revision and
-      revision-label leaves. This grouping is to be used for read-only cases such
-      as the content of YANG push Notifications. The module-name and revision are
-      mandatory and MUST be present in the data.";
+      revision-label leaves. This grouping is to be used for
+      read-only cases such as the content of YANG push Notifications.
+      The module-name and revision are mandatory and MUST be present
+      in the data.";
     leaf module-name {
       type yang:yang-identifier;
       config false;
@@ -995,7 +1001,7 @@ module ietf-yang-push-revision {
         "This references the YANG module name.";
     }
     leaf revision {
-      type rev:revision-date-or-label;
+      type rev:revision-date;
       config false;
       mandatory true;
       description
@@ -1005,7 +1011,7 @@ module ietf-yang-push-revision {
     leaf revision-label {
       type ysver:version;
       description
-        "This references the YANG module semversion of the sent
+        "This references the YANG module semantic version of the sent
         notification message.";
     }
   }
@@ -1039,6 +1045,7 @@ module ietf-yang-push-revision {
 
   // Subscription parameters
   augment "/sn:establish-subscription/sn:input" {
+    if-feature "yang-push-revision-supported";
     description
       "Augment the establish-subscription RPC from the
       ietf-subscribed-notifications YANG module with the
@@ -1046,6 +1053,7 @@ module ietf-yang-push-revision {
     uses ypr:yang-push-module-version-config-list;
   }
   augment "/sn:modify-subscription/sn:input" {
+    if-feature "yang-push-revision-supported";
     description
       "Augment the modify-subscription RPC from the
       ietf-subscribed-notifications YANG module with the
@@ -1055,6 +1063,7 @@ module ietf-yang-push-revision {
 
   // Subscription notifications
   augment "/sn:subscription-started" {
+    if-feature "yang-push-revision-supported";
     description
       "Augment the subscription-started notification from the
       ietf-subscribed-notifications YANG module with the
@@ -1062,6 +1071,7 @@ module ietf-yang-push-revision {
     uses ypr:yang-push-module-version-list;
   }
   augment "/sn:subscription-modified" {
+    if-feature "yang-push-revision-supported";
     description
       "Augment the subscription-modified notification from the
       ietf-subscribed-notifications YANG module with the
@@ -1071,6 +1081,7 @@ module ietf-yang-push-revision {
 
   // Subscription container
   augment "/sn:subscriptions/sn:subscription" {
+    if-feature "yang-push-revision-supported";
     description
       "Augment the subscriptions RPC container from the
       ietf-subscribed-notifications YANG module with the
@@ -1145,39 +1156,39 @@ module ietf-yang-push-revision {
 
   <back>
     <references title="Normative References">
-      <?rfc include='reference.RFC.2119'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml'?>
 
-      <?rfc include='reference.RFC.3688'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3688.xml'?>
 
-      <?rfc include='reference.RFC.6020'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6020.xml'?>
 
-      <?rfc include='reference.RFC.6241'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml'?>
 
-      <?rfc include='reference.RFC.8174'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml'?>
 
-      <?rfc include='reference.RFC.8639'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8639.xml'?>
 
-      <?rfc include='reference.RFC.8641'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8641.xml'?>
 
-      <?rfc include='reference.I-D.ietf-netmod-yang-module-versioning'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-yang-module-versioning.xml'?>
 
-      <?rfc include='reference.I-D.ietf-netmod-yang-semver'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-yang-semver.xml'?>
     </references>
 
     <references title="Informative References">
-      <?rfc include='reference.RFC.8259'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8259.xml'?>
 
-      <?rfc include='reference.RFC.8340'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml'?>
 
-      <?rfc include='reference.RFC.8343'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8343.xml'?>
 
-      <?rfc include='reference.RFC.8640'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8640.xml'?>
 
-      <?rfc include='reference.I-D.ietf-netconf-https-notif'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
 
-      <?rfc include='reference.I-D.ietf-netconf-udp-notif'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-udp-notif.xml'?>
 
-      <?rfc include='reference.I-D.ietf-netmod-yang-packages'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-yang-packages.xml'?>
 
       <reference anchor="W3C.REC-xml-20081126"
                  derivedAnchor="W3C.REC-xml-20081126" quoteTitle="true"
