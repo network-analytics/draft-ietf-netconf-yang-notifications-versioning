@@ -979,7 +979,6 @@ module: ietf-system-capabilities
 
         <t><sourcecode type="yang" markers="true"
 		name="ietf-yang-push-revision@2024-12-17.yang"><![CDATA[
-<CODE BEGINS> file "ietf-yang-push-revision@2024-12-17.yang"
 module ietf-yang-push-revision {
   yang-version 1.1;
   namespace

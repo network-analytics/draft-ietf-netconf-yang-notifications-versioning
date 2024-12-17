@@ -81,7 +81,7 @@ Table of Contents
      6.2.  YANG Module Name  . . . . . . . . . . . . . . . . . . . .  27
    7.  Operational Considerations  . . . . . . . . . . . . . . . . .  27
    8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  27
-     8.1.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  28
+     8.1.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  27
      8.2.  6WIND VSR . . . . . . . . . . . . . . . . . . . . . . . .  28
      8.3.  Cisco IOS XR  . . . . . . . . . . . . . . . . . . . . . .  28
    9.  Security Considerations . . . . . . . . . . . . . . . . . . .  28
@@ -1147,7 +1147,6 @@ Internet-Draft        YANG Notifications Versioning        December 2024
    to YANG Notifications [RFC8639].
 
    <CODE BEGINS> file "ietf-yang-push-revision@2024-12-17.yang"
-   <CODE BEGINS> file "ietf-yang-push-revision@2024-12-17.yang"
    module ietf-yang-push-revision {
      yang-version 1.1;
      namespace
@@ -1170,6 +1169,7 @@ Internet-Draft        YANG Notifications Versioning        December 2024
        reference
          "RFC 6991: Common YANG Data Types.";
      }
+     import ietf-yang-semver {
 
 
 
@@ -1178,7 +1178,6 @@ Graf, et al.              Expires 20 June 2025                 [Page 21]
 Internet-Draft        YANG Notifications Versioning        December 2024
 
 
-     import ietf-yang-semver {
        prefix ysver;
        reference
          "RFC ZZZZ: draft-ietf-netmod-yang-semver-15, YANG Semantic
@@ -1226,6 +1225,7 @@ Internet-Draft        YANG Notifications Versioning        December 2024
        modification, is permitted pursuant to, and subject to the license
        terms contained in, the Revised BSD License set forth in Section
        4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
+       (https://trustee.ietf.org/license-info).
 
 
 
@@ -1233,8 +1233,6 @@ Graf, et al.              Expires 20 June 2025                 [Page 22]
 
 Internet-Draft        YANG Notifications Versioning        December 2024
 
-
-       (https://trustee.ietf.org/license-info).
 
        This version of this YANG module is part of RFC XXXX; see the RFC
        itself for full legal notices.";
@@ -1282,6 +1280,8 @@ Internet-Draft        YANG Notifications Versioning        December 2024
          revision or the revision-label.";
      }
 
+     grouping yang-push-module-version-config {
+       description
 
 
 
@@ -1290,8 +1290,6 @@ Graf, et al.              Expires 20 June 2025                 [Page 23]
 Internet-Draft        YANG Notifications Versioning        December 2024
 
 
-     grouping yang-push-module-version-config {
-       description
          "This grouping combines the module name, the revision and
          revision-label leaves. This grouping is to be used for
          configuration and the leaves are not mandatory.";
@@ -1338,6 +1336,8 @@ Internet-Draft        YANG Notifications Versioning        December 2024
        }
        leaf revision-label {
          type ysver:version;
+         description
+           "This references the YANG module semantic version of the sent
 
 
 
@@ -1346,8 +1346,6 @@ Graf, et al.              Expires 20 June 2025                 [Page 24]
 Internet-Draft        YANG Notifications Versioning        December 2024
 
 
-         description
-           "This references the YANG module semantic version of the sent
            notification message.";
        }
      }
@@ -1394,6 +1392,8 @@ Internet-Draft        YANG Notifications Versioning        December 2024
          "Augment the establish-subscription RPC from the
          ietf-subscribed-notifications YANG module with the
          yang-push-module-version-config-list grouping.";
+       uses ypr:yang-push-module-version-config-list;
+     }
 
 
 
@@ -1402,8 +1402,6 @@ Graf, et al.              Expires 20 June 2025                 [Page 25]
 Internet-Draft        YANG Notifications Versioning        December 2024
 
 
-       uses ypr:yang-push-module-version-config-list;
-     }
      augment "/sn:modify-subscription/sn:input" {
        if-feature "yang-push-revision-supported";
        description
@@ -1450,6 +1448,8 @@ Internet-Draft        YANG Notifications Versioning        December 2024
          type boolean;
          description
            "Specifies whether the publisher supports exporting
+           revision and revision-label in YANG-Push subscription state change
+           notifications.";
 
 
 
@@ -1458,8 +1458,6 @@ Graf, et al.              Expires 20 June 2025                 [Page 26]
 Internet-Draft        YANG Notifications Versioning        December 2024
 
 
-           revision and revision-label in YANG-Push subscription state change
-           notifications.";
          reference
            "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
        }
@@ -1502,10 +1500,12 @@ Internet-Draft        YANG Notifications Versioning        December 2024
 
    Note to the RFC-Editor: Please remove this section before publishing.
 
+8.1.  Huawei VRP
 
-
-
-
+   Huawei implemented in notification the module, revision and revision-
+   label extension as described in Section 3 for a YANG-Push publisher
+   on UDP-based Transport for Configured Subscriptions
+   [I-D.ietf-netconf-udp-notif] in their VRP platform.
 
 
 
@@ -1513,13 +1513,6 @@ Graf, et al.              Expires 20 June 2025                 [Page 27]
 
 Internet-Draft        YANG Notifications Versioning        December 2024
 
-
-8.1.  Huawei VRP
-
-   Huawei implemented in notification the module, revision and revision-
-   label extension as described in Section 3 for a YANG-Push publisher
-   on UDP-based Transport for Configured Subscriptions
-   [I-D.ietf-netconf-udp-notif] in their VRP platform.
 
 8.2.  6WIND VSR
 
@@ -1562,6 +1555,13 @@ Internet-Draft        YANG Notifications Versioning        December 2024
    [I-D.ietf-netmod-yang-semver]
               Clarke, J., Wilton, R., Rahman, R., Lengyel, B., Sterne,
               J., and B. Claise, "YANG Semantic Versioning", Work in
+              Progress, Internet-Draft, draft-ietf-netmod-yang-semver-
+              17, 2 July 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-netmod-yang-semver-17>.
+
+
+
+
 
 
 
@@ -1569,10 +1569,6 @@ Graf, et al.              Expires 20 June 2025                 [Page 28]
 
 Internet-Draft        YANG Notifications Versioning        December 2024
 
-
-              Progress, Internet-Draft, draft-ietf-netmod-yang-semver-
-              17, 2 July 2024, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-netmod-yang-semver-17>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1617,6 +1613,10 @@ Internet-Draft        YANG Notifications Versioning        December 2024
               2022, <https://www.rfc-editor.org/info/rfc9196>.
 
 11.2.  Informative References
+
+
+
+
 
 
 
