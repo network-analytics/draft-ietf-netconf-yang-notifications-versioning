@@ -136,7 +136,8 @@
       module semantic version to which the YANG module version needs to be
       backward compatible to. The subscription state change
       "subscription-started" and "subscription-modified" notification messages
-      are also extended to include the revision and semantic version.</t>
+      are also extended to include the revision, semantic version and YANG library
+	  content-id.</t>
     </section>
 
     <section anchor="Datastore-Selection"
@@ -320,6 +321,14 @@
         content.</dd>
       </dl>
 
+      <dl>
+        <dt>content-id:</dt>
+
+        <dd>Contains the YANG library, <xref target="RFC8525"/>, content
+		identifier, which is an implementation-specific identifier representing
+		the current information in the YANG library on a specific server.</dd>
+      </dl>
+
       <t><xref target="subscription_modified_notif_example_xml_fig"/> provides
       an example of a "subscription-modified" subscription state change
       notification message with the YANG module name, revision, revision label
@@ -347,6 +356,7 @@
       <module-name>ietf-interfaces</module-name>
       <revision>2018-02-20</revision>
       <revision-label>2.0.0</revision-label>
+	  <content-id>1</content-id>
     </module-version>
   </subscription-modified>
 </notification>
@@ -374,6 +384,7 @@
         "module-name": "ietf-interfaces"
         "revision": "2018-02-20",
         "revision-label": "2.0.0",
+        "content-id": "1",
       }],
     }
   }
@@ -389,8 +400,8 @@
 
       <ul>
         <li>A leaf 'yang-push-module-revision-supported', stating that the YANG-Push
-		subscription state change notifications are extended with revision and revision-label
-		extensions.</li>
+		subscription state change notifications are extended with revision, revision-label
+		and content-id extensions.</li>
       </ul>
 
       <t>The YANG models defined in <xref target="YANG Module"/> augments the
@@ -448,11 +459,11 @@ module: ietf-system-capabilities
              title="The &quot;ietf-yang-push-revision&quot; Module">
       <section anchor="Data Model Overview" title="Data Model Overview">
         <t>This YANG module augments the "ietf-yang-push" module with the
-        module-name, revision and revision-label in the "subscription-started"
-        and "subscription-modified" subscription state change notifications
-        and the ability to define the "revision" and "revision-label" in the
-        "establish-subscription" and "modify-subscription" RPCs in the
-        datastore push subscription.</t>
+        module-name, revision, revision-label and content-id in the 
+		"subscription-started" and "subscription-modified" subscription
+		state change notifications and the ability to define the "revision"
+		and "revision-label" in the "establish-subscription" and 
+		"modify-subscription" RPCs in the datastore push subscription.</t>
 
         <section anchor="Tree View" title="Tree View">
           <t>The following is the YANG tree diagram <xref target="RFC8340"/>
@@ -475,22 +486,29 @@ module: ietf-yang-push-revision
        +---w revision-label?   ysver:version
   augment /sn:subscription-started:
     +--ro module-version* [module-name]
+    |       {yang-push-revision-supported}?
+    |  +--ro module-name       yang:yang-identifier
+    |  +--ro revision          rev:revision-date
+    |  +--ro revision-label?   ysver:version
+    +--ro content-id?       -> /yanglib:yang-library/content-id
             {yang-push-revision-supported}?
-       +--ro module-name       yang:yang-identifier
-       +--ro revision          rev:revision-date
-       +--ro revision-label?   ysver:version
   augment /sn:subscription-modified:
     +--ro module-version* [module-name]
+    |       {yang-push-revision-supported}?
+    |  +--ro module-name       yang:yang-identifier
+    |  +--ro revision          rev:revision-date
+    |  +--ro revision-label?   ysver:version
+    +--ro content-id?       -> /yanglib:yang-library/content-id
             {yang-push-revision-supported}?
-       +--ro module-name       yang:yang-identifier
-       +--ro revision          rev:revision-date
-       +--ro revision-label?   ysver:version
   augment /sn:subscriptions/sn:subscription:
     +--rw module-version-config* [module-name]
             {yang-push-revision-supported}?
        +--rw module-name       yang:yang-identifier
        +--rw revision?         rev:revision-date
        +--rw revision-label?   ysver:version
+  augment /sysc:system-capabilities/notc:subscription-capabilities:
+    +--ro yang-push-module-revision-supported?   boolean
+            {yang-push-revision-supported}?
 ]]></sourcecode></t>
         </section>
 
@@ -960,8 +978,8 @@ module: ietf-system-capabilities
         target="RFC8639">Subscription to YANG Notifications</xref>.</t>
 
         <t><sourcecode type="yang" markers="true"
-		name="ietf-yang-push-revision@2024-05-28.yang"><![CDATA[
-<CODE BEGINS> file "ietf-yang-push-revision@2024-05-28.yang"
+		name="ietf-yang-push-revision@2024-12-17.yang"><![CDATA[
+<CODE BEGINS> file "ietf-yang-push-revision@2024-12-17.yang"
 module ietf-yang-push-revision {
   yang-version 1.1;
   namespace
@@ -989,6 +1007,11 @@ module ietf-yang-push-revision {
     reference
       "RFC ZZZZ: draft-ietf-netmod-yang-semver-15, YANG Semantic
       Versioning";
+  }
+  import ietf-yang-library {
+    prefix yanglib;
+    reference
+      "RFC 8525: YANG Library";
   }
   import ietf-system-capabilities {
     prefix sysc;
@@ -1141,6 +1164,14 @@ module ietf-yang-push-revision {
         not configurable.";
       uses ypr:yang-push-module-version;
     }
+    leaf content-id {
+      type leafref {
+        path "/yanglib:yang-library/yanglib:content-id";
+      }
+      description
+        "Contains the YANG library content identifier for the updated
+         YANG library at the time the notification is generated.";
+    }
   }
 
   grouping yang-push-module-version-config-list {
@@ -1212,7 +1243,7 @@ module ietf-yang-push-revision {
       description
         "Specifies whether the publisher supports exporting
         revision and revision-label in YANG-Push subscription state change
-		notifications.";
+	notifications.";
       reference
         "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
     }
@@ -1312,6 +1343,8 @@ module ietf-yang-push-revision {
       <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml'?>
 
       <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml'?>
+
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8525.xml'?>
 
       <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8639.xml'?>
 

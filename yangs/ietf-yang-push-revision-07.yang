@@ -26,6 +26,11 @@ module ietf-yang-push-revision {
       "RFC ZZZZ: draft-ietf-netmod-yang-semver-15, YANG Semantic
       Versioning";
   }
+  import ietf-yang-library {
+    prefix yanglib;
+    reference
+      "RFC 8525: YANG Library";
+  }
   import ietf-system-capabilities {
     prefix sysc;
     reference
@@ -176,6 +181,14 @@ module ietf-yang-push-revision {
         "List of yang-push-module-version grouping. The revision is
         not configurable.";
       uses ypr:yang-push-module-version;
+    }
+    leaf content-id {
+      type leafref {
+        path "/yanglib:yang-library/yanglib:content-id";
+      }
+      description
+        "Contains the YANG library content identifier for the updated
+         YANG library at the time the notification is generated.";
     }
   }
 
