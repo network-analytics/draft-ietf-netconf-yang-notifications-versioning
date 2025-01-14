@@ -183,6 +183,7 @@ module ietf-yang-push-revision {
       uses ypr:yang-push-module-version;
     }
     leaf yang-library-content-id {
+      config false;
       type leafref {
         path "/yanglib:yang-library/yanglib:content-id";
       }
@@ -256,7 +257,6 @@ module ietf-yang-push-revision {
     description
       "Add system level capabilities";
     leaf yang-push-module-revision-supported {
-      if-feature "yang-push-revision-supported";
       type boolean;
       description
         "Specifies whether the publisher supports exporting

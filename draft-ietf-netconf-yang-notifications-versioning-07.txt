@@ -1363,6 +1363,7 @@ Internet-Draft        YANG Notifications Versioning         January 2025
          uses ypr:yang-push-module-version;
        }
        leaf yang-library-content-id {
+             config false;
          type leafref {
            path "/yanglib:yang-library/yanglib:content-id";
          }
@@ -1393,7 +1394,6 @@ Internet-Draft        YANG Notifications Versioning         January 2025
          ietf-subscribed-notifications YANG module with the
          yang-push-module-version-config-list grouping.";
        uses ypr:yang-push-module-version-config-list;
-     }
 
 
 
@@ -1402,6 +1402,7 @@ Graf, et al.              Expires 18 July 2025                 [Page 25]
 Internet-Draft        YANG Notifications Versioning         January 2025
 
 
+     }
      augment "/sn:modify-subscription/sn:input" {
        if-feature "yang-push-revision-supported";
        description
@@ -1444,7 +1445,6 @@ Internet-Draft        YANG Notifications Versioning         January 2025
        description
          "Add system level capabilities";
        leaf yang-push-module-revision-supported {
-         if-feature "yang-push-revision-supported";
          type boolean;
          description
            "Specifies whether the publisher supports exporting
