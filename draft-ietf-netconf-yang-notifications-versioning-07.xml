@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="17" month="December" year="2024"/>
+    <date day="14" month="January" year="2025"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -77,14 +77,6 @@
       new extension with the revision and the semantic version of the YANG
       push subscription state change notification is proposed.</t>
     </abstract>
-
-    <note title="Requirements Language">
-      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-      "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-      "OPTIONAL" in this document are to be interpreted as described in BCP 14
-      <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when,
-      they appear in all capitals, as shown here.</t>
-    </note>
   </front>
 
   <middle>
@@ -134,10 +126,26 @@
       <t>This documents extends the current YANG notifications subscription
       mechanism to allow to subscribe to a specific revision or latest YANG
       module semantic version to which the YANG module version needs to be
-      backward compatible to. The subscription state change
-      "subscription-started" and "subscription-modified" notification messages
-      are also extended to include the revision, semantic version and YANG library
-	  content-id.</t>
+      backward compatible to.</t>
+	  
+	  <t>The subscription state change "subscription-started" and
+	  "subscription-modified" notification messages are also extended to
+	  include the revision, semantic version and YANG library content-id. This
+	  allows a YANG-Push receiver to detect wherever the subscribed YANG
+	  module revision or revision-label has changed or yang-library-content-id
+	  change indicates that YANG module(s) on the network management server of
+	  the YANG-Push publisher has changed.</t>
+	  
+      <section title="Terminology">
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+        "OPTIONAL" in this document are to be interpreted as described in BCP
+        14 [RFC2119] [RFC8174] when, and only when, they appear in all
+        capitals, as shown here.</t>
+		
+		<t>The terms "YANG library" and "YANG library content identifier" are
+		used as defined in <xref target="RFC8525"/>.</t>
+      </section>	  
     </section>
 
     <section anchor="Datastore-Selection"
@@ -322,10 +330,10 @@
       </dl>
 
       <dl>
-        <dt>content-id:</dt>
+        <dt>yang-library-content-id:</dt>
 
-        <dd>Contains the YANG library, <xref target="RFC8525"/>, content
-		identifier, which is an implementation-specific identifier representing
+        <dd>Contains the YANG library content identifier <xref target="RFC8525"/>
+		which is an implementation-specific identifier representing
 		the current information in the YANG library on a specific server.</dd>
       </dl>
 
@@ -356,7 +364,7 @@
       <module-name>ietf-interfaces</module-name>
       <revision>2018-02-20</revision>
       <revision-label>2.0.0</revision-label>
-	  <content-id>1</content-id>
+	  <yang-library-content-id>1</yang-library-content-id>
     </module-version>
   </subscription-modified>
 </notification>
@@ -384,7 +392,7 @@
         "module-name": "ietf-interfaces"
         "revision": "2018-02-20",
         "revision-label": "2.0.0",
-        "content-id": "1",
+        "yang-library-content-id": "1",
       }],
     }
   }
@@ -401,7 +409,7 @@
       <ul>
         <li>A leaf 'yang-push-module-revision-supported', stating that the YANG-Push
 		subscription state change notifications are extended with revision, revision-label
-		and content-id extensions.</li>
+		and yang-library-content-id extensions.</li>
       </ul>
 
       <t>The YANG models defined in <xref target="YANG Module"/> augments the
@@ -459,8 +467,8 @@ module: ietf-system-capabilities
              title="The &quot;ietf-yang-push-revision&quot; Module">
       <section anchor="Data Model Overview" title="Data Model Overview">
         <t>This YANG module augments the "ietf-yang-push" module with the
-        module-name, revision, revision-label and content-id in the 
-		"subscription-started" and "subscription-modified" subscription
+        module-name, revision, revision-label and yang-library-content-id
+		in the "subscription-started" and "subscription-modified" subscription
 		state change notifications and the ability to define the "revision"
 		and "revision-label" in the "establish-subscription" and 
 		"modify-subscription" RPCs in the datastore push subscription.</t>
@@ -490,7 +498,7 @@ module: ietf-yang-push-revision
     |  +--ro module-name       yang:yang-identifier
     |  +--ro revision          rev:revision-date
     |  +--ro revision-label?   ysver:version
-    +--ro content-id?       -> /yanglib:yang-library/content-id
+    +--ro yang-library-content-id?       -> /yanglib:yang-library/content-id
             {yang-push-revision-supported}?
   augment /sn:subscription-modified:
     +--ro module-version* [module-name]
@@ -498,7 +506,7 @@ module: ietf-yang-push-revision
     |  +--ro module-name       yang:yang-identifier
     |  +--ro revision          rev:revision-date
     |  +--ro revision-label?   ysver:version
-    +--ro content-id?       -> /yanglib:yang-library/content-id
+    +--ro yang-library-content-id?       -> /yanglib:yang-library/content-id
             {yang-push-revision-supported}?
   augment /sn:subscriptions/sn:subscription:
     +--rw module-version-config* [module-name]
@@ -1163,13 +1171,13 @@ module ietf-yang-push-revision {
         not configurable.";
       uses ypr:yang-push-module-version;
     }
-    leaf content-id {
+    leaf yang-library-content-id {
       type leafref {
         path "/yanglib:yang-library/yanglib:content-id";
       }
       description
-        "Contains the YANG library content identifier for the updated
-         YANG library at the time the notification is generated.";
+        "Contains the YANG library content identifier RFC 8525
+        information.";
     }
   }
 

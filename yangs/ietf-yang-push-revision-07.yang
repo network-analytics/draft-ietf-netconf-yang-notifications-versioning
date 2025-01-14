@@ -73,7 +73,7 @@ module ietf-yang-push-revision {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2024-12-17 {
+  revision 2025-01-14 {
     description
       "First revision";
     reference
@@ -182,13 +182,13 @@ module ietf-yang-push-revision {
         not configurable.";
       uses ypr:yang-push-module-version;
     }
-    leaf content-id {
+    leaf yang-library-content-id {
       type leafref {
         path "/yanglib:yang-library/yanglib:content-id";
       }
       description
-        "Contains the YANG library content identifier for the updated
-         YANG library at the time the notification is generated.";
+        "Contains the YANG library content identifier RFC 8525
+        information.";
     }
   }
 
