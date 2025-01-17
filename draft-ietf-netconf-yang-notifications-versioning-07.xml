@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="14" month="January" year="2025"/>
+    <date day="17" month="January" year="2025"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription mechanism
@@ -130,11 +130,12 @@
 	  
 	  <t>The subscription state change "subscription-started" and
 	  "subscription-modified" notification messages are also extended to
-	  include the revision, semantic version and YANG library content-id. This
-	  allows a YANG-Push receiver to detect wherever the subscribed YANG
-	  module revision or revision-label has changed or yang-library-content-id
-	  change indicates that YANG module(s) on the network management server of
-	  the YANG-Push publisher has changed.</t>
+	  include the YANG module revision, revision-label, and YANG library
+	  content-id. Changes in the revision and revision-label fields allow a
+	  YANG-Push receiver to detect whenever the subscribed YANG module has
+	  changed. Changes in the yang-library-content-id that YANG module(s) on
+	  the network management server of the YANG-Push publisher has/have
+	  changed.</t>
 	  
       <section title="Terminology">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
