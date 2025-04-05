@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 <?rfc toc="yes"?>
 <?rfc tocompact="yes"?>
 <?rfc tocdepth="2"?>
@@ -210,15 +209,18 @@
           <tr>
             <th align="left" colspan="1" rowspan="1">Error identity</th>
 
-            <th align="left" colspan="1" rowspan="1">Uses "error-tag"</th>
+            <th align="left" colspan="1" rowspan="1">
+						Uses "error-tag"</th>
           </tr>
         </thead>
 
         <tbody>
           <tr>
-            <td align="left" colspan="1" rowspan="1">revision-unsupported</td>
+            <td align="left" colspan="1" rowspan="1">
+						revision-unsupported</td>
 
-            <td align="left" colspan="1" rowspan="1">invalid-value</td>
+            <td align="left" colspan="1" rowspan="1">
+						invalid-value</td>
           </tr>
 
           <tr>
@@ -241,10 +243,10 @@
 			provides an example of a "establish-subscription" RPC call with
 			YANG revision and datastore-xpath-filter for periodical
 			subscription. <xref
-      target="subscription_establish_sub_positive_response_example_xml_fig"/>
+target="subscription_establish_sub_positive_response_example_xml_fig"/>
       shows the response when the RPC has been accepted by the NETCONF
 			server and <xref
-      target="subscription_establish_sub_error_response_example_xml_fig"/>
+target="subscription_establish_sub_error_response_example_xml_fig"/>
 			the error sent by the NETCONF server when the revision is not
 			supported.</t>
 
@@ -277,8 +279,9 @@
         ]]></sourcecode>
       </figure>
 
-      <figure anchor="subscription_establish_sub_positive_response_example_xml_fig"
-              title="RPC Example for a positive establish-subscription response">
+      <figure
+anchor="subscription_establish_sub_positive_response_example_xml_fig"
+title="RPC Example for a positive establish-subscription response">
         <sourcecode type="xml"><![CDATA[
 <rpc-reply message-id="101"
    xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
@@ -290,8 +293,9 @@
         ]]></sourcecode>
       </figure>
 
-      <figure anchor="subscription_establish_sub_error_response_example_xml_fig"
-              title="RPC Example for an error establish-subscription response">
+      <figure
+			anchor="subscription_establish_sub_error_response_example_xml_fig"
+      title="RPC Example for an error establish-subscription response">
         <sourcecode type="xml"><![CDATA[
 <rpc-reply message-id="101"
   xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"
@@ -365,7 +369,7 @@
 			target="RFC8640"/>.</t>
 
       <figure anchor="subscription_modified_notif_example_xml_fig"
-              title="XML Push Example for a subscription-modified notification message">
+title="XML Push Example for a subscription-modified notification message">
         <sourcecode type="xml"><![CDATA[
 <notification xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
   <eventTime>2023-01-03T10:00:00Z</eventTime>
@@ -407,12 +411,12 @@ title="JSON Push Example for a subscription-modified notification message">
       "stream-xpath-filter": "/ietf-interfaces:interfaces",
       "stream": "NETCONF",
       "ietf-yang-push-revision:module-version": [
-			  {
+        {
         "module-name": "ietf-interfaces"
         "revision": "2018-02-20",
         "revision-label": "2.0.0",
         }
-			],
+      ],
       "ietf-yang-push-revision:yang-library-content-id": "1",
     }
 
@@ -1123,7 +1127,8 @@ module ietf-yang-push-revision {
     base sn:modify-subscription-error;
     description
       "Revision-label not supported.  This failure can be due to 
-      subscribing to a specific revision-label not supported by the publisher.";
+      subscribing to a specific revision-label not supported by the
+      publisher.";
   }
 
   identity incompatible-revision-and-revision-label {
@@ -1156,8 +1161,8 @@ module ietf-yang-push-revision {
     leaf revision-label {
       type ysver:version;
       description
-        "This references the YANG module semantic version to be sent in the
-        subscription.";
+        "This references the YANG module semantic version to be sent in
+        the subscription.";
     }
   }
 
@@ -1204,7 +1209,7 @@ module ietf-yang-push-revision {
       uses ypr:yang-push-module-version;
     }
     leaf yang-library-content-id {
-	  config false;
+    config false;
       type leafref {
         path "/yanglib:yang-library/yanglib:content-id";
       }
@@ -1281,10 +1286,11 @@ module ietf-yang-push-revision {
       type boolean;
       description
         "Specifies whether the publisher supports exporting
-        revision and revision-label in YANG-Push subscription state change
-	notifications.";
+        revision and revision-label in YANG-Push subscription state
+        change notifications.";
       reference
-        "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
+        "RFC XXXX: Support of Versioning in YANG Notifications
+        Subscription";
     }
   }
 }

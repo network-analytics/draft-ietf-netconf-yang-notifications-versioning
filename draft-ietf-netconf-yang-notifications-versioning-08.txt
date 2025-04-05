@@ -81,7 +81,7 @@ Table of Contents
      6.1.  IETF XML Registry . . . . . . . . . . . . . . . . . . . .  27
      6.2.  YANG Module Name  . . . . . . . . . . . . . . . . . . . .  27
    7.  Operational Considerations  . . . . . . . . . . . . . . . . .  27
-   8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  27
+   8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  28
      8.1.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  28
      8.2.  6WIND VSR . . . . . . . . . . . . . . . . . . . . . . . .  28
      8.3.  Cisco IOS XR  . . . . . . . . . . . . . . . . . . . . . .  28
@@ -89,7 +89,7 @@ Table of Contents
    10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  28
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  28
      11.1.  Normative References . . . . . . . . . . . . . . . . . .  28
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  29
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  30
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  31
 
 1.  Introduction
@@ -402,12 +402,12 @@ Internet-Draft        YANG Notifications Versioning           April 2025
          "stream-xpath-filter": "/ietf-interfaces:interfaces",
          "stream": "NETCONF",
          "ietf-yang-push-revision:module-version": [
-                             {
+           {
            "module-name": "ietf-interfaces"
            "revision": "2018-02-20",
            "revision-label": "2.0.0",
            }
-                           ],
+         ],
          "ietf-yang-push-revision:yang-library-content-id": "1",
        }
 
@@ -1272,7 +1272,8 @@ Internet-Draft        YANG Notifications Versioning           April 2025
        base sn:modify-subscription-error;
        description
          "Revision-label not supported.  This failure can be due to
-         subscribing to a specific revision-label not supported by the publisher.";
+         subscribing to a specific revision-label not supported by the
+         publisher.";
      }
 
      identity incompatible-revision-and-revision-label {
@@ -1281,7 +1282,6 @@ Internet-Draft        YANG Notifications Versioning           April 2025
        description
          "The combination of revision and the revision-label are
          incompatible. This failure happens when the revision and the
-         revision-label are both specified in the RPC and the YANG
 
 
 
@@ -1290,6 +1290,7 @@ Graf, et al.             Expires 7 October 2025                [Page 23]
 Internet-Draft        YANG Notifications Versioning           April 2025
 
 
+         revision-label are both specified in the RPC and the YANG
          module supported by the publisher does not support one of the
          revision or the revision-label.";
      }
@@ -1313,8 +1314,8 @@ Internet-Draft        YANG Notifications Versioning           April 2025
        leaf revision-label {
          type ysver:version;
          description
-           "This references the YANG module semantic version to be sent in the
-           subscription.";
+           "This references the YANG module semantic version to be sent in
+           the subscription.";
        }
      }
 
@@ -1337,7 +1338,6 @@ Internet-Draft        YANG Notifications Versioning           April 2025
          config false;
          mandatory true;
          description
-           "This references the YANG module revision of the sent
 
 
 
@@ -1346,6 +1346,7 @@ Graf, et al.             Expires 7 October 2025                [Page 24]
 Internet-Draft        YANG Notifications Versioning           April 2025
 
 
+           "This references the YANG module revision of the sent
            notification message.";
        }
        leaf revision-label {
@@ -1369,7 +1370,7 @@ Internet-Draft        YANG Notifications Versioning           April 2025
          uses ypr:yang-push-module-version;
        }
        leaf yang-library-content-id {
-             config false;
+       config false;
          type leafref {
            path "/yanglib:yang-library/yanglib:content-id";
          }
@@ -1393,7 +1394,6 @@ Internet-Draft        YANG Notifications Versioning           April 2025
      }
 
      // Subscription parameters
-     augment "/sn:establish-subscription/sn:input" {
 
 
 
@@ -1402,6 +1402,7 @@ Graf, et al.             Expires 7 October 2025                [Page 25]
 Internet-Draft        YANG Notifications Versioning           April 2025
 
 
+     augment "/sn:establish-subscription/sn:input" {
        if-feature "yang-push-revision-supported";
        description
          "Augment the establish-subscription RPC from the
@@ -1449,7 +1450,6 @@ Internet-Draft        YANG Notifications Versioning           April 2025
      // Event capabilities
      augment "/sysc:system-capabilities/notc:subscription-capabilities" {
        description
-         "Add system level capabilities";
 
 
 
@@ -1458,14 +1458,16 @@ Graf, et al.             Expires 7 October 2025                [Page 26]
 Internet-Draft        YANG Notifications Versioning           April 2025
 
 
+         "Add system level capabilities";
        leaf yang-push-module-revision-supported {
          type boolean;
          description
            "Specifies whether the publisher supports exporting
-           revision and revision-label in YANG-Push subscription state change
-           notifications.";
+           revision and revision-label in YANG-Push subscription state
+           change notifications.";
          reference
-           "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
+           "RFC XXXX: Support of Versioning in YANG Notifications
+           Subscription";
        }
      }
    }
@@ -1502,9 +1504,7 @@ Internet-Draft        YANG Notifications Versioning           April 2025
    information to the solution in this draft by describing how one
    specifi YANG module revision is part of a set of YANG modules.
 
-8.  Implementation Status
 
-   Note to the RFC-Editor: Please remove this section before publishing.
 
 
 
@@ -1513,6 +1513,10 @@ Graf, et al.             Expires 7 October 2025                [Page 27]
 
 Internet-Draft        YANG Notifications Versioning           April 2025
 
+
+8.  Implementation Status
+
+   Note to the RFC-Editor: Please remove this section before publishing.
 
 8.1.  Huawei VRP
 
@@ -1559,10 +1563,6 @@ Internet-Draft        YANG Notifications Versioning           April 2025
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
               yang-module-versioning-13>.
 
-   [I-D.ietf-netmod-yang-semver]
-              Clarke, J., Wilton, R., Rahman, R., Lengyel, B., Sterne,
-              J., and B. Claise, "YANG Semantic Versioning", Work in
-
 
 
 Graf, et al.             Expires 7 October 2025                [Page 28]
@@ -1570,6 +1570,9 @@ Graf, et al.             Expires 7 October 2025                [Page 28]
 Internet-Draft        YANG Notifications Versioning           April 2025
 
 
+   [I-D.ietf-netmod-yang-semver]
+              Clarke, J., Wilton, R., Rahman, R., Lengyel, B., Sterne,
+              J., and B. Claise, "YANG Semantic Versioning", Work in
               Progress, Internet-Draft, draft-ietf-netmod-yang-semver-
               20, 7 February 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
@@ -1612,12 +1615,9 @@ Internet-Draft        YANG Notifications Versioning           April 2025
               for Datastore Updates", RFC 8641, DOI 10.17487/RFC8641,
               September 2019, <https://www.rfc-editor.org/info/rfc8641>.
 
-   [RFC9196]  Lengyel, B., Clemm, A., and B. Claise, "YANG Modules
-              Describing Capabilities for Systems and Datastore Update
-              Notifications", RFC 9196, DOI 10.17487/RFC9196, February
-              2022, <https://www.rfc-editor.org/info/rfc9196>.
 
-11.2.  Informative References
+
+
 
 
 
@@ -1625,6 +1625,13 @@ Graf, et al.             Expires 7 October 2025                [Page 29]
 
 Internet-Draft        YANG Notifications Versioning           April 2025
 
+
+   [RFC9196]  Lengyel, B., Clemm, A., and B. Claise, "YANG Modules
+              Describing Capabilities for Systems and Datastore Update
+              Notifications", RFC 9196, DOI 10.17487/RFC9196, February
+              2022, <https://www.rfc-editor.org/info/rfc9196>.
+
+11.2.  Informative References
 
    [I-D.ietf-netconf-https-notif]
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
@@ -1667,13 +1674,6 @@ Internet-Draft        YANG Notifications Versioning           April 2025
               DOI 10.17487/RFC8640, September 2019,
               <https://www.rfc-editor.org/info/rfc8640>.
 
-   [W3C.REC-xml-20081126]
-              Bray, T., Paoli, J., Sperberg-McQueen, M., Maler, E., and
-              F. Yergeau, "Extensible Markup Language (XML) 1.0 (Fifth
-              Edition)", World Wide Web Consortium Recommendation REC-
-              xml-20081126, November 2008,
-              <https://www.w3.org/TR/2008/REC-xml-20081126>.
-
 
 
 
@@ -1681,6 +1681,13 @@ Graf, et al.             Expires 7 October 2025                [Page 30]
 
 Internet-Draft        YANG Notifications Versioning           April 2025
 
+
+   [W3C.REC-xml-20081126]
+              Bray, T., Paoli, J., Sperberg-McQueen, M., Maler, E., and
+              F. Yergeau, "Extensible Markup Language (XML) 1.0 (Fifth
+              Edition)", World Wide Web Consortium Recommendation REC-
+              xml-20081126, November 2008,
+              <https://www.w3.org/TR/2008/REC-xml-20081126>.
 
 Authors' Addresses
 
@@ -1702,13 +1709,6 @@ Authors' Addresses
    Lyon
    France
    Email: alex.huang-feng@insa-lyon.fr
-
-
-
-
-
-
-
 
 
 
