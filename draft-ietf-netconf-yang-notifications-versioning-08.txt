@@ -1327,15 +1327,15 @@ Internet-Draft        YANG Notifications Versioning           April 2025
          The module-name and revision are mandatory and MUST be present
          in the data.";
        leaf module-name {
-         type yang:yang-identifier;
          config false;
+         type yang:yang-identifier;
          mandatory true;
          description
            "This references the YANG module name.";
        }
        leaf revision {
-         type rev:revision-date;
          config false;
+         type rev:revision-date;
          mandatory true;
          description
 
