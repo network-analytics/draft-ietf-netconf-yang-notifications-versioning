@@ -153,15 +153,15 @@ module ietf-yang-push-revision {
       The module-name and revision are mandatory and MUST be present
       in the data.";
     leaf module-name {
-      config false;
       type yang:yang-identifier;
+      config false;
       mandatory true;
       description
         "This references the YANG module name.";
     }
     leaf revision {
-      config false;
       type rev:revision-date;
+      config false;
       mandatory true;
       description
         "This references the YANG module revision of the sent
