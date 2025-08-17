@@ -58,8 +58,8 @@ module ietf-yang-push-revision {
 
   description
     "Defines YANG-Push event notification header with the revision and
-    the revision-label. Adds the support of the revision and
-    revision-label selection in the YANG-Push subscription RPCs.
+    the version. Adds the support of the revision and
+    version selection in the YANG-Push subscription RPCs.
 
     Copyright (c) 2025 IETF Trust and the persons
     identified as authors of the code.  All rights reserved.
@@ -78,7 +78,7 @@ module ietf-yang-push-revision {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2025-04-05 {
+  revision 2025-08-17 {
     description
       "First revision";
     reference
@@ -90,7 +90,7 @@ module ietf-yang-push-revision {
     description
       "This feature indicates the YANG Subscription Notifications
       supports specifying the list of modules, revisions and
-      revision-label in the YANG subscription.";
+      version in the YANG subscription.";
   }
 
   // Identities
@@ -102,29 +102,29 @@ module ietf-yang-push-revision {
       to a specific revision not supported by the publisher.";
   }
 
-  identity revision-label-unsupported {
+  identity version-unsupported {
     base sn:establish-subscription-error;
     base sn:modify-subscription-error;
     description
-      "Revision-label not supported.  This failure can be due to 
-      subscribing to a specific revision-label not supported by the publisher.";
+      "Version not supported.  This failure can be due to 
+      subscribing to a specific version not supported by the publisher.";
   }
 
-  identity incompatible-revision-and-revision-label {
+  identity incompatible-revision-and-version {
     base sn:establish-subscription-error;
     base sn:modify-subscription-error;
     description
-      "The combination of revision and the revision-label are
+      "The combination of revision and the version are
       incompatible. This failure happens when the revision and the
-      revision-label are both specified in the RPC and the YANG
+      version are both specified in the RPC and the YANG
       module supported by the publisher does not support one of the
-      revision or the revision-label.";
+      revision or the version.";
   }
 
   grouping yang-push-module-version-config {
     description
       "This grouping combines the module name, the revision and
-      revision-label leaves. This grouping is to be used for
+      version leaves. This grouping is to be used for
       configuration and the leaves are not mandatory.";
     leaf module-name {
       type yang:yang-identifier;
@@ -137,7 +137,7 @@ module ietf-yang-push-revision {
         "This references the YANG module revision to be sent in the
         subscription.";
     }
-    leaf revision-label {
+    leaf version {
       type ysver:version;
       description
         "This references the YANG module semantic version to be sent in the
@@ -148,7 +148,7 @@ module ietf-yang-push-revision {
   grouping yang-push-module-version {
     description
       "This grouping combines the module name, the revision and
-      revision-label leaves. This grouping is to be used for
+      version leaves. This grouping is to be used for
       read-only cases such as the content of YANG-Push Notifications.
       The module-name and revision are mandatory and MUST be present
       in the data.";
@@ -167,7 +167,7 @@ module ietf-yang-push-revision {
         "This references the YANG module revision of the sent
         notification message.";
     }
-    leaf revision-label {
+    leaf version {
       type ysver:version;
       description
         "This references the YANG module semantic version of the sent
@@ -265,7 +265,7 @@ module ietf-yang-push-revision {
       type boolean;
       description
         "Specifies whether the publisher supports exporting
-        revision and revision-label in YANG-Push subscription state change
+        revision and version in YANG-Push subscription state change
 	notifications.";
       reference
         "RFC XXXX: Support of Versioning in YANG Notifications Subscription";
