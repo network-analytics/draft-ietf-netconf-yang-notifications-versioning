@@ -68,7 +68,7 @@
       </address>
     </author>
 
-    <date day="20" month="August" year="2025"/>
+    <date day="29" month="August" year="2025"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription
@@ -984,7 +984,7 @@ module: ietf-subscribed-notifications
         target="RFC8639">Subscription to YANG Notifications</xref>.</t>
 
         <sourcecode type="yang" markers="true"
-        name="ietf-yang-push-revision@2025-08-20.yang"><![CDATA[
+        name="ietf-yang-push-revision@2025-08-29.yang"><![CDATA[
 module ietf-yang-push-revision {
   yang-version 1.1;
   namespace
@@ -1071,7 +1071,7 @@ module ietf-yang-push-revision {
     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
     they appear in all capitals, as shown here.";
 
-  revision 2025-08-20 {
+  revision 2025-08-29 {
     description
       "First revision";
     reference
