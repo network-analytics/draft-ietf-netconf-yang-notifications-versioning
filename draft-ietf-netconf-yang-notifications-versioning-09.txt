@@ -5,10 +5,10 @@
 Network Working Group                                            T. Graf
 Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
-Expires: 18 February 2026                                         Huawei
-                                                           A. Huang Feng
+Expires: 21 February 2026                                         Huawei
+                                                           A. Huang-Feng
                                                                INSA-Lyon
-                                                          17 August 2025
+                                                          20 August 2025
 
 
         Support of Versioning in YANG Notifications Subscription
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 February 2026.
+   This Internet-Draft will expire on 21 February 2026.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Graf, et al.            Expires 18 February 2026                [Page 1]
+Graf, et al.            Expires 21 February 2026                [Page 1]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
@@ -74,23 +74,23 @@ Table of Contents
    2.  Extend the Datastore Selection  . . . . . . . . . . . . . . .   4
    3.  Extend the Subscription State Change Notifications  . . . . .   6
    4.  Discovering "ietf-yang-push-revision" Support . . . . . . . .   8
-   5.  The "ietf-yang-push-revision" Module  . . . . . . . . . . . .  10
+   5.  The "ietf-yang-push-revision" Module  . . . . . . . . . . . .   9
      5.1.  Data Model Overview . . . . . . . . . . . . . . . . . . .  10
-     5.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  21
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  27
-     6.1.  IETF XML Registry . . . . . . . . . . . . . . . . . . . .  27
+     5.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  20
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  26
+     6.1.  IETF XML Registry . . . . . . . . . . . . . . . . . . . .  26
      6.2.  YANG Module Name  . . . . . . . . . . . . . . . . . . . .  27
    7.  Operational Considerations  . . . . . . . . . . . . . . . . .  27
-   8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  28
-     8.1.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  28
-     8.2.  6WIND VSR . . . . . . . . . . . . . . . . . . . . . . . .  28
-     8.3.  Cisco IOS XR  . . . . . . . . . . . . . . . . . . . . . .  28
+   8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  27
+     8.1.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  27
+     8.2.  6WIND VSR . . . . . . . . . . . . . . . . . . . . . . . .  27
+     8.3.  Cisco IOS XR  . . . . . . . . . . . . . . . . . . . . . .  27
    9.  Security Considerations . . . . . . . . . . . . . . . . . . .  28
    10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  28
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  28
      11.1.  Normative References . . . . . . . . . . . . . . . . . .  28
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  30
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  31
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  29
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  30
 
 1.  Introduction
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Graf, et al.            Expires 18 February 2026                [Page 2]
+Graf, et al.            Expires 21 February 2026                [Page 2]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
@@ -165,7 +165,7 @@ Internet-Draft        YANG Notifications Versioning          August 2025
 
 
 
-Graf, et al.            Expires 18 February 2026                [Page 3]
+Graf, et al.            Expires 21 February 2026                [Page 3]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
@@ -221,7 +221,7 @@ Internet-Draft        YANG Notifications Versioning          August 2025
 
 
 
-Graf, et al.            Expires 18 February 2026                [Page 4]
+Graf, et al.            Expires 21 February 2026                [Page 4]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
@@ -245,14 +245,14 @@ Internet-Draft        YANG Notifications Versioning          August 2025
    accepted by the NETCONF server and Figure 3 the error sent by the
    NETCONF server when the revision is not supported.
 
-   <netconf:rpc message-id="101"
+   <rpc message-id="101"
        xmlns:netconf="urn:ietf:params:xml:ns:netconf:base:1.0">
      <establish-subscription
          xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications"
          xmlns:yp="urn:ietf:params:xml:ns:yang:ietf-yang-push">
          xmlns:ypr="urn:ietf:params:xml:ns:yang:ietf-yang-push-revision">
        <yp:datastore
-            xmlns:ds="urn:ietf:params:xml:ns:yang:ietf-datastores">
+           xmlns:ds="urn:ietf:params:xml:ns:yang:ietf-datastores">
          ds:operational
        </yp:datastore>
        <yp:datastore-xpath-filter
@@ -267,7 +267,7 @@ Internet-Draft        YANG Notifications Versioning          August 2025
          <yp:period>500</yp:period>
        </yp:periodic>
      </establish-subscription>
-   </netconf:rpc>
+   </rpc>
 
             Figure 1: RPC Example for an establish-subscription
 
@@ -277,7 +277,7 @@ Internet-Draft        YANG Notifications Versioning          August 2025
 
 
 
-Graf, et al.            Expires 18 February 2026                [Page 5]
+Graf, et al.            Expires 21 February 2026                [Page 5]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
@@ -333,7 +333,7 @@ Internet-Draft        YANG Notifications Versioning          August 2025
 
 
 
-Graf, et al.            Expires 18 February 2026                [Page 6]
+Graf, et al.            Expires 21 February 2026                [Page 6]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
@@ -365,7 +365,7 @@ Internet-Draft        YANG Notifications Versioning          August 2025
          <module-name>ietf-interfaces</module-name>
          <revision>2018-02-20</revision>
          <version>2.0.0</version>
-      <yang-library-content-id>1</yang-library-content-id>
+         <yang-library-content-id>1</yang-library-content-id>
        </module-version>
      </subscription-modified>
    </notification>
@@ -389,7 +389,7 @@ Internet-Draft        YANG Notifications Versioning          August 2025
 
 
 
-Graf, et al.            Expires 18 February 2026                [Page 7]
+Graf, et al.            Expires 21 February 2026                [Page 7]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
@@ -445,7 +445,7 @@ Internet-Draft        YANG Notifications Versioning          August 2025
 
 
 
-Graf, et al.            Expires 18 February 2026                [Page 8]
+Graf, et al.            Expires 21 February 2026                [Page 8]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
@@ -491,22 +491,20 @@ Internet-Draft        YANG Notifications Versioning          August 2025
            +--ro notc:supported-excluded-change-type*       union
            |       {yp:on-change}?
            +--ro ypr:yang-push-module-revision-supported?   boolean
-                   {yang-push-revision-supported}?
 
    This model can be retrieved via a NETCONF <get> RPC.
 
+5.  The "ietf-yang-push-revision" Module
 
 
 
 
 
 
-Graf, et al.            Expires 18 February 2026                [Page 9]
+Graf, et al.            Expires 21 February 2026                [Page 9]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
-
-5.  The "ietf-yang-push-revision" Module
 
 5.1.  Data Model Overview
 
@@ -557,7 +555,9 @@ Internet-Draft        YANG Notifications Versioning          August 2025
 
 
 
-Graf, et al.            Expires 18 February 2026               [Page 10]
+
+
+Graf, et al.            Expires 21 February 2026               [Page 10]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
@@ -567,40 +567,41 @@ Internet-Draft        YANG Notifications Versioning          August 2025
      augment /sn:establish-subscription/sn:input:
        +---w module-version-config* [module-name]
                {yang-push-revision-supported}?
-          +---w module-name       yang:yang-identifier
-          +---w revision?         rev:revision-date
-          +---w version?          ysver:version
+          +---w module-name    yang:yang-identifier
+          +---w revision?      rev:revision-date
+          +---w version?       ysver:version
      augment /sn:modify-subscription/sn:input:
        +---w module-version-config* [module-name]
                {yang-push-revision-supported}?
-          +---w module-name       yang:yang-identifier
-          +---w revision?         rev:revision-date
-          +---w version?          ysver:version
+          +---w module-name    yang:yang-identifier
+          +---w revision?      rev:revision-date
+          +---w version?       ysver:version
      augment /sn:subscription-started:
        +--ro module-version* [module-name]
        |       {yang-push-revision-supported}?
-       |  +--ro module-name       yang:yang-identifier
-       |  +--ro revision          rev:revision-date
-       |  +--ro version?          ysver:version
-       +--ro yang-library-content-id?       -> /yanglib:yang-library/content-id
+       |  +--ro module-name    yang:yang-identifier
+       |  +--ro revision       rev:revision-date
+       |  +--ro version?       ysver:version
+       +--ro yang-library-content-id?
+               -> /yanglib:yang-library/content-id
                {yang-push-revision-supported}?
      augment /sn:subscription-modified:
        +--ro module-version* [module-name]
        |       {yang-push-revision-supported}?
-       |  +--ro module-name       yang:yang-identifier
-       |  +--ro revision          rev:revision-date
-       |  +--ro version?          ysver:version
-       +--ro yang-library-content-id?       -> /yanglib:yang-library/content-id
+       |  +--ro module-name    yang:yang-identifier
+       |  +--ro revision       rev:revision-date
+       |  +--ro version?       ysver:version
+       +--ro yang-library-content-id?
+               -> /yanglib:yang-library/content-id
                {yang-push-revision-supported}?
      augment /sn:subscriptions/sn:subscription:
        +--rw module-version-config* [module-name]
                {yang-push-revision-supported}?
-          +--rw module-name       yang:yang-identifier
-          +--rw revision?         rev:revision-date
-          +--rw version?          ysver:version
+          +--rw module-name    yang:yang-identifier
+          +--rw revision?      rev:revision-date
+          +--rw version?       ysver:version
      augment /sysc:system-capabilities/notc:subscription-capabilities:
        +--ro yang-push-module-revision-supported?   boolean
-               {yang-push-revision-supported}?
 
 5.1.2.  Full Tree View
 
@@ -612,8 +613,7 @@ Internet-Draft        YANG Notifications Versioning          August 2025
 
 
 
-
-Graf, et al.            Expires 18 February 2026               [Page 11]
+Graf, et al.            Expires 21 February 2026               [Page 11]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
@@ -651,8 +651,10 @@ Internet-Draft        YANG Notifications Versioning          August 2025
      |     +--ro name                        string
      |     +--ro description?                string
      |     +--ro replay-support?             empty {replay}?
-     |     +--ro replay-log-creation-time    yang:date-and-time {replay}?
-     |     +--ro replay-log-aged-time?       yang:date-and-time {replay}?
+     |     +--ro replay-log-creation-time    yang:date-and-time
+     |     |       {replay}?
+     |     +--ro replay-log-aged-time?       yang:date-and-time
+     |             {replay}?
      +--rw filters
      |  +--rw stream-filter* [name]
      |  |  +--rw name                           string
@@ -664,16 +666,16 @@ Internet-Draft        YANG Notifications Versioning          August 2025
      |  +--rw yp:selection-filter* [filter-id]
      |     +--rw yp:filter-id                         string
      |     +--rw (yp:filter-spec)?
-     |        +--:(yp:datastore-subtree-filter)
-     |        |  +--rw yp:datastore-subtree-filter?   <anydata>
 
 
 
-Graf, et al.            Expires 18 February 2026               [Page 12]
+Graf, et al.            Expires 21 February 2026               [Page 12]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
 
+     |        +--:(yp:datastore-subtree-filter)
+     |        |  +--rw yp:datastore-subtree-filter?   <anydata>
      |        |          {sn:subtree}?
      |        +--:(yp:datastore-xpath-filter)
      |           +--rw yp:datastore-xpath-filter?     yang:xpath1.0
@@ -720,16 +722,16 @@ Internet-Draft        YANG Notifications Versioning          August 2025
            +--rw stop-time?
            |       yang:date-and-time
            +--rw dscp?
-           |       inet:dscp {dscp}?
-           +--rw weighting?                                       uint8
 
 
 
-Graf, et al.            Expires 18 February 2026               [Page 13]
+Graf, et al.            Expires 21 February 2026               [Page 13]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
 
+           |       inet:dscp {dscp}?
+           +--rw weighting?                                       uint8
            |       {qos}?
            +--rw dependency?
            |       subscription-id {qos}?
@@ -762,29 +764,29 @@ Internet-Draft        YANG Notifications Versioning          August 2025
            |     +---x reset {configured}?
            |        +--ro output
            |           +--ro time    yang:date-and-time
-           +--rw ypr:module-version-config* [module-name]
-           |       {yang-push-revision-supported}?
-           |  +--rw ypr:module-name       yang:yang-identifier
-           |  +--rw ypr:revision?         rev:revision-date
-           |  +--rw ypr:version?          ysver:version
            +--rw (yp:update-trigger)?
-              +--:(yp:periodic)
-              |  +--rw yp:periodic!
-              |     +--rw yp:period         centiseconds
-              |     +--rw yp:anchor-time?   yang:date-and-time
-              +--:(yp:on-change) {on-change}?
-                 +--rw yp:on-change!
-                    +--rw yp:dampening-period?   centiseconds
-                    +--rw yp:sync-on-start?      boolean
-                    +--rw yp:excluded-change*    change-type
+           |  +--:(yp:periodic)
+           |  |  +--rw yp:periodic!
+           |  |     +--rw yp:period         centiseconds
+           |  |     +--rw yp:anchor-time?   yang:date-and-time
+           |  +--:(yp:on-change) {on-change}?
+           |     +--rw yp:on-change!
+           |        +--rw yp:dampening-period?   centiseconds
+           |        +--rw yp:sync-on-start?      boolean
+           |        +--rw yp:excluded-change*    change-type
+           +--rw ypr:module-version-config* [module-name]
+                   {yang-push-revision-supported}?
+              +--rw ypr:module-name    yang:yang-identifier
+              +--rw ypr:revision?      rev:revision-date
 
 
 
-
-Graf, et al.            Expires 18 February 2026               [Page 14]
+Graf, et al.            Expires 21 February 2026               [Page 14]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
+
+              +--rw ypr:version?       ysver:version
 
      rpcs:
        +---x establish-subscription
@@ -826,35 +828,35 @@ Internet-Draft        YANG Notifications Versioning          August 2025
        |  |  |       yang:date-and-time
        |  |  +---w dscp?
        |  |  |       inet:dscp {dscp}?
-       |  |  +---w weighting?                                       uint8
-       |  |  |       {qos}?
+       |  |  +---w weighting?
+       |  |  |       uint8 {qos}?
        |  |  +---w dependency?
        |  |  |       subscription-id {qos}?
        |  |  +---w encoding?
        |  |  |       encoding
-       |  |  +---w ypr:module-version-config* [module-name]
-       |  |  |       {yang-push-revision-supported}?
 
 
 
-Graf, et al.            Expires 18 February 2026               [Page 15]
+Graf, et al.            Expires 21 February 2026               [Page 15]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
 
-       |  |  |  +---w ypr:module-name       yang:yang-identifier
-       |  |  |  +---w ypr:revision?         rev:revision-date
-       |  |  |  +---w ypr:version?          ysver:version
        |  |  +---w (yp:update-trigger)?
-       |  |     +--:(yp:periodic)
-       |  |     |  +---w yp:periodic!
-       |  |     |     +---w yp:period         centiseconds
-       |  |     |     +---w yp:anchor-time?   yang:date-and-time
-       |  |     +--:(yp:on-change) {on-change}?
-       |  |        +---w yp:on-change!
-       |  |           +---w yp:dampening-period?   centiseconds
-       |  |           +---w yp:sync-on-start?      boolean
-       |  |           +---w yp:excluded-change*    change-type
+       |  |  |  +--:(yp:periodic)
+       |  |  |  |  +---w yp:periodic!
+       |  |  |  |     +---w yp:period         centiseconds
+       |  |  |  |     +---w yp:anchor-time?   yang:date-and-time
+       |  |  |  +--:(yp:on-change) {on-change}?
+       |  |  |     +---w yp:on-change!
+       |  |  |        +---w yp:dampening-period?   centiseconds
+       |  |  |        +---w yp:sync-on-start?      boolean
+       |  |  |        +---w yp:excluded-change*    change-type
+       |  |  +---w ypr:module-version-config* [module-name]
+       |  |          {yang-push-revision-supported}?
+       |  |     +---w ypr:module-name    yang:yang-identifier
+       |  |     +---w ypr:revision?      rev:revision-date
+       |  |     +---w ypr:version?       ysver:version
        |  +--ro output
        |     +--ro id                            subscription-id
        |     +--ro replay-start-time-revision?   yang:date-and-time
@@ -888,33 +890,33 @@ Internet-Draft        YANG Notifications Versioning          August 2025
        |     |           +---w (yp:filter-spec)?
        |     |              +--:(yp:datastore-subtree-filter)
        |     |              |  +---w yp:datastore-subtree-filter?
-       |     |              |          <anydata> {sn:subtree}?
-       |     |              +--:(yp:datastore-xpath-filter)
 
 
 
-Graf, et al.            Expires 18 February 2026               [Page 16]
+Graf, et al.            Expires 21 February 2026               [Page 16]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
 
+       |     |              |          <anydata> {sn:subtree}?
+       |     |              +--:(yp:datastore-xpath-filter)
        |     |                 +---w yp:datastore-xpath-filter?
        |     |                         yang:xpath1.0 {sn:xpath}?
        |     +---w stop-time?
        |     |       yang:date-and-time
-       |     +---w ypr:module-version-config* [module-name]
-       |     |       {yang-push-revision-supported}?
-       |     |  +---w ypr:module-name       yang:yang-identifier
-       |     |  +---w ypr:revision?         rev:revision-date
-       |     |  +---w ypr:version?          ysver:version
        |     +---w (yp:update-trigger)?
-       |        +--:(yp:periodic)
-       |        |  +---w yp:periodic!
-       |        |     +---w yp:period         centiseconds
-       |        |     +---w yp:anchor-time?   yang:date-and-time
-       |        +--:(yp:on-change) {on-change}?
-       |           +---w yp:on-change!
-       |              +---w yp:dampening-period?   centiseconds
+       |     |  +--:(yp:periodic)
+       |     |  |  +---w yp:periodic!
+       |     |  |     +---w yp:period         centiseconds
+       |     |  |     +---w yp:anchor-time?   yang:date-and-time
+       |     |  +--:(yp:on-change) {on-change}?
+       |     |     +---w yp:on-change!
+       |     |        +---w yp:dampening-period?   centiseconds
+       |     +---w ypr:module-version-config* [module-name]
+       |             {yang-push-revision-supported}?
+       |        +---w ypr:module-name    yang:yang-identifier
+       |        +---w ypr:revision?      rev:revision-date
+       |        +---w ypr:version?       ysver:version
        +---x delete-subscription
        |  +---w input
        |     +---w id    subscription-id
@@ -944,16 +946,16 @@ Internet-Draft        YANG Notifications Versioning          August 2025
        |  |  |  |        +--:(stream-xpath-filter)
        |  |  |  |           +--ro stream-xpath-filter?
        |  |  |  |                   yang:xpath1.0 {xpath}?
-       |  |  |  +--ro stream
-       |  |  |  |       stream-ref
 
 
 
-Graf, et al.            Expires 18 February 2026               [Page 17]
+Graf, et al.            Expires 21 February 2026               [Page 17]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
 
+       |  |  |  +--ro stream
+       |  |  |  |       stream-ref
        |  |  |  +--ro replay-start-time?
        |  |  |          yang:date-and-time {replay}?
        |  |  +--:(yp:datastore)
@@ -981,35 +983,39 @@ Internet-Draft        YANG Notifications Versioning          August 2025
        |  |       subscription-id {qos}?
        |  +--ro transport?
        |  |       transport {configured}?
-       |  +--ro encoding?                                        encoding
+       |  +--ro encoding?
+       |  |       encoding
        |  +--ro purpose?                                         string
        |  |       {configured}?
+       |  +--ro (yp:update-trigger)?
+       |  |  +--:(yp:periodic)
+       |  |  |  +--ro yp:periodic!
+       |  |  |     +--ro yp:period         centiseconds
+       |  |  |     +--ro yp:anchor-time?   yang:date-and-time
+       |  |  +--:(yp:on-change) {on-change}?
+       |  |     +--ro yp:on-change!
+       |  |        +--ro yp:dampening-period?   centiseconds
+       |  |        +--ro yp:sync-on-start?      boolean
+       |  |        +--ro yp:excluded-change*    change-type
        |  +--ro ypr:module-version* [module-name]
        |  |       {yang-push-revision-supported}?
-       |  |  +--ro ypr:module-name       yang:yang-identifier
-       |  |  +--ro ypr:revision          rev:revision-date
-       |  |  +--ro ypr:version?          ysver:version
-       |  +--ro (yp:update-trigger)?
-       |     +--:(yp:periodic)
-       |     |  +--ro yp:periodic!
-       |     |     +--ro yp:period         centiseconds
-       |     |     +--ro yp:anchor-time?   yang:date-and-time
-       |     +--:(yp:on-change) {on-change}?
-       |        +--ro yp:on-change!
-       |           +--ro yp:dampening-period?   centiseconds
-       |           +--ro yp:sync-on-start?      boolean
-       |           +--ro yp:excluded-change*    change-type
-       +---n subscription-resumed
-       |  +--ro id    subscription-id
-       +---n subscription-started {configured}?
+       |  |  +--ro ypr:module-name    yang:yang-identifier
+       |  |  +--ro ypr:revision       rev:revision-date
+       |  |  +--ro ypr:version?       ysver:version
 
 
 
-Graf, et al.            Expires 18 February 2026               [Page 18]
+Graf, et al.            Expires 21 February 2026               [Page 18]
 
 Internet-Draft        YANG Notifications Versioning          August 2025
 
 
+       |  +--ro ypr:yang-library-content-id?
+       |          -> /yanglib:yang-library/content-id
+       |          {yang-push-revision-supported}?
+       +---n subscription-resumed
+       |  +--ro id    subscription-id
+       +---n subscription-started {configured}?
        |  +--ro id
        |  |       subscription-id
        |  +--ro (target)
@@ -1052,37 +1058,41 @@ Internet-Draft        YANG Notifications Versioning          August 2025
        |  +--ro dscp?
        |  |       inet:dscp {dscp}?
        |  +--ro weighting?                                       uint8
+
+
+
+Graf, et al.            Expires 21 February 2026               [Page 19]
+
+Internet-Draft        YANG Notifications Versioning          August 2025
+
+
        |  |       {qos}?
        |  +--ro dependency?
        |  |       subscription-id {qos}?
        |  +--ro transport?
        |  |       transport {configured}?
-       |  +--ro encoding?                                        encoding
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 19]
-
-Internet-Draft        YANG Notifications Versioning          August 2025
-
-
+       |  +--ro encoding?
+       |  |       encoding
        |  +--ro purpose?                                         string
        |  |       {configured}?
+       |  +--ro (yp:update-trigger)?
+       |  |  +--:(yp:periodic)
+       |  |  |  +--ro yp:periodic!
+       |  |  |     +--ro yp:period         centiseconds
+       |  |  |     +--ro yp:anchor-time?   yang:date-and-time
+       |  |  +--:(yp:on-change) {on-change}?
+       |  |     +--ro yp:on-change!
+       |  |        +--ro yp:dampening-period?   centiseconds
+       |  |        +--ro yp:sync-on-start?      boolean
+       |  |        +--ro yp:excluded-change*    change-type
        |  +--ro ypr:module-version* [module-name]
        |  |       {yang-push-revision-supported}?
-       |  |  +--ro ypr:module-name       yang:yang-identifier
-       |  |  +--ro ypr:revision          rev:revision-date
-       |  |  +--ro ypr:version?          ysver:version
-       |  +--ro (yp:update-trigger)?
-       |     +--:(yp:periodic)
-       |     |  +--ro yp:periodic!
-       |     |     +--ro yp:period         centiseconds
-       |     |     +--ro yp:anchor-time?   yang:date-and-time
-       |     +--:(yp:on-change) {on-change}?
-       |        +--ro yp:on-change!
-       |           +--ro yp:dampening-period?   centiseconds
-       |           +--ro yp:sync-on-start?      boolean
-       |           +--ro yp:excluded-change*    change-type
+       |  |  +--ro ypr:module-name    yang:yang-identifier
+       |  |  +--ro ypr:revision       rev:revision-date
+       |  |  +--ro ypr:version?       ysver:version
+       |  +--ro ypr:yang-library-content-id?
+       |          -> /yanglib:yang-library/content-id
+       |          {yang-push-revision-supported}?
        +---n subscription-suspended
        |  +--ro id        subscription-id
        |  +--ro reason    identityref
@@ -1090,63 +1100,12 @@ Internet-Draft        YANG Notifications Versioning          August 2025
           +--ro id        subscription-id
           +--ro reason    identityref
 
-   module: ietf-system-capabilities
-     +--ro system-capabilities
-        +--ro datastore-capabilities* [datastore]
-        |  +--ro datastore
-        |  |       -> /yanglib:yang-library/datastore/name
-        |  +--ro per-node-capabilities* []
-        |     +--ro (node-selection)?
-        |     |  +--:(node-selector)
-        |     |     +--ro node-selector?
-        |     |             nacm:node-instance-identifier
-        |     +--ro notc:subscription-capabilities
-        |        +--ro notc:max-nodes-per-update?               uint32
-        |        +--ro notc:periodic-notifications-supported?
-        |        |       notification-support
-        |        +--ro (notc:update-period)?
-        |        |  +--:(notc:minimum-update-period)
-        |        |  |  +--ro notc:minimum-update-period?        uint32
-        |        |  +--:(notc:supported-update-period)
-        |        |     +--ro notc:supported-update-period*      uint32
-        |        +--ro notc:on-change-supported?
-        |        |       notification-support {yp:on-change}?
-        |        +--ro notc:minimum-dampening-period?           uint32
-        |        |       {yp:on-change}?
-        |        +--ro notc:supported-excluded-change-type*     union
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 20]
-
-Internet-Draft        YANG Notifications Versioning          August 2025
-
-
-        |                {yp:on-change}?
-        +--ro notc:subscription-capabilities
-           +--ro notc:max-nodes-per-update?                 uint32
-           +--ro notc:periodic-notifications-supported?
-           |       notification-support
-           +--ro (notc:update-period)?
-           |  +--:(notc:minimum-update-period)
-           |  |  +--ro notc:minimum-update-period?          uint32
-           |  +--:(notc:supported-update-period)
-           |     +--ro notc:supported-update-period*        uint32
-           +--ro notc:on-change-supported?
-           |       notification-support {yp:on-change}?
-           +--ro notc:minimum-dampening-period?             uint32
-           |       {yp:on-change}?
-           +--ro notc:supported-excluded-change-type*       union
-           |       {yp:on-change}?
-           +--ro ypr:yang-push-module-revision-supported?   boolean
-                   {yang-push-revision-supported}?
-
 5.2.  YANG Module
 
    The YANG module has two leaves augmenting the model of Subscription
    to YANG Notifications [RFC8639].
 
-   <CODE BEGINS> file "ietf-yang-push-revision@2025-04-05.yang"
+   <CODE BEGINS> file "ietf-yang-push-revision@2025-08-20.yang"
    module ietf-yang-push-revision {
      yang-version 1.1;
      namespace
@@ -1155,12 +1114,20 @@ Internet-Draft        YANG Notifications Versioning          August 2025
      import ietf-subscribed-notifications {
        prefix sn;
        reference
+
+
+
+Graf, et al.            Expires 21 February 2026               [Page 20]
+
+Internet-Draft        YANG Notifications Versioning          August 2025
+
+
          "RFC 8639: Subscription to YANG Notifications";
      }
      import ietf-yang-revisions {
        prefix rev;
        reference
-         "RFC YYYY: draft-ietf-netmod-yang-module-versioning-11,
+         "RFC YYYY: draft-ietf-netmod-yang-module-versioning-13,
          Updated YANG Module Revision Handling";
      }
      import ietf-yang-types {
@@ -1170,17 +1137,9 @@ Internet-Draft        YANG Notifications Versioning          August 2025
          "RFC 6991: Common YANG Data Types.";
      }
      import ietf-yang-semver {
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 21]
-
-Internet-Draft        YANG Notifications Versioning          August 2025
-
-
        prefix ysver;
        reference
-         "RFC ZZZZ: draft-ietf-netmod-yang-semver-15, YANG Semantic
+         "RFC ZZZZ: draft-ietf-netmod-yang-semver-23, YANG Semantic
          Versioning";
      }
      import ietf-yang-library {
@@ -1211,11 +1170,19 @@ Internet-Draft        YANG Notifications Versioning          August 2025
                   Benoit Claise
                   <mailto:benoit.claise@huawei.com>
                   Alex Huang Feng
+
+
+
+Graf, et al.            Expires 21 February 2026               [Page 21]
+
+Internet-Draft        YANG Notifications Versioning          August 2025
+
+
                   <mailto:alex.huang-feng@insa-lyon.fr>";
 
      description
-       "Defines YANG-Push event notification header with the revision and
-       the version. Adds the support of the revision and
+       "Defines YANG-Push event notification header with the revision
+       and the version. Adds the support of the revision and
        version selection in the YANG-Push subscription RPCs.
 
        Copyright (c) 2025 IETF Trust and the persons
@@ -1226,14 +1193,6 @@ Internet-Draft        YANG Notifications Versioning          August 2025
        to the license terms contained in, the Revised BSD License
        set forth in Section 4.c of the IETF Trust's Legal Provisions
        Relating to IETF Documents
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 22]
-
-Internet-Draft        YANG Notifications Versioning          August 2025
-
-
        (https://trustee.ietf.org/license-info).
 
        All revisions of IETF and IANA published modules can be found
@@ -1241,9 +1200,15 @@ Internet-Draft        YANG Notifications Versioning          August 2025
        (https://www.iana.org/assignments/yang-parameters).
 
        This version of this YANG module is part of RFC XXXX; see the RFC
-       itself for full legal notices.";
+       itself for full legal notices.
 
-     revision 2025-08-17 {
+       The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+       NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+       'MAY', and 'OPTIONAL' in this document are to be interpreted as
+       described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+       they appear in all capitals, as shown here.";
+
+     revision 2025-08-20 {
        description
          "First revision";
        reference
@@ -1261,10 +1226,19 @@ Internet-Draft        YANG Notifications Versioning          August 2025
      // Identities
      identity revision-unsupported {
        base sn:establish-subscription-error;
+
+
+
+Graf, et al.            Expires 21 February 2026               [Page 22]
+
+Internet-Draft        YANG Notifications Versioning          August 2025
+
+
        base sn:modify-subscription-error;
        description
-         "Revision not supported.  This failure can be due to subscribing
-         to a specific revision not supported by the publisher.";
+         "Revision not supported.  This failure can be due to
+         subscribing to a specific revision not supported by the
+         publisher.";
      }
 
      identity version-unsupported {
@@ -1282,14 +1256,6 @@ Internet-Draft        YANG Notifications Versioning          August 2025
        description
          "The combination of revision and the version are
          incompatible. This failure happens when the revision and the
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 23]
-
-Internet-Draft        YANG Notifications Versioning          August 2025
-
-
          version are both specified in the RPC and the YANG
          module supported by the publisher does not support one of the
          revision or the version.";
@@ -1314,8 +1280,16 @@ Internet-Draft        YANG Notifications Versioning          August 2025
        leaf version {
          type ysver:version;
          description
-           "This references the YANG module semantic version to be sent in
-           the subscription.";
+           "This references the YANG module semantic version to be sent
+           in the subscription.";
+
+
+
+Graf, et al.            Expires 21 February 2026               [Page 23]
+
+Internet-Draft        YANG Notifications Versioning          August 2025
+
+
        }
      }
 
@@ -1338,22 +1312,14 @@ Internet-Draft        YANG Notifications Versioning          August 2025
          config false;
          mandatory true;
          description
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 24]
-
-Internet-Draft        YANG Notifications Versioning          August 2025
-
-
            "This references the YANG module revision of the sent
            notification message.";
        }
        leaf version {
          type ysver:version;
          description
-           "This references the YANG module semantic version of the sent
-           notification message.";
+           "This references the YANG module semantic version of the
+           sent notification message.";
        }
      }
 
@@ -1370,10 +1336,18 @@ Internet-Draft        YANG Notifications Versioning          August 2025
          uses ypr:yang-push-module-version;
        }
        leaf yang-library-content-id {
-       config false;
          type leafref {
            path "/yanglib:yang-library/yanglib:content-id";
+
+
+
+Graf, et al.            Expires 21 February 2026               [Page 24]
+
+Internet-Draft        YANG Notifications Versioning          August 2025
+
+
          }
+         config false;
          description
            "Contains the YANG library content identifier RFC 8525
            information.";
@@ -1387,21 +1361,13 @@ Internet-Draft        YANG Notifications Versioning          August 2025
        list module-version-config {
          key "module-name";
          description
-           "List of yang-push-module-version-config grouping. The revision
-           is configurable.";
+           "List of yang-push-module-version-config grouping. The
+           revision is configurable.";
          uses ypr:yang-push-module-version-config;
        }
      }
 
      // Subscription parameters
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 25]
-
-Internet-Draft        YANG Notifications Versioning          August 2025
-
-
      augment "/sn:establish-subscription/sn:input" {
        if-feature "yang-push-revision-supported";
        description
@@ -1428,6 +1394,14 @@ Internet-Draft        YANG Notifications Versioning          August 2025
          yang-push-module-version-list grouping.";
        uses ypr:yang-push-module-version-list;
      }
+
+
+
+Graf, et al.            Expires 21 February 2026               [Page 25]
+
+Internet-Draft        YANG Notifications Versioning          August 2025
+
+
      augment "/sn:subscription-modified" {
        if-feature "yang-push-revision-supported";
        description
@@ -1450,21 +1424,13 @@ Internet-Draft        YANG Notifications Versioning          August 2025
      // Event capabilities
      augment "/sysc:system-capabilities/notc:subscription-capabilities" {
        description
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 26]
-
-Internet-Draft        YANG Notifications Versioning          August 2025
-
-
          "Add system level capabilities";
        leaf yang-push-module-revision-supported {
          type boolean;
          description
            "Specifies whether the publisher supports exporting
-           revision and version in YANG-Push subscription state
-           change notifications.";
+           revision and version in YANG-Push subscription state change
+           notifications.";
          reference
            "RFC XXXX: Support of Versioning in YANG Notifications
            Subscription";
@@ -1483,6 +1449,14 @@ Internet-Draft        YANG Notifications Versioning          August 2025
      URI: urn:ietf:params:xml:ns:yang:ietf-yang-push-revision
      Registrant Contact: The IESG.
      XML: N/A; the requested URI is an XML namespace.
+
+
+
+
+Graf, et al.            Expires 21 February 2026               [Page 26]
+
+Internet-Draft        YANG Notifications Versioning          August 2025
+
 
 6.2.  YANG Module Name
 
@@ -1503,16 +1477,6 @@ Internet-Draft        YANG Notifications Versioning          August 2025
    service on a network node.  It offers therefore a complementary
    information to the solution in this draft by describing how one
    specifi YANG module revision is part of a set of YANG modules.
-
-
-
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 27]
-
-Internet-Draft        YANG Notifications Versioning          August 2025
-
 
 8.  Implementation Status
 
@@ -1540,6 +1504,16 @@ Internet-Draft        YANG Notifications Versioning          August 2025
    publisher on UDP-based Transport for Configured Subscriptions
    [I-D.ietf-netconf-udp-notif] in their IOS XR platform.
 
+
+
+
+
+
+Graf, et al.            Expires 21 February 2026               [Page 27]
+
+Internet-Draft        YANG Notifications Versioning          August 2025
+
+
 9.  Security Considerations
 
    The security considerations for the YANG notifications subscription
@@ -1562,13 +1536,6 @@ Internet-Draft        YANG Notifications Versioning          August 2025
               versioning-13, 6 February 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
               yang-module-versioning-13>.
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 28]
-
-Internet-Draft        YANG Notifications Versioning          August 2025
-
 
    [I-D.ietf-netmod-yang-semver]
               Clarke, J., Wilton, R., Rahman, R., Lengyel, B., Sterne,
@@ -1596,6 +1563,13 @@ Internet-Draft        YANG Notifications Versioning          August 2025
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
               <https://www.rfc-editor.org/info/rfc6241>.
 
+
+
+Graf, et al.            Expires 21 February 2026               [Page 28]
+
+Internet-Draft        YANG Notifications Versioning          August 2025
+
+
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
@@ -1618,13 +1592,6 @@ Internet-Draft        YANG Notifications Versioning          August 2025
               Describing Capabilities for Systems and Datastore Update
               Notifications", RFC 9196, DOI 10.17487/RFC9196, February
               2022, <https://www.rfc-editor.org/info/rfc9196>.
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 29]
-
-Internet-Draft        YANG Notifications Versioning          August 2025
-
 
 11.2.  Informative References
 
@@ -1650,6 +1617,15 @@ Internet-Draft        YANG Notifications Versioning          August 2025
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
               yang-packages-06>.
 
+
+
+
+
+Graf, et al.            Expires 21 February 2026               [Page 29]
+
+Internet-Draft        YANG Notifications Versioning          August 2025
+
+
    [RFC8259]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", STD 90, RFC 8259,
               DOI 10.17487/RFC8259, December 2017,
@@ -1668,19 +1644,6 @@ Internet-Draft        YANG Notifications Versioning          August 2025
               and Datastores over NETCONF", RFC 8640,
               DOI 10.17487/RFC8640, September 2019,
               <https://www.rfc-editor.org/info/rfc8640>.
-
-
-
-
-
-
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 30]
-
-Internet-Draft        YANG Notifications Versioning          August 2025
-
 
    [W3C.REC-xml-20081126]
               Bray, T., Paoli, J., Sperberg-McQueen, M., Maler, E., and
@@ -1704,7 +1667,7 @@ Authors' Addresses
    Email: benoit.claise@huawei.com
 
 
-   Alex Huang Feng
+   Alex Huang-Feng
    INSA-Lyon
    Lyon
    France
@@ -1714,23 +1677,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Graf, et al.            Expires 18 February 2026               [Page 31]
+Graf, et al.            Expires 21 February 2026               [Page 30]
