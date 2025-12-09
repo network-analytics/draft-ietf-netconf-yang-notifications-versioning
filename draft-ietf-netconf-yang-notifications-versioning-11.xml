@@ -11,7 +11,8 @@
 <?rfc subcompact="no"?>
 <rfc category="std"
      docName="draft-ietf-netconf-yang-notifications-versioning-11"
-     ipr="trust200902" submissionType="IETF" consensus="true">
+     ipr="trust200902" submissionType="IETF" consensus="true"
+     xmlns:xi="http://www.w3.org/2001/XInclude">
   <front>
     <title abbrev="YANG Notifications Versioning">Support of Versioning
     in YANG Notifications Subscription</title>
@@ -90,21 +91,21 @@
       needed to determine the data types for each field and which part
       of the YANG module the metrics are exposed from.</t>
 
-      <t>This specification is primarily aimed to YANG-Push configured
-			subscription defined in <xref section="2.5" sectionFormat="of"
-      target="RFC8639"/> since the schema of a YANG-Push publisher
-			datastore could change after configured subscription has been
-      established and subscription-started notification has been sent
-      to the receiver. Without described specification in <xref
-			target="Datastore-Selection"/> and <xref
-			target="Streaming-Update"/> a subscriber would not be able to
-			control the YANG module revision or version nor would the
-			YANG-Push reiver be notified of changes in YANG module revision
-			or version in the YANG-Push subscription. Even though primarily
-			aimed at YANG-Push configured subscriptions <xref
-			target="Streaming-Update"/>, described subscription-started
-			extension is also applicable to dynamic subscriptions as defined
-			in <xref section="2.4" sectionFormat="of" target="RFC8639"/>.</t>
+      <t>This specification is primarily aimed for YANG-Push configured
+      subscription, as defined in <xref section="2.5" sectionFormat="of"
+      target="RFC8639"/>, since the schema of a YANG-Push publisher
+      datastore could change after a configured subscription has been
+      established and the 'subscription-started' notification has already been sent
+      to the receiver. Without the mechasnism described in <xref
+      target="Datastore-Selection"/> and <xref
+      target="Streaming-Update"/>, a subscriber is unable to
+      control the supported YANG module revision or version nor would the
+      YANG-Push receiver be notified of changes in YANG module revision
+      or version in the YANG-Push subscription. Although this mechanism is primarily
+      designed for YANG-Push configured subscriptions <xref
+      target="Streaming-Update"/>, the extensions for 'subscription-started'
+      are also applicable to dynamic subscriptions as defined
+      in <xref section="2.4" sectionFormat="of" target="RFC8639"/>.</t>
 
       <t>This semantic reference is available when the subscription is
       established as described in <xref section="3.6" sectionFormat="of"
@@ -132,22 +133,22 @@
       target="RFC8641"/> does not allow to specify the YANG module
       revision. When a network node is upgraded, the subscribed YANG
       module revision MAY have been updated and might, consequently,
-			break the data processing pipeline since the YANG-Push receiver
-			may not be aware of this change.</t>
+      break the data processing pipeline since the YANG-Push receiver
+      may not be aware of this change.</t>
 
       <t>This document extends the current YANG notifications
-      subscription mechanism to to allow subscriptions to a specific
+      subscription mechanism to allow subscriptions to a specific
       revision or latest YANG module semantic version to which the
       YANG module version needs to be backward compatible to.</t>
     
-      <t>The subscription state change "subscription-started" and
-      "subscription-modified" notification messages are also extended to
+      <t>The subscription state change 'subscription-started' and
+      'subscription-modified' notification messages are also extended to
       include the YANG module revision, version, and YANG library
       content-id. Changes in the revision and version fields
       allow a YANG-Push receiver to detect whenever the subscribed YANG
       module has changed. Changes in yang-library-content-id indicate
-			that YANG module(s) on the network management server of the
-			YANG-Push publisher has/have changed.</t>
+      that YANG module(s) on the network management server of the
+      YANG-Push publisher has or have changed.</t>
     
       <section title="Terminology">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
@@ -370,7 +371,7 @@ title="RPC Example for a positive establish-subscription response">
       the operational status of a single Ethernet interface (per <xref
       target="RFC8343"/>). This subscription state change notification
       message is encoded in XML <xref target="W3C.REC-xml-20081126"/>
-			over the Network Configuration Protocol (NETCONF) as per <xref
+      over the Network Configuration Protocol (NETCONF) as per <xref
       target="RFC8640"/>.</t>
 
       <figure anchor="subscription_modified_notif_example_xml_fig"
@@ -391,8 +392,8 @@ title="XML Push Example for a subscription-modified notification message">
       <name>ietf-interfaces</name>
       <revision>2018-02-20</revision>
       <version>2.0.0</version>
-      <yang-library-content-id>1</yang-library-content-id>
     </module-version>
+    <yang-library-content-id>1</yang-library-content-id>
   </subscription-modified>
 </notification>
         ]]></sourcecode>
@@ -491,6 +492,7 @@ module: ietf-system-capabilities
         +--ro notc:supported-excluded-change-type*       union
         |       {yp:on-change}?
         +--ro ypr:yang-push-module-revision-supported?   boolean
+                {yang-push-revision-supported}?
        ]]></sourcecode>
 
       <t>This model can be retrieved via a NETCONF &lt;get&gt; RPC.</t>
@@ -516,7 +518,8 @@ module: ietf-system-capabilities
 module: ietf-yang-push-revision
 
   augment /sn:establish-subscription/sn:input:
-    +---w module-version-subs* [name] {yang-push-revision-supported}?
+    +---w module-version-config* [name]
+            {yang-push-revision-supported}?
        +---w name              yang:yang-identifier
        +---w (revision-version)?
           +--:(revision)
@@ -524,7 +527,8 @@ module: ietf-yang-push-revision
           +--:(version)
              +---w version?    ysver:version
   augment /sn:modify-subscription/sn:input:
-    +---w module-version-subs* [name] {yang-push-revision-supported}?
+    +---w module-version-config* [name]
+            {yang-push-revision-supported}?
        +---w name              yang:yang-identifier
        +---w (revision-version)?
           +--:(revision)
@@ -548,7 +552,8 @@ module: ietf-yang-push-revision
             -> /yanglib:yang-library/content-id
             {yang-push-revision-supported}?
   augment /sn:subscriptions/sn:subscription:
-    +--rw module-version-subs* [name] {yang-push-revision-supported}?
+    +--rw module-version-config* [name]
+            {yang-push-revision-supported}?
        +--rw name              yang:yang-identifier
        +--rw (revision-version)?
           +--:(revision)
@@ -557,6 +562,7 @@ module: ietf-yang-push-revision
              +--rw version?    ysver:version
   augment /sysc:system-capabilities/notc:subscription-capabilities:
     +--ro yang-push-module-revision-supported?   boolean
+            {yang-push-revision-supported}?
 ]]></sourcecode>
         </section>
 
@@ -566,11 +572,12 @@ module: ietf-yang-push-revision
           augmentation within the 'ietf-subscribed-notifications',
           including the RPCs and notifications.</t>
 
-          <t><sourcecode type="yangtree"><![CDATA[
+          <sourcecode type="yangtree"><![CDATA[
 module: ietf-yang-push-revision
 
   augment /sysc:system-capabilities/notc:subscription-capabilities:
     +--ro yang-push-module-revision-supported?   boolean
+            {yang-push-revision-supported}?
 
 module: ietf-yang-push
 
@@ -712,7 +719,7 @@ module: ietf-subscribed-notifications
         |        +--rw yp:dampening-period?   centiseconds
         |        +--rw yp:sync-on-start?      boolean
         |        +--rw yp:excluded-change*    change-type
-        +--rw ypr:module-version-subs* [name]
+        +--rw ypr:module-version-config* [name]
                 {yang-push-revision-supported}?
            +--rw ypr:name              yang:yang-identifier
            +--rw (ypr:revision-version)?
@@ -777,7 +784,7 @@ module: ietf-subscribed-notifications
     |  |  |        +---w yp:dampening-period?   centiseconds
     |  |  |        +---w yp:sync-on-start?      boolean
     |  |  |        +---w yp:excluded-change*    change-type
-    |  |  +---w ypr:module-version-subs* [name]
+    |  |  +---w ypr:module-version-config* [name]
     |  |          {yang-push-revision-supported}?
     |  |     +---w ypr:name              yang:yang-identifier
     |  |     +---w (ypr:revision-version)?
@@ -832,7 +839,7 @@ module: ietf-subscribed-notifications
     |     |  +--:(yp:on-change) {on-change}?
     |     |     +---w yp:on-change!
     |     |        +---w yp:dampening-period?   centiseconds
-    |     +---w ypr:module-version-subs* [name]
+    |     +---w ypr:module-version-config* [name]
     |             {yang-push-revision-supported}?
     |        +---w ypr:name              yang:yang-identifier
     |        +---w (ypr:revision-version)?
@@ -998,7 +1005,7 @@ module: ietf-subscribed-notifications
     +---n subscription-terminated
        +--ro id        subscription-id
        +--ro reason    identityref
-]]></sourcecode></t>
+]]></sourcecode>
         </section>
       </section>
 
@@ -1010,9 +1017,9 @@ module: ietf-subscribed-notifications
         name="ietf-yang-push-revision@2025-12-07.yang"><![CDATA[
 module ietf-yang-push-revision {
   yang-version 1.1;
-  namespace "urn:ietf:params:xml:ns:yang:ietf-yang-push-revision";
+  namespace
+    "urn:ietf:params:xml:ns:yang:ietf-yang-push-revision";
   prefix ypr;
-
   import ietf-subscribed-notifications {
     prefix sn;
     reference
@@ -1022,7 +1029,7 @@ module ietf-yang-push-revision {
     prefix rev;
     reference
       "RFC YYYY: draft-ietf-netmod-yang-module-versioning-13,
-       Updated YANG Module Revision Handling";
+      Updated YANG Module Revision Handling";
   }
   import ietf-yang-types {
     prefix yang;
@@ -1034,7 +1041,7 @@ module ietf-yang-push-revision {
     prefix ysver;
     reference
       "RFC ZZZZ: draft-ietf-netmod-yang-semver-23, YANG Semantic
-       Versioning";
+      Versioning";
   }
   import ietf-yang-library {
     prefix yanglib;
@@ -1054,8 +1061,7 @@ module ietf-yang-push-revision {
        Systems and Datastore Update Notifications";
   }
 
-  organization
-    "IETF NETCONF (Network Configuration) Working Group";
+  organization "IETF NETCONF (Network Configuration) Working Group";
   contact
     "WG Web:   <http:/tools.ietf.org/wg/netconf/>
      WG List:  <mailto:netconf@ietf.org>
@@ -1066,67 +1072,67 @@ module ietf-yang-push-revision {
                <mailto:benoit.claise@huawei.com>
                Alex Huang Feng
                <mailto:alex.huang-feng@insa-lyon.fr>";
+
   description
     "Defines YANG-Push event notification header with the revision
-     and the version. Adds the support of the revision and
-     version selection in the YANG-Push subscription RPCs.
+    and the version. Adds the support of the revision and
+    version selection in the YANG-Push subscription RPCs.
 
-     Copyright (c) 2025 IETF Trust and the persons
-     identified as authors of the code.  All rights reserved.
+    Copyright (c) 2025 IETF Trust and the persons
+    identified as authors of the code.  All rights reserved.
 
-     Redistribution and use in source and binary forms, with or
-     without modification, is permitted pursuant to, and subject
-     to the license terms contained in, the Revised BSD License
-     set forth in Section 4.c of the IETF Trust's Legal Provisions
-     Relating to IETF Documents
-     (https://trustee.ietf.org/license-info).
+    Redistribution and use in source and binary forms, with or
+    without modification, is permitted pursuant to, and subject
+    to the license terms contained in, the Revised BSD License
+    set forth in Section 4.c of the IETF Trust's Legal Provisions
+    Relating to IETF Documents
+    (https://trustee.ietf.org/license-info).
 
-     All revisions of IETF and IANA published modules can be found
-     at the YANG Parameters registry
-     (https://www.iana.org/assignments/yang-parameters).
+    All revisions of IETF and IANA published modules can be found
+    at the YANG Parameters registry
+    (https://www.iana.org/assignments/yang-parameters).
 
-     This version of this YANG module is part of RFC XXXX; see the RFC
-     itself for full legal notices.
-
-     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
-     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
-     'MAY', and 'OPTIONAL' in this document are to be interpreted as
-     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
-     they appear in all capitals, as shown here.";
+    This version of this YANG module is part of RFC XXXX; see the RFC
+    itself for full legal notices.
+    
+    The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+    NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+    'MAY', and 'OPTIONAL' in this document are to be interpreted as
+    described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+    they appear in all capitals, as shown here.";
 
   revision 2025-12-07 {
     description
       "First revision";
     reference
       "RFC XXXX: Support of Versioning in YANG Notifications
-       Subscription";
+      Subscription";
   }
 
   feature yang-push-revision-supported {
     description
       "This feature indicates the YANG Subscription Notifications
-       support specifying the list of modules, revisions and
-       versions in the YANG subscription.";
+      support specifying the list of modules, revisions and
+      versions in the YANG subscription.";
   }
 
   // Identities
-
   identity revision-unsupported {
     base sn:establish-subscription-error;
     base sn:modify-subscription-error;
     description
       "Revision not supported.  This failure can be due to
-       subscribing to a specific revision not supported by the
-       publisher.";
+      subscribing to a specific revision not supported by the
+      publisher.";
   }
 
   identity version-unsupported {
     base sn:establish-subscription-error;
     base sn:modify-subscription-error;
     description
-      "Specific version not supported.  This failure can be due to
-       subscribing to a specific version not supported by the
-       publisher.";
+      "Specific version not supported.  This failure can be due to 
+      subscribing to a specific version not supported by the
+      publisher.";
   }
 
   identity incompatible-revision-and-version {
@@ -1134,28 +1140,31 @@ module ietf-yang-push-revision {
     base sn:modify-subscription-error;
     description
       "The combination of revision and version are
-       incompatible. This failure happens when the revision and the
-       version are both specified in the RPC and the YANG
-       module supported by the publisher does not support one of them.";
+      incompatible. This failure happens when the revision and the
+      version are both specified in the RPC and the YANG
+      module supported by the publisher does not support one of them.";
   }
 
   grouping yang-push-module-version-subs {
     description
       "This grouping combines the module name, the revision and
-       version leaves. This grouping is to be used for
-       configuration and the leaves are not mandatory.";
+      version leaves. This grouping is to be used for
+      configuration and the leaves are not mandatory.";
     leaf name {
       type yang:yang-identifier;
       description
         "This references the YANG module name.";
     }
     choice revision-version {
+      description
+        "Specifies whether the revision or version of the YANG module sent
+        in the subscription.";
       case revision {
         leaf revision {
           type rev:revision-date;
           description
             "This references the YANG module revision to be sent in the
-             subscription.";
+            subscription.";
         }
       }
       case version {
@@ -1163,19 +1172,19 @@ module ietf-yang-push-revision {
           type ysver:version;
           description
             "This references the YANG module semantic version to be sent
-             in the subscription.";
+            in the subscription.";
         }
       }
-    }
+    }	
   }
 
   grouping yang-push-module-version-notif {
     description
       "This grouping combines the module name, the revision and
-       version leaves. This grouping is to be used for
-       read-only cases such as the content of YANG-Push Notifications.
-       The name and revision are mandatory and MUST be present
-       in the data.";
+      version leaves. This grouping is to be used for
+      read-only cases such as the content of YANG-Push Notifications.
+      The name and revision are mandatory and MUST be present
+      in the data.";
     leaf name {
       type yang:yang-identifier;
       config false;
@@ -1189,26 +1198,26 @@ module ietf-yang-push-revision {
       mandatory true;
       description
         "This references the YANG module revision of the sent
-         notification message.";
+        notification message.";
     }
     leaf version {
       type ysver:version;
       description
         "This references the YANG module semantic version of the
-         sent notification message.";
+        sent notification message.";
     }
   }
 
   grouping yang-push-module-version-notif-list {
     description
       "This grouping defines a list of yang-push-module-version
-       grouping.";
+      grouping.";
     list module-version {
       key "name";
       config false;
       description
-        "List of yang-push-module-version-notif grouping. The revision is
-         not configurable.";
+        "List of yang-push-module-version grouping. The revision is
+        not configurable.";
       uses ypr:yang-push-module-version-notif;
     }
     leaf yang-library-content-id {
@@ -1218,89 +1227,84 @@ module ietf-yang-push-revision {
       config false;
       description
         "Contains the YANG library content identifier RFC 8525
-         information.";
+        information.";
     }
   }
 
   grouping yang-push-module-version-subs-list {
     description
-      "This grouping defines a list of yang-push-module-version-subs
-       grouping.";
-    list module-version-subs {
+      "This grouping defines a list of yang-push-module-version-config
+      grouping.";
+    list module-version-config {
       key "name";
       description
-        "List of yang-push-module-version-subs grouping. The
-         revision is configurable.";
+        "List of yang-push-module-version-config grouping. The
+        revision is configurable.";
       uses ypr:yang-push-module-version-subs;
     }
   }
 
   // Subscription parameters
-
   augment "/sn:establish-subscription/sn:input" {
     if-feature "yang-push-revision-supported";
     description
       "Augment the establish-subscription RPC from the
-       ietf-subscribed-notifications YANG module with the
-       yang-push-module-version-subs-list grouping.";
+      ietf-subscribed-notifications YANG module with the
+      yang-push-module-version-subs-list grouping.";
     uses ypr:yang-push-module-version-subs-list;
   }
-
   augment "/sn:modify-subscription/sn:input" {
     if-feature "yang-push-revision-supported";
     description
       "Augment the modify-subscription RPC from the
-       ietf-subscribed-notifications YANG module with the
-       yang-push-module-version-subs-list grouping.";
+      ietf-subscribed-notifications YANG module with the
+      yang-push-module-version-subs-list grouping.";
     uses ypr:yang-push-module-version-subs-list;
   }
 
   // Subscription notifications
-
   augment "/sn:subscription-started" {
     if-feature "yang-push-revision-supported";
     description
       "Augment the subscription-started notification from the
-       ietf-subscribed-notifications YANG module with the
-       yang-push-module-version-notif-list grouping.";
+      ietf-subscribed-notifications YANG module with the
+      yang-push-module-version-notif-list grouping.";
     uses ypr:yang-push-module-version-notif-list;
   }
-
   augment "/sn:subscription-modified" {
     if-feature "yang-push-revision-supported";
     description
       "Augment the subscription-modified notification from the
-       ietf-subscribed-notifications YANG module with the
-       yang-push-module-version-notif-list grouping.";
+      ietf-subscribed-notifications YANG module with the
+      yang-push-module-version-notif-list grouping.";
     uses ypr:yang-push-module-version-notif-list;
   }
 
   // Subscription container
-
   augment "/sn:subscriptions/sn:subscription" {
     if-feature "yang-push-revision-supported";
     description
       "Augment the subscriptions RPC container from the
-       ietf-subscribed-notifications YANG module with the
-       yang-push-module-version-subs-list grouping.";
+      ietf-subscribed-notifications YANG module with the
+      yang-push-module-version-subs-list grouping.";
     uses ypr:yang-push-module-version-subs-list;
   }
 
   // Event capabilities
-
-  augment "/sysc:system-capabilities"
-        + "/notc:subscription-capabilities" {
+  augment "/sysc:system-capabilities/notc:subscription-capabilities" {
+    if-feature "yang-push-revision-supported";
     description
       "Add system level capabilities";
     leaf yang-push-module-revision-supported {
       type boolean;
+      default true;
       description
         "Specifies whether the publisher supports exporting
-         revision and version in YANG-Push subscription state change
-              notifications.";
+        revision and version in YANG-Push subscription state change
+        notifications.";
       reference
         "RFC XXXX: Support of Versioning in YANG Notifications
-         Subscription";
+        Subscription";
     }
   }
 }
@@ -1383,28 +1387,28 @@ module ietf-yang-push-revision {
       <xref target="I-D.ietf-netmod-rfc8407bis" section="3.7"/>.</t>
 
       <t>The "ietf-yang-push-revision" YANG module defines a data model
-			that is designed to be accessed via YANG-based management
-			protocols, such as NETCONF <xref target="RFC6241"/> and RESTCONF
-			<xref target="RFC8040"/>. These YANG-based management protocols
-			(1) have to use a secure transport layer (e.g., SSH <xref
-			target="RFC6242"/>, TLS <xref target="RFC8446"/>, and QUIC <xref
-			target="RFC9000"/>) and (2) have to use mutual authentication.</t>
+      that is designed to be accessed via YANG-based management
+      protocols, such as NETCONF <xref target="RFC6241"/> and RESTCONF
+      <xref target="RFC8040"/>. These YANG-based management protocols
+      (1) have to use a secure transport layer (e.g., SSH <xref
+      target="RFC6242"/>, TLS <xref target="RFC8446"/>, and QUIC <xref
+      target="RFC9000"/>) and (2) have to use mutual authentication.</t>
 
       <t>The Network Configuration Access Control Model (NACM) <xref
-			target="RFC8341"/> provides the means to restrict access for
-			particular NETCONF or RESTCONF users to a preconfigured subset of
-			all available NETCONF or RESTCONF protocol operations and content.
+      target="RFC8341"/> provides the means to restrict access for
+      particular NETCONF or RESTCONF users to a preconfigured subset of
+      all available NETCONF or RESTCONF protocol operations and content.
       </t>
 
       <t>There are a number of data nodes defined in this YANG module
-			that are writable/creatable/deletable (i.e., "config true", which
-			is the default).  All writable data nodes are likely to be
-			reasonably sensitive or vulnerable in some network environments.
-			Write operations (e.g., edit-config) and delete operations to
-			these data nodes without proper protection or authentication can
-			have a negative effect on network operations. The following
-			subtrees and data nodes have particular
-			sensitivities/vulnerabilities:</t>
+      that are writable/creatable/deletable (i.e., "config true", which
+      is the default).  All writable data nodes are likely to be
+      reasonably sensitive or vulnerable in some network environments.
+      Write operations (e.g., edit-config) and delete operations to
+      these data nodes without proper protection or authentication can
+      have a negative effect on network operations. The following
+      subtrees and data nodes have particular
+      sensitivities/vulnerabilities:</t>
 
       <ul>
         <li>/sn:establish-subscription/sn:input/ypr:module-version-subs</li>
@@ -1413,71 +1417,71 @@ module ietf-yang-push-revision {
       </ul>
 
       <t>The entries in the list above allow in a YANG-Push Subscription
-			to define the revision or version of a YANG module name. Access
-			control MUST be set so that only someone with proper access
-			permissions has the ability to access and modify this resource.</t>
+      to define the revision or version of a YANG module name. Access
+      control MUST be set so that only someone with proper access
+      permissions has the ability to access and modify this resource.</t>
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors would like to thank Qiufang Ma, Robert Wilton,
       Jian Ping Zhang, Robert Wills and Reshad Rahman for their review
-			and valuable comments.</t>
+      and valuable comments.</t>
     </section>
   </middle>
 
   <back>
     <references title="Normative References">
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3688.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3688.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6020.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6020.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6991.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6991.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8040.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8040.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8341.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8341.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8525.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8525.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8639.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8639.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8641.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8641.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9000.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9196.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9196.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-yang-module-versioning.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-yang-module-versioning.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-yang-semver.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-yang-semver.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-rfc8407bis.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-rfc8407bis.xml'/>
     </references>
 
     <references title="Informative References">
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8259.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8259.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8343.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8343.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8640.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8640.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-udp-notif.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-udp-notif.xml'/>
 
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-yang-packages.xml'?>
+      <xi:include href='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-yang-packages.xml'/>
 
       <reference anchor="W3C.REC-xml-20081126"
                  derivedAnchor="W3C.REC-xml-20081126" quoteTitle="true"

@@ -139,6 +139,9 @@ module ietf-yang-push-revision {
         "This references the YANG module name.";
     }
     choice revision-version {
+      description
+        "Specifies whether the revision or version of the YANG module sent
+        in the subscription.";
       case revision {
         leaf revision {
           type rev:revision-date;
@@ -272,10 +275,12 @@ module ietf-yang-push-revision {
 
   // Event capabilities
   augment "/sysc:system-capabilities/notc:subscription-capabilities" {
+    if-feature "yang-push-revision-supported";
     description
       "Add system level capabilities";
     leaf yang-push-module-revision-supported {
       type boolean;
+      default true;
       description
         "Specifies whether the publisher supports exporting
         revision and version in YANG-Push subscription state change
