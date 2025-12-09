@@ -193,7 +193,7 @@ module ietf-yang-push-revision {
 
   grouping yang-push-module-version-notif-list {
     description
-      "This grouping defines a list of yang-push-module-version
+      "This grouping defines a list of yang-push-module-version-notif
       grouping.";
     list module-version {
       key "name";
@@ -216,12 +216,12 @@ module ietf-yang-push-revision {
 
   grouping yang-push-module-version-subs-list {
     description
-      "This grouping defines a list of yang-push-module-version-config
+      "This grouping defines a list of yang-push-module-version-subs
       grouping.";
-    list module-version-config {
+    list module-version-subs {
       key "name";
       description
-        "List of yang-push-module-version-config grouping. The
+        "List of yang-push-module-version-subs grouping. The
         revision is configurable.";
       uses ypr:yang-push-module-version-subs;
     }

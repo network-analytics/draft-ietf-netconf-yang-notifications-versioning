@@ -518,8 +518,7 @@ module: ietf-system-capabilities
 module: ietf-yang-push-revision
 
   augment /sn:establish-subscription/sn:input:
-    +---w module-version-config* [name]
-            {yang-push-revision-supported}?
+    +---w module-version-subs* [name] {yang-push-revision-supported}?
        +---w name              yang:yang-identifier
        +---w (revision-version)?
           +--:(revision)
@@ -527,8 +526,7 @@ module: ietf-yang-push-revision
           +--:(version)
              +---w version?    ysver:version
   augment /sn:modify-subscription/sn:input:
-    +---w module-version-config* [name]
-            {yang-push-revision-supported}?
+    +---w module-version-subs* [name] {yang-push-revision-supported}?
        +---w name              yang:yang-identifier
        +---w (revision-version)?
           +--:(revision)
@@ -552,8 +550,7 @@ module: ietf-yang-push-revision
             -> /yanglib:yang-library/content-id
             {yang-push-revision-supported}?
   augment /sn:subscriptions/sn:subscription:
-    +--rw module-version-config* [name]
-            {yang-push-revision-supported}?
+    +--rw module-version-subs* [name] {yang-push-revision-supported}?
        +--rw name              yang:yang-identifier
        +--rw (revision-version)?
           +--:(revision)
@@ -719,7 +716,7 @@ module: ietf-subscribed-notifications
         |        +--rw yp:dampening-period?   centiseconds
         |        +--rw yp:sync-on-start?      boolean
         |        +--rw yp:excluded-change*    change-type
-        +--rw ypr:module-version-config* [name]
+        +--rw ypr:module-version-subs* [name]
                 {yang-push-revision-supported}?
            +--rw ypr:name              yang:yang-identifier
            +--rw (ypr:revision-version)?
@@ -784,7 +781,7 @@ module: ietf-subscribed-notifications
     |  |  |        +---w yp:dampening-period?   centiseconds
     |  |  |        +---w yp:sync-on-start?      boolean
     |  |  |        +---w yp:excluded-change*    change-type
-    |  |  +---w ypr:module-version-config* [name]
+    |  |  +---w ypr:module-version-subs* [name]
     |  |          {yang-push-revision-supported}?
     |  |     +---w ypr:name              yang:yang-identifier
     |  |     +---w (ypr:revision-version)?
@@ -839,7 +836,7 @@ module: ietf-subscribed-notifications
     |     |  +--:(yp:on-change) {on-change}?
     |     |     +---w yp:on-change!
     |     |        +---w yp:dampening-period?   centiseconds
-    |     +---w ypr:module-version-config* [name]
+    |     +---w ypr:module-version-subs* [name]
     |             {yang-push-revision-supported}?
     |        +---w ypr:name              yang:yang-identifier
     |        +---w (ypr:revision-version)?
@@ -1210,7 +1207,7 @@ module ietf-yang-push-revision {
 
   grouping yang-push-module-version-notif-list {
     description
-      "This grouping defines a list of yang-push-module-version
+      "This grouping defines a list of yang-push-module-version-notif
       grouping.";
     list module-version {
       key "name";
@@ -1233,12 +1230,12 @@ module ietf-yang-push-revision {
 
   grouping yang-push-module-version-subs-list {
     description
-      "This grouping defines a list of yang-push-module-version-config
+      "This grouping defines a list of yang-push-module-version-subs
       grouping.";
-    list module-version-config {
+    list module-version-subs {
       key "name";
       description
-        "List of yang-push-module-version-config grouping. The
+        "List of yang-push-module-version-subs grouping. The
         revision is configurable.";
       uses ypr:yang-push-module-version-subs;
     }
@@ -1301,7 +1298,7 @@ module ietf-yang-push-revision {
       description
         "Specifies whether the publisher supports exporting
         revision and version in YANG-Push subscription state change
-        notifications.";
+	      notifications.";
       reference
         "RFC XXXX: Support of Versioning in YANG Notifications
         Subscription";
