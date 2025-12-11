@@ -76,7 +76,7 @@
       mechanism to specify the YANG module semantic version at the
       subscription. Then, a new extension with the revision and the
       semantic version of the YANG-Push subscription state change
-      notification is proposed.</t>
+      notifications is proposed.</t>
     </abstract>
   </front>
 
