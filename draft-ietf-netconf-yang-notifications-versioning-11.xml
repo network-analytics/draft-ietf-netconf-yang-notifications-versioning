@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="07" month="December" year="2025"/>
+    <date day="14" month="December" year="2025"/>
 
     <abstract>
       <t>This document extends the YANG notifications subscription
@@ -96,7 +96,7 @@
       target="RFC8639"/>, since the schema of a YANG-Push publisher
       datastore could change after a configured subscription has been
       established and the 'subscription-started' notification has already been sent
-      to the receiver. Without the mechasnism described in <xref
+      to the receiver. Without the mechanism described in <xref
       target="Datastore-Selection"/> and <xref
       target="Streaming-Update"/>, a subscriber is unable to
       control the supported YANG module revision or version nor would the
@@ -501,8 +501,8 @@ module: ietf-system-capabilities
     <section anchor="YANG-push-revision-module"
              title="The &quot;ietf-yang-push-revision&quot; Module">
       <section anchor="Data Model Overview" title="Data Model Overview">
-        <t>This YANG module augments the "ietf-yang-push" module with
-        the 'name', 'revision', 'version' and 
+        <t>This YANG module augments the 'ietf-subscribed-notifications'
+				module with the 'name', 'revision', 'version' and 
         'yang-library-content-id' in the 'subscription-started' and 
         'subscription-modified' subscription state change notifications
         and the ability to define the 'revision' and 'version' in
@@ -1343,8 +1343,20 @@ module ietf-yang-push-revision {
       For example, a YANG package could contain a set of YANG modules
       required to implement a L3VPN service on a network node. It offers
       therefore a complementary information to the solution in this
-      draft by describing how one specifi YANG module revision is part
+      draft by describing how one specific YANG module revision is part
       of a set of YANG modules.</t>
+
+      <t><xref section="2.5.1" sectionFormat="of" target="RFC8639"/>
+			describes the subscription state machine for configured YANG-Push
+			subscriptions. It states that 'subscription-modified' condition is
+			triggered when the subscription policy is being changed. Since
+			this docoument proposes YANG version and revision extensions In
+			subscription configuration and state change notifications, it is
+			expected that changes in YANG version and revision of a
+			subscription during subscription lifecycle accounts for
+			changes in subscription policy and therefore MUST trigger
+			'subscription-modified' subscription state change notifications.
+			</t>
     </section>
 
     <section anchor="Implementation" title="Implementation Status">
@@ -1421,8 +1433,8 @@ module ietf-yang-push-revision {
 
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors would like to thank Qiufang Ma, Robert Wilton,
-      Jian Ping Zhang, Robert Wills and Reshad Rahman for their review
-      and valuable comments.</t>
+      Jian Ping Zhang, Robert Wills, Reshad Rahman and Camilo Cardona
+			for their review and valuable comments.</t>
     </section>
   </middle>
 
