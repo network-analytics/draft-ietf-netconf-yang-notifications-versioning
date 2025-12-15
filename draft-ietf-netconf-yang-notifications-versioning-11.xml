@@ -73,44 +73,44 @@
 
     <abstract>
       <t>This document extends the YANG-Push subscription mechanism to
-			enforce that particular revisions or semantic versions are used
-			when configuring or establishing a subscription.  It also extends
-			the YANG Push subscription state change notifications with
-			additional context regarding the YANG schema associated with the
-			subscription.</t>
+      enforce that particular revisions or semantic versions are used
+      when configuring or establishing a subscription.  It also extends
+      the YANG Push subscription state change notifications with
+      additional context regarding the YANG schema associated with the
+      subscription.</t>
     </abstract>
   </front>
 
   <middle>
     <section anchor="Introduction" title="Introduction">
       <t>In order to process the YANG-Push notification messages
-			described in <xref section="3.7" sectionFormat="of"
+      described in <xref section="3.7" sectionFormat="of"
       target="RFC8641"/>at the YANG-Push receiver, the Publisher's
-			instance of ietf-yang-library <xref target="RFC8525"/> needs to be
-			queried each time a subscription state change notification <xref
-			section="2.7" sectionFormat="of" target="RFC8639"/> is being
-			received to understand whether the YANG module(s) semantic has
-			changed. To notify the receiver whether the YANG module(s)
-			semantic has changed, a semantic reference to the YANG modules and
-			the XPath or subtree in the subscription state change
-			notifications is needed.</t>
+      instance of ietf-yang-library <xref target="RFC8525"/> needs to be
+      queried each time a subscription state change notification <xref
+      section="2.7" sectionFormat="of" target="RFC8639"/> is being
+      received to understand whether the YANG module(s) semantic has
+      changed. To notify the receiver whether the YANG module(s)
+      semantic has changed, a semantic reference to the YANG modules and
+      the XPath or subtree in the subscription state change
+      notifications is needed.</t>
 
       <t>This specification is primarily aimed for YANG-Push configured
       subscription, as defined in <xref section="2.5" sectionFormat="of"
       target="RFC8639"/>, since the schema of a YANG-Push publisher
       datastore could change after a configured subscription has been
       established and the 'subscription-started' notification has
-			already been sent to the receiver. Without the mechanism described
-			in <xref target="Subscription_Policy_Extension"/> and <xref
+      already been sent to the receiver. Without the mechanism described
+      in <xref target="Subscription_Policy_Extension"/> and <xref
       target="Subscription_State_Change_Extension"/>, a subscriber is
-			unable to control the supported YANG module revision or version
-			nor would the YANG-Push receiver be notified of changes in YANG
-			module revision or version in the YANG-Push subscription. Although
-			this mechanism is primarily designed for YANG-Push configured
-			subscriptions <xref target="Subscription_State_Change_Extension"/>
-			, the extensions for 'subscription-started' are also applicable to
-			dynamic subscriptions as defined in <xref section="2.4"
-			sectionFormat="of" target="RFC8639"/>.</t>
+      unable to control the supported YANG module revision or version
+      nor would the YANG-Push receiver be notified of changes in YANG
+      module revision or version in the YANG-Push subscription. Although
+      this mechanism is primarily designed for YANG-Push configured
+      subscriptions <xref target="Subscription_State_Change_Extension"/>
+      , the extensions for 'subscription-started' are also applicable to
+      dynamic subscriptions as defined in <xref section="2.4"
+      sectionFormat="of" target="RFC8639"/>.</t>
 
       <t>This semantic reference is available when the subscription is
       established as described in <xref section="3.6" sectionFormat="of"
@@ -124,12 +124,12 @@
       message header.</t>
 
       <t>TThe semantics of data nodes defined in a module can change
-			between different YANG module revisions. The YANG module version
-			statement is specified in <xref section="7.1.2" sectionFormat="of"
-			target="RFC7950"/> and states that the newer revision needs to be
-			backward compatible to the previous revision. <xref section="3.1"
-			sectionFormat="of"
-			target="I-D.ietf-netmod-yang-module-versioning"/> specifies that
+      between different YANG module revisions. The YANG module version
+      statement is specified in <xref section="7.1.2" sectionFormat="of"
+      target="RFC7950"/> and states that the newer revision needs to be
+      backward compatible to the previous revision. <xref section="3.1"
+      sectionFormat="of"
+      target="I-D.ietf-netmod-yang-module-versioning"/> specifies that
       newer semantic versions introduced in <xref
       target="I-D.ietf-netmod-yang-semver"/> MAY not be backward
       compatible to the previous version when indicated with
@@ -137,10 +137,10 @@
 
       <t>The YANG notifications subscription mechanism defined in <xref
       target="RFC8641"/> does not include the YANG module revision.
-			Hence, when a network node is upgraded, the subscribed YANG module
-			revision might have changed, and might consequently break the data
-			processing pipeline since the YANG-Push receiver may not be aware
-			of this change.</t>
+      Hence, when a network node is upgraded, the subscribed YANG module
+      revision might have changed, and might consequently break the data
+      processing pipeline since the YANG-Push receiver may not be aware
+      of this change.</t>
 
       <t>This document extends the current YANG notifications
       subscription mechanism to allow subscriptions to a specific
@@ -161,8 +161,8 @@
         "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",
         "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to
         be interpreted as described in BCP 14 <xref target="RFC2119"/>
-				<xref target="RFC8174"/> when, and only when, they appear in all
-				capitals, as shown here.</t>
+        <xref target="RFC8174"/> when, and only when, they appear in all
+        capitals, as shown here.</t>
     
         <t>The terms "YANG library" and "YANG library content
         identifier" are used as defined in <xref target="RFC8525"/>.</t>
@@ -172,16 +172,16 @@
     <section anchor="Subscription_Policy_Extension"
              title="Subscription Policy Extension">
       <t>The ability to configure or establish a dynamic subscription
-			can be constrained to particular module versions or revisions
-			using the following fields that are defined in
-			'ietf-yang-push-revision':</t>
+      can be constrained to particular module versions or revisions
+      using the following fields that are defined in
+      'ietf-yang-push-revision':</t>
 
       <dl>
         <dt>module:</dt>
 
         <dd>Restricts the subscription to one or more YANG module names
         on the subscription path with revision and version together for
-				the related streamed content.</dd>
+        the related streamed content.</dd>
       </dl>
 
       <dl>
@@ -200,12 +200,12 @@
 
       <t>When the NETCONF client creates or modifies the subscription
       by changing the subscription configuration or using the RPCs
-			establish-subscription and modify-subscription and the NETCONF
-			server does not support the revision, the version or the
-			combination of revision and version specified in the RPC request,
-			the NETCONF server MUST return an RPC reply including an 
-			&lt;rpc-error&gt; element as defined in <xref section="4.3"
-			sectionFormat="of" target="RFC6241"/> with the
+      establish-subscription and modify-subscription and the NETCONF
+      server does not support the revision, the version or the
+      combination of revision and version specified in the RPC request,
+      the NETCONF server MUST return an RPC reply including an 
+      &lt;rpc-error&gt; element as defined in <xref section="4.3"
+      sectionFormat="of" target="RFC6241"/> with the
       error information populated as follows:</t>
 
       <ul bare="false" empty="false" spacing="normal">
@@ -272,7 +272,7 @@ target="subscription_establish_sub_error_response_example_xml_fig"/>
     xmlns:netconf="urn:ietf:params:xml:ns:netconf:base:1.0">
   <establish-subscription
       xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications"
-      xmlns:yp="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+      xmlns:yp="urn:ietf:params:xml:ns:yang:ietf-yang-push"
       xmlns:ypr="urn:ietf:params:xml:ns:yang:ietf-yang-push-revision">
     <yp:datastore
         xmlns:ds="urn:ietf:params:xml:ns:yang:ietf-datastores">
@@ -283,7 +283,7 @@ target="subscription_establish_sub_error_response_example_xml_fig"/>
       /ex:foo
     </yp:datastore-xpath-filter>
     <ypr:module-version>
-      <ypr:name>ex:foo</ypr:name>
+      <ypr:name>foo</ypr:name>
       <ypr:revision>2023-09-17</ypr:revision>
     </ypr:module-version>
     <yp:periodic>
@@ -333,9 +333,9 @@ title="RPC Example for a positive establish-subscription response">
       </figure>
 
       <t>The YANG-Push publisher MUST NOT publish notifications if the
-			'revision' or 'version' of the YANG module name in the
-			subscription policy configuration does not match with the YANG
-			library <xref target="RFC8525"/>.</t>
+      'revision' or 'version' of the YANG module name in the
+      subscription policy configuration does not match with the YANG
+      library <xref target="RFC8525"/>.</t>
     </section>
 
     <section anchor="Subscription_State_Change_Extension"
@@ -350,7 +350,7 @@ title="RPC Example for a positive establish-subscription response">
         <dt>module:</dt>
 
         <dd>Describes the YANG module names from the subscription path
-				for the related streamed content.</dd>
+        for the related streamed content.</dd>
       </dl>
 
       <dl>
@@ -516,7 +516,7 @@ module: ietf-system-capabilities
              title="The &quot;ietf-yang-push-revision&quot; Module">
       <section anchor="Data Model Overview" title="Data Model Overview">
         <t>This YANG module augments the 'ietf-subscribed-notifications'
-				module with the 'name', 'revision', 'version' and 
+        module with the 'name', 'revision', 'version' and 
         'yang-library-content-id' in the 'subscription-started' and 
         'subscription-modified' subscription state change notifications
         and the ability to define the 'revision' and 'version' in
@@ -1312,7 +1312,7 @@ module ietf-yang-push-revision {
       description
         "Specifies whether the publisher supports exporting
         revision and version in YANG-Push subscription state change
-	      notifications.";
+        notifications.";
       reference
         "RFC XXXX: Support of Versioning in YANG Notifications
         Subscription";
@@ -1353,34 +1353,34 @@ module ietf-yang-push-revision {
     <section anchor="Operational" title="Operational Considerations">
 
       <t>The solution described in this document allows subscription
-			policies to be constrained to a particular module
-			revisions/versions that are used by the publisher before a
-			subscription will be initiated.  The augmentations to the
-			subscription state change notifications also gives the receiver
-			additional context and confidence of the current schema associated
-			with a subscription.</t>
+      policies to be constrained to a particular module
+      revisions/versions that are used by the publisher before a
+      subscription will be initiated.  The augmentations to the
+      subscription state change notifications also gives the receiver
+      additional context and confidence of the current schema associated
+      with a subscription.</t>
 
       <t><xref section="2.5.1" sectionFormat="of" target="RFC8639"/>
-			describes the subscription state machine for configured YANG-Push
-			subscriptions. It states that 'subscription-modified' condition is
-			triggered when the subscription policy is being changed. Since
-			this docoument proposes YANG version and revision extensions In
-			subscription configuration and state change notifications, it is
-			expected that changes in YANG version and revision of a
-			subscription during subscription lifecycle accounts for
-			changes in subscription policy and therefore MUST trigger
-			'subscription-modified' subscription state change notifications.
-			</t>
+      describes the subscription state machine for configured YANG-Push
+      subscriptions. It states that 'subscription-modified' condition is
+      triggered when the subscription policy is being changed. Since
+      this docoument proposes YANG version and revision extensions In
+      subscription configuration and state change notifications, it is
+      expected that changes in YANG version and revision of a
+      subscription during subscription lifecycle accounts for
+      changes in subscription policy and therefore MUST trigger
+      'subscription-modified' subscription state change notifications.
+      </t>
 
       <t>Note, that not all modules used or referenced under a
-			subscription path are included in the subscription state change
-			notification, and hence, it is possible that the schema associated
-			with a subscription MAY change without any corresponding change to
-			the advertise module revisions or versions.  The YANG library
-			content-id that is also included in the subscription state change
-			notifications allows the receiver to detect if there were changes
-			to the device schema. This includes changes not related to the
-			subscription path as well.</t>
+      subscription path are included in the subscription state change
+      notification, and hence, it is possible that the schema associated
+      with a subscription MAY change without any corresponding change to
+      the advertise module revisions or versions.  The YANG library
+      content-id that is also included in the subscription state change
+      notifications allows the receiver to detect if there were changes
+      to the device schema. This includes changes not related to the
+      subscription path as well.</t>
 
       <t>A YANG package <xref target="I-D.ietf-netmod-yang-packages"/>,
       specifies a versioned organizational structure used to manage a
@@ -1467,7 +1467,7 @@ module ietf-yang-push-revision {
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors would like to thank Qiufang Ma, Robert Wilton,
       Jian Ping Zhang, Robert Wills, Reshad Rahman and Camilo Cardona
-			for their review and valuable comments.</t>
+      for their review and valuable comments.</t>
     </section>
   </middle>
 

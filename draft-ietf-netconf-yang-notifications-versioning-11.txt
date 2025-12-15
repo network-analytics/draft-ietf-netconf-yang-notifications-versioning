@@ -249,7 +249,7 @@ Internet-Draft        YANG Notifications Versioning        December 2025
        xmlns:netconf="urn:ietf:params:xml:ns:netconf:base:1.0">
      <establish-subscription
          xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications"
-         xmlns:yp="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+         xmlns:yp="urn:ietf:params:xml:ns:yang:ietf-yang-push"
          xmlns:ypr="urn:ietf:params:xml:ns:yang:ietf-yang-push-revision">
        <yp:datastore
            xmlns:ds="urn:ietf:params:xml:ns:yang:ietf-datastores">
@@ -260,7 +260,7 @@ Internet-Draft        YANG Notifications Versioning        December 2025
          /ex:foo
        </yp:datastore-xpath-filter>
        <ypr:module-version>
-         <ypr:name>ex:foo</ypr:name>
+         <ypr:name>foo</ypr:name>
          <ypr:revision>2023-09-17</ypr:revision>
        </ypr:module-version>
        <yp:periodic>
@@ -1469,7 +1469,7 @@ Internet-Draft        YANG Notifications Versioning        December 2025
          description
            "Specifies whether the publisher supports exporting
            revision and version in YANG-Push subscription state change
-                 notifications.";
+           notifications.";
          reference
            "RFC XXXX: Support of Versioning in YANG Notifications
            Subscription";
