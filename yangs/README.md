@@ -10,3 +10,8 @@ $ pyang -f tree ietf-yang-push-revision@2025-12-07.yang ietf-system-capabilities
 $ pyang ietf-yang-push-revision@2025-12-07.yang -f tree -p dependencies --tree-line-length=69
 $ pyang -f tree ietf-yang-push-revision@2025-12-07.yang ietf-yang-push@2019-09-09.yang ietf-subscribed-notifications@2019-09-09.yang --tree-line-length=69 -p dependencies
 ```
+
+
+```shell
+$ ./rfcfold.sh -s 1 -i configured-subscriptions.xml -o configured-folded.xml 
+```

@@ -7,45 +7,44 @@
       <running/>
     </target>
     <config>
-      <subscriptions xmlns="urn:ietf:params:xml:ns:yang:ietf-subscri\
-bed-notifications">
+      <subscriptions
+  xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications"
+  xmlns:yp="urn:ietf:params:xml:ns:yang:ietf-yang-push"
+  xmlns:ds="urn:ietf:params:xml:ns:yang:ietf-datastores"
+  xmlns:if="urn:ietf:params:xml:ns:yang:ietf-interfaces"
+  xmlns:ypr="urn:ietf:params:xml:ns:yang:ietf-yang-push-revision"
+  xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport"
+  xmlns:snr="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-recei\
+vers"
+  >
         <subscription>
           <id>6666</id>
-          <datastore xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-pu\
-sh"
-            xmlns:ds="urn:ietf:params:xml:ns:yang:ietf-datastores">d\
-s:operational</datastore>
-          <datastore-xpath-filter xmlns="urn:ietf:params:xml:ns:yang\
-:ietf-yang-push"
-            xmlns:if="urn:ietf:params:xml:ns:yang:ietf-interfaces">/\
-if:interfaces</datastore-xpath-filter>
-          <module-version-subs xmlns="urn:ietf:params:xml:ns:yang:ie\
-tf-yang-push-revision">
+          <yp:datastore>ds:operational</datastore>
+          <yp:datastore-xpath-filter>
+            /if:interfaces
+          </datastore-xpath-filter>
+          <ypr:module-version-subs>
             <name>ietf-interfaces</name>
             <revision>2018-02-20</revision>
           </module-version-subs>
-          <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp\
--notif-transport">unt:udp-notif</transport>
+          <transport>unt:udp-notif</transport>
           <encoding>encode-json</encoding>
           <receivers>
             <receiver>
               <name>subscription-specific-receiver-def</name>
-              <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:y\
-ang:ietf-subscribed-notif-receivers">global-udp-notif-receiver-def</\
-receiver-instance-ref>
+              <snr:receiver-instance-ref>
+                global-udp-notif-receiver-def
+              </receiver-instance-ref>
             </receiver>
           </receivers>
-          <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-pus\
-h">
+          <yp:periodic>
             <period>6000</period>
           </periodic>
         </subscription>
-        <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-\
-subscribed-notif-receivers">
+        <snr:receiver-instances>
           <receiver-instance>
             <name>global-udp-notif-receiver-def</name>
-            <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:i\
-etf-udp-notif-transport">
+            <unt:udp-notif-receiver>
               <address>192.0.5.1</address>
               <port>12345</port>
               <enable-segmentation>false</enable-segmentation>
