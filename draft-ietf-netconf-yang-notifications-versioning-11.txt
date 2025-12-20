@@ -1741,8 +1741,8 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 10.  Acknowledgements
 
    The authors would like to thank Qiufang Ma, Robert Wilton, Jian Ping
-   Zhang, Robert Wills, Reshad Rahman and Camilo Cardona for their
-   review and valuable comments.
+   Zhang, Robert Wills, Reshad Rahman, Camilo Cardona Holger Keller and
+   Gabriele Galimberti for their review and valuable comments.
 
 11.  References
 

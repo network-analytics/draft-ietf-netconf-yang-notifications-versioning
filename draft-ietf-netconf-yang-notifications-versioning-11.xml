@@ -1522,8 +1522,9 @@ module ietf-yang-push-revision {
 
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors would like to thank Qiufang Ma, Robert Wilton,
-      Jian Ping Zhang, Robert Wills, Reshad Rahman and Camilo Cardona
-      for their review and valuable comments.</t>
+      Jian Ping Zhang, Robert Wills, Reshad Rahman, Camilo Cardona
+      Holger Keller and Gabriele Galimberti for their review and
+			valuable comments.</t>
     </section>
   </middle>
 
