@@ -140,7 +140,7 @@ module ietf-yang-push-revision {
     }
     choice revision-version {
       description
-        "Specifies whether the revision or version of the YANG module sent
+        "Specifies the revision or version of the YANG module sent
         in the subscription.";
       case revision {
         leaf revision {
@@ -284,7 +284,7 @@ module ietf-yang-push-revision {
       description
         "Specifies whether the publisher supports exporting
         revision and version in YANG-Push subscription state change
-	      notifications.";
+        notifications.";
       reference
         "RFC XXXX: Support of Versioning in YANG Notifications
         Subscription";
