@@ -579,7 +579,6 @@ module: ietf-system-capabilities
         +--ro notc:supported-excluded-change-type*       union
         |       {yp:on-change}?
         +--ro ypr:yang-push-module-revision-supported?   boolean
-                {yang-push-revision-supported}?
        ]]></sourcecode>
 
       <t>This model can be retrieved via a NETCONF &lt;get&gt; RPC.</t>
@@ -645,9 +644,6 @@ module: ietf-yang-push-revision
           |  +--rw revision?   rev:revision-date
           +--:(version)
              +--rw version?    ysver:version
-  augment /sysc:system-capabilities/notc:subscription-capabilities:
-    +--ro yang-push-module-revision-supported?   boolean
-            {yang-push-revision-supported}?
 ]]></sourcecode>
         </section>
 
@@ -1344,16 +1340,16 @@ module ietf-yang-push-revision {
 
   // Event capabilities
   augment "/sysc:system-capabilities/notc:subscription-capabilities" {
-    if-feature "yang-push-revision-supported";
     description
       "Add system level capabilities";
     leaf yang-push-module-revision-supported {
       type boolean;
-      default true;
+      default false;
       description
         "Specifies whether the publisher supports exporting
         revision and version in YANG-Push subscription state change
-        notifications.";
+        notifications. If set to true, publisher supports. If set to
+        false, publisher doesn't support.";
       reference
         "RFC XXXX: Support of Versioning in YANG Notifications
         Subscription";
