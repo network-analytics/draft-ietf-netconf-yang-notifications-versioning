@@ -5,10 +5,10 @@
 Network Working Group                                            T. Graf
 Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
-Expires: 17 June 2026                                             Huawei
+Expires: 16 August 2026                                           Huawei
                                                            A. Huang-Feng
                                                                INSA-Lyon
-                                                        14 December 2025
+                                                        12 February 2026
 
 
         Support of Versioning in YANG Notifications Subscription
@@ -37,11 +37,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 June 2026.
+   This Internet-Draft will expire on 16 August 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Graf, et al.              Expires 17 June 2026                  [Page 1]
+Graf, et al.             Expires 16 August 2026                 [Page 1]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Graf, et al.              Expires 17 June 2026                  [Page 2]
+Graf, et al.             Expires 16 August 2026                 [Page 2]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    This specification is primarily aimed for YANG-Push Configured
@@ -165,9 +165,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                  [Page 3]
+Graf, et al.             Expires 16 August 2026                 [Page 3]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    The Subscription state change 'subscription-started' and
@@ -221,9 +221,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                  [Page 4]
+Graf, et al.             Expires 16 August 2026                 [Page 4]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    When a NETCONF client creates or modifies a Subscription, either by
@@ -277,9 +277,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                  [Page 5]
+Graf, et al.             Expires 16 August 2026                 [Page 5]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    <rpc message-id="101"
@@ -333,9 +333,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                  [Page 6]
+Graf, et al.             Expires 16 August 2026                 [Page 6]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    <rpc-reply message-id="101"
@@ -389,9 +389,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                  [Page 7]
+Graf, et al.             Expires 16 August 2026                 [Page 7]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
              <ypr:module-version-subs>
@@ -445,9 +445,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                  [Page 8]
+Graf, et al.             Expires 16 August 2026                 [Page 8]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
       for the related streamed content.
@@ -501,9 +501,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                  [Page 9]
+Graf, et al.             Expires 16 August 2026                 [Page 9]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    {
@@ -557,9 +557,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 10]
+Graf, et al.             Expires 16 August 2026                [Page 10]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    module: ietf-system-capabilities
@@ -613,9 +613,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 11]
+Graf, et al.             Expires 16 August 2026                [Page 11]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
 5.1.  Data Model Overview
@@ -669,9 +669,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 12]
+Graf, et al.             Expires 16 August 2026                [Page 12]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    module: ietf-yang-push-revision
@@ -725,9 +725,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 13]
+Graf, et al.             Expires 16 August 2026                [Page 13]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    module: ietf-subscribed-notifications
@@ -781,9 +781,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 14]
+Graf, et al.             Expires 16 August 2026                [Page 14]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
            |  |  |       yang:date-and-time {replay}?
@@ -837,9 +837,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 15]
+Graf, et al.             Expires 16 August 2026                [Page 15]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
            |     |       yang:zero-based-counter64
@@ -893,9 +893,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 16]
+Graf, et al.             Expires 16 August 2026                [Page 16]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
        |  |  |     |       identityref
@@ -949,9 +949,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 17]
+Graf, et al.             Expires 16 August 2026                [Page 17]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
        |     +---w (target)
@@ -1005,9 +1005,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 18]
+Graf, et al.             Expires 16 August 2026                [Page 18]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
        |     +---w id    subscription-id
@@ -1061,9 +1061,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 19]
+Graf, et al.             Expires 16 August 2026                [Page 19]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
        |  +--ro dscp?
@@ -1117,9 +1117,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 20]
+Graf, et al.             Expires 16 August 2026                [Page 20]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
        |  |  |  |       stream-ref
@@ -1173,9 +1173,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 21]
+Graf, et al.             Expires 16 August 2026                [Page 21]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
        |  +--ro ypr:yang-library-content-id?
@@ -1229,9 +1229,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 22]
+Graf, et al.             Expires 16 August 2026                [Page 22]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
      import ietf-system-capabilities {
@@ -1285,9 +1285,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 23]
+Graf, et al.             Expires 16 August 2026                [Page 23]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
        NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
@@ -1341,9 +1341,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 24]
+Graf, et al.             Expires 16 August 2026                [Page 24]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
          type yang:yang-identifier;
@@ -1397,9 +1397,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 25]
+Graf, et al.             Expires 16 August 2026                [Page 25]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
        }
@@ -1453,9 +1453,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 26]
+Graf, et al.             Expires 16 August 2026                [Page 26]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
          "Augment the establish-subscription RPC from the
@@ -1509,9 +1509,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 27]
+Graf, et al.             Expires 16 August 2026                [Page 27]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
            notifications. If set to true, publisher supports. If set to
@@ -1565,9 +1565,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 28]
+Graf, et al.             Expires 16 August 2026                [Page 28]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    Section 2.5.1 of [RFC8639] describes the Subscription state machine
@@ -1621,9 +1621,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 29]
+Graf, et al.             Expires 16 August 2026                [Page 29]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
 8.2.  6WIND VSR
@@ -1677,9 +1677,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 30]
+Graf, et al.             Expires 16 August 2026                [Page 30]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    The entries in the list above allow in a YANG-Push Subscription to
@@ -1733,9 +1733,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 31]
+Graf, et al.             Expires 16 August 2026                [Page 31]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
@@ -1789,9 +1789,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 32]
+Graf, et al.             Expires 16 August 2026                [Page 32]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    [RFC8639]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
@@ -1845,9 +1845,9 @@ Internet-Draft        YANG Notifications Versioning        December 2025
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 33]
+Graf, et al.             Expires 16 August 2026                [Page 33]
 
-Internet-Draft        YANG Notifications Versioning        December 2025
+Internet-Draft        YANG Notifications Versioning        February 2026
 
 
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
@@ -1901,4 +1901,4 @@ Authors' Addresses
 
 
 
-Graf, et al.              Expires 17 June 2026                 [Page 34]
+Graf, et al.             Expires 16 August 2026                [Page 34]
