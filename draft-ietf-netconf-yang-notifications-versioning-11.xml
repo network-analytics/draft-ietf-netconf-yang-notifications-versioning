@@ -605,7 +605,7 @@ module: ietf-system-capabilities
 module: ietf-yang-push-revision
 
   augment /sn:establish-subscription/sn:input:
-    +---w module-version-subs* [name] {yang-push-revision-supported}?
+    +---w module-version-subs* [name]
        +---w name              yang:yang-identifier
        +---w (revision-version)?
           +--:(revision)
@@ -613,7 +613,7 @@ module: ietf-yang-push-revision
           +--:(version)
              +---w version?    ysver:version
   augment /sn:modify-subscription/sn:input:
-    +---w module-version-subs* [name] {yang-push-revision-supported}?
+    +---w module-version-subs* [name]
        +---w name              yang:yang-identifier
        +---w (revision-version)?
           +--:(revision)
@@ -621,29 +621,29 @@ module: ietf-yang-push-revision
           +--:(version)
              +---w version?    ysver:version
   augment /sn:subscription-started:
-    +--ro module-version* [name] {yang-push-revision-supported}?
+    +--ro module-version* [name]
     |  +--ro name        yang:yang-identifier
     |  +--ro revision    rev:revision-date
     |  +--ro version?    ysver:version
     +--ro yang-library-content-id?
             -> /yanglib:yang-library/content-id
-            {yang-push-revision-supported}?
   augment /sn:subscription-modified:
-    +--ro module-version* [name] {yang-push-revision-supported}?
+    +--ro module-version* [name]
     |  +--ro name        yang:yang-identifier
     |  +--ro revision    rev:revision-date
     |  +--ro version?    ysver:version
     +--ro yang-library-content-id?
             -> /yanglib:yang-library/content-id
-            {yang-push-revision-supported}?
   augment /sn:subscriptions/sn:subscription:
-    +--rw module-version-subs* [name] {yang-push-revision-supported}?
+    +--rw module-version-subs* [name]
        +--rw name              yang:yang-identifier
        +--rw (revision-version)?
           +--:(revision)
           |  +--rw revision?   rev:revision-date
           +--:(version)
              +--rw version?    ysver:version
+  augment /sysc:system-capabilities/notc:subscription-capabilities:
+    +--ro yang-push-module-revision-supported?   boolean
 ]]></sourcecode>
         </section>
 
@@ -768,7 +768,6 @@ module: ietf-subscribed-notifications
         |        +--rw yp:sync-on-start?      boolean
         |        +--rw yp:excluded-change*    change-type
         +--rw ypr:module-version-subs* [name]
-                {yang-push-revision-supported}?
            +--rw ypr:name              yang:yang-identifier
            +--rw (ypr:revision-version)?
               +--:(ypr:revision)
@@ -833,7 +832,6 @@ module: ietf-subscribed-notifications
     |  |  |        +---w yp:sync-on-start?      boolean
     |  |  |        +---w yp:excluded-change*    change-type
     |  |  +---w ypr:module-version-subs* [name]
-    |  |          {yang-push-revision-supported}?
     |  |     +---w ypr:name              yang:yang-identifier
     |  |     +---w (ypr:revision-version)?
     |  |        +--:(ypr:revision)
@@ -888,7 +886,6 @@ module: ietf-subscribed-notifications
     |     |     +---w yp:on-change!
     |     |        +---w yp:dampening-period?   centiseconds
     |     +---w ypr:module-version-subs* [name]
-    |             {yang-push-revision-supported}?
     |        +---w ypr:name              yang:yang-identifier
     |        +---w (ypr:revision-version)?
     |           +--:(ypr:revision)
@@ -968,13 +965,11 @@ module: ietf-subscribed-notifications
     |  |        +--ro yp:sync-on-start?      boolean
     |  |        +--ro yp:excluded-change*    change-type
     |  +--ro ypr:module-version* [name]
-    |  |       {yang-push-revision-supported}?
     |  |  +--ro ypr:name        yang:yang-identifier
     |  |  +--ro ypr:revision    rev:revision-date
     |  |  +--ro ypr:version?    ysver:version
     |  +--ro ypr:yang-library-content-id?
     |          -> /yanglib:yang-library/content-id
-    |          {yang-push-revision-supported}?
     +---n subscription-resumed
     |  +--ro id    subscription-id
     +---n subscription-started {configured}?
@@ -1040,13 +1035,11 @@ module: ietf-subscribed-notifications
     |  |        +--ro yp:sync-on-start?      boolean
     |  |        +--ro yp:excluded-change*    change-type
     |  +--ro ypr:module-version* [name]
-    |  |       {yang-push-revision-supported}?
     |  |  +--ro ypr:name        yang:yang-identifier
     |  |  +--ro ypr:revision    rev:revision-date
     |  |  +--ro ypr:version?    ysver:version
     |  +--ro ypr:yang-library-content-id?
     |          -> /yanglib:yang-library/content-id
-    |          {yang-push-revision-supported}?
     +---n subscription-suspended
     |  +--ro id        subscription-id
     |  +--ro reason    identityref
@@ -1155,13 +1148,6 @@ module ietf-yang-push-revision {
     reference
       "RFC XXXX: Support of Versioning in YANG Notifications
       Subscription";
-  }
-
-  feature yang-push-revision-supported {
-    description
-      "This feature indicates the YANG Subscription Notifications
-      support specifying the list of modules, revisions and
-      versions in the YANG subscription.";
   }
 
   // Identities
@@ -1294,7 +1280,6 @@ module ietf-yang-push-revision {
 
   // Subscription parameters
   augment "/sn:establish-subscription/sn:input" {
-    if-feature "yang-push-revision-supported";
     description
       "Augment the establish-subscription RPC from the
       ietf-subscribed-notifications YANG module with the
@@ -1302,7 +1287,6 @@ module ietf-yang-push-revision {
     uses ypr:yang-push-module-version-subs-list;
   }
   augment "/sn:modify-subscription/sn:input" {
-    if-feature "yang-push-revision-supported";
     description
       "Augment the modify-subscription RPC from the
       ietf-subscribed-notifications YANG module with the
@@ -1312,7 +1296,6 @@ module ietf-yang-push-revision {
 
   // Subscription notifications
   augment "/sn:subscription-started" {
-    if-feature "yang-push-revision-supported";
     description
       "Augment the subscription-started notification from the
       ietf-subscribed-notifications YANG module with the
@@ -1320,7 +1303,6 @@ module ietf-yang-push-revision {
     uses ypr:yang-push-module-version-notif-list;
   }
   augment "/sn:subscription-modified" {
-    if-feature "yang-push-revision-supported";
     description
       "Augment the subscription-modified notification from the
       ietf-subscribed-notifications YANG module with the
@@ -1330,7 +1312,6 @@ module ietf-yang-push-revision {
 
   // Subscription container
   augment "/sn:subscriptions/sn:subscription" {
-    if-feature "yang-push-revision-supported";
     description
       "Augment the subscriptions RPC container from the
       ietf-subscribed-notifications YANG module with the
@@ -1338,18 +1319,18 @@ module ietf-yang-push-revision {
     uses ypr:yang-push-module-version-subs-list;
   }
 
-  // Event capabilities
+  // Subscription capabilities
   augment "/sysc:system-capabilities/notc:subscription-capabilities" {
     description
       "Add system level capabilities";
     leaf yang-push-module-revision-supported {
       type boolean;
-      default false;
+      default true;
       description
         "Specifies whether the publisher supports exporting
         revision and version in YANG-Push subscription state change
         notifications. If set to true, publisher supports. If set to
-        false, publisher doesn't support.";
+        false, publisher does not support.";
       reference
         "RFC XXXX: Support of Versioning in YANG Notifications
         Subscription";
