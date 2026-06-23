@@ -7,7 +7,7 @@ Internet-Draft                                                  Swisscom
 Intended status: Standards Track                               B. Claise
 Expires: 25 December 2026                                         Huawei
                                                            A. Huang-Feng
-                                                               INSA-Lyon
+                                                        Deutsche Telekom
                                                             23 June 2026
 
 
@@ -1907,10 +1907,10 @@ Internet-Draft        YANG Notifications Versioning            June 2026
 
 
    Alex Huang-Feng
-   INSA-Lyon
+   Deutsche Telekom
    Lyon
    France
-   Email: alex.huang-feng@insa-lyon.fr
+   Email: alex.huang-feng@t-systems.com
 
 
 
