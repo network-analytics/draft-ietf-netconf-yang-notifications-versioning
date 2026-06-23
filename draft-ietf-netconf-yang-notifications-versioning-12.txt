@@ -1908,8 +1908,8 @@ Internet-Draft        YANG Notifications Versioning            June 2026
 
    Alex Huang-Feng
    Deutsche Telekom
-   Lyon
-   France
+   Barcelona
+   Spain
    Email: alex.huang-feng@t-systems.com
 
 
