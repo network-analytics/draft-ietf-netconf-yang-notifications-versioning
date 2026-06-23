@@ -69,7 +69,7 @@
       </address>
     </author>
 
-    <date day="22" month="June" year="2026"/>
+    <date day="23" month="June" year="2026"/>
 
     <abstract>
       <t>This document defines a YANG module which extends the YANG-Push
