@@ -204,7 +204,9 @@ module ietf-yang-push-revision {
       config false;
       description
         "Contains the YANG library content identifier
-        information (RFC 8525).";
+        information.";
+      reference
+        "RFC 8525: YANG Library";
     }
   }
 

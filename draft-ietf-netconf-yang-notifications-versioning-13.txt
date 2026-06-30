@@ -1441,15 +1441,15 @@ Internet-Draft        YANG Notifications Versioning            June 2026
          config false;
          description
            "Contains the YANG library content identifier
-           information (RFC 8525).";
+           information.";
+         reference
+           "RFC 8525: YANG Library";
        }
      }
 
      grouping yang-push-module-version-subs-list {
        description
          "This grouping defines a list of yang-push-module-version-subs
-         grouping.";
-       list module-version-subs {
 
 
 
@@ -1458,6 +1458,8 @@ Graf, et al.             Expires 1 January 2027                [Page 26]
 Internet-Draft        YANG Notifications Versioning            June 2026
 
 
+         grouping.";
+       list module-version-subs {
          key "name";
          description
            "List of yang-push-module-version-subs grouping. The
@@ -1504,8 +1506,6 @@ Internet-Draft        YANG Notifications Versioning            June 2026
          "Augment the subscriptions RPC container from the
          ietf-subscribed-notifications YANG module with the
          yang-push-module-version-subs-list grouping.";
-       uses ypr:yang-push-module-version-subs-list;
-     }
 
 
 
@@ -1513,6 +1513,9 @@ Graf, et al.             Expires 1 January 2027                [Page 27]
 
 Internet-Draft        YANG Notifications Versioning            June 2026
 
+
+       uses ypr:yang-push-module-version-subs-list;
+     }
 
      // Subscription capabilities
      augment "/sysc:system-capabilities/notc:subscription-capabilities" {
@@ -1554,9 +1557,6 @@ Internet-Draft        YANG Notifications Versioning            June 2026
      namespace: urn:ietf:params:xml:ns:yang:ietf-yang-push-revision
      prefix: ypr
      reference: RFC-to-be
-
-
-
 
 
 
