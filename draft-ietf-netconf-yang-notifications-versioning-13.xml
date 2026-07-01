@@ -376,14 +376,14 @@ vers"
   >
         <subscription>
           <id>53</id>
-          <yp:datastore>ds:operational</datastore>
+          <yp:datastore>ds:operational</yp:datastore>
           <yp:datastore-xpath-filter>
             /if:interfaces
-          </datastore-xpath-filter>
+          </yp:datastore-xpath-filter>
           <ypr:module-version-subs>
             <name>ietf-interfaces</name>
             <revision>2018-02-20</revision>
-          </module-version-subs>
+          </ypr:module-version-subs>
           <transport>unt:udp-notif</transport>
           <encoding>encode-json</encoding>
           <receivers>
@@ -391,12 +391,12 @@ vers"
               <name>subscription-specific-receiver-def</name>
               <snr:receiver-instance-ref>
                 global-udp-notif-receiver-def
-              </receiver-instance-ref>
+              </snr:receiver-instance-ref>
             </receiver>
           </receivers>
           <yp:periodic>
             <period>6000</period>
-          </periodic>
+          </yp:periodic>
         </subscription>
         <snr:receiver-instances>
           <receiver-instance>
@@ -405,10 +405,10 @@ vers"
               <address>192.0.5.1</address>
               <port>12345</port>
               <enable-segmentation>true</enable-segmentation>
-              <max-segment-size/>
-            </udp-notif-receiver>
+              <max-segment-size>1400</max-segment-size>
+            </unt:udp-notif-receiver>
           </receiver-instance>
-        </receiver-instances>
+        </snr:receiver-instances>
       </subscriptions>
     </config>
   </edit-config>
