@@ -498,10 +498,12 @@ title="XML Push Example for a subscription-modified Notification message">
 
       <t><xref target="subscription_modified_notif_example_json_fig"/>
       provides an example of a JSON encoded, <xref target="RFC7951"/>,
-      Subscription state change Notification message over HTTPS-based
-      <xref target="I-D.ietf-netconf-https-notif"/> or UDP-based <xref
-      target="I-D.ietf-netconf-udp-notif"/> transport for the same
-      Subscription.</t>
+      Subscription state change Notification message that is sent
+      over UDP-based transport <xref target="I-D.ietf-netconf-udp-notif"/>.
+      The same Subscription state change Notification
+      can be sent over HTTPS-based transport <xref target="I-D.ietf-netconf-https-notif"/>,
+      using the namespace specified in <xref section="4.1" target="I-D.ietf-netconf-https-notif"/>.
+      </t>
 
       <figure anchor="subscription_modified_notif_example_json_fig"
 title="JSON Push Example for a subscription-modified Notification message">

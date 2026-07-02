@@ -477,11 +477,11 @@ Internet-Draft        YANG Notifications Versioning            July 2026
                             Notification message
 
    Figure 6 provides an example of a JSON encoded, [RFC7951],
-   Subscription state change Notification message over HTTPS-based
-   [I-D.ietf-netconf-https-notif] or UDP-based
-   [I-D.ietf-netconf-udp-notif] transport for the same Subscription.
-
-
+   Subscription state change Notification message that is sent over UDP-
+   based transport [I-D.ietf-netconf-udp-notif].  The same Subscription
+   state change Notification can be sent over HTTPS-based transport
+   [I-D.ietf-netconf-https-notif], using the namespace specified in
+   Section 4.1 of [I-D.ietf-netconf-https-notif].
 
 
 
