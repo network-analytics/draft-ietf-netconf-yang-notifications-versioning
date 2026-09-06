@@ -12,7 +12,7 @@ module ietf-yang-push-revision {
   import ietf-yang-revisions {
     prefix rev;
     reference
-      "RFC YYYY: draft-ietf-netmod-yang-module-versioning-13,
+      "RFC YYYY: draft-ietf-netmod-yang-module-versioning,
       Updated YANG Module Revision Handling";
   }
   import ietf-yang-types {
@@ -24,7 +24,7 @@ module ietf-yang-push-revision {
   import ietf-yang-semver {
     prefix ysv;
     reference
-      "RFC ZZZZ: draft-ietf-netmod-yang-semver-23, YANG Semantic
+      "RFC ZZZZ: draft-ietf-netmod-yang-semver, YANG Semantic
       Versioning";
   }
   import ietf-yang-library {
@@ -85,7 +85,7 @@ module ietf-yang-push-revision {
     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
     they appear in all capitals, as shown here.";
 
-  revision 2026-07-02 {
+  revision 2026-09-06 {
     description
       "First revision";
     reference
