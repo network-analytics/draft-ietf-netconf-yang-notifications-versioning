@@ -19,57 +19,42 @@
 
     <author fullname="Thomas Graf" initials="T" surname="Graf">
       <organization>Swisscom</organization>
-
       <address>
         <postal>
           <street>Binzring 17</street>
-
           <city>Zurich</city>
-
           <code>8045</code>
-
           <country>Switzerland</country>
         </postal>
-
         <email>thomas.graf@swisscom.com</email>
       </address>
     </author>
 
     <author fullname="Benoit Claise" initials="B" surname="Claise">
-      <organization>Huawei</organization>
-
+      <organization>Everything OPS and Arrcus</organization>
       <address>
         <email>benoit@everything-ops.net</email>
       </address>
     </author>
 
-    <author fullname="Alex Huang-Feng" initials="A." surname="Huang-Feng">
+    <author fullname="Alex Huang Feng" initials="A." surname="Huang-Feng">
       <organization>Deutsche Telekom</organization>
-
       <address>
         <postal>
           <street/>
-
           <city>Barcelona</city>
-
           <region/>
-
           <code/>
-
           <country>Spain</country>
         </postal>
-
         <phone/>
-
         <facsimile/>
-
         <email>alex.huang-feng@t-systems.com</email>
-
         <uri/>
       </address>
     </author>
 
-    <date day="6" month="September" year="2026"/>
+    <date day="14" month="September" year="2026"/>
 
     <abstract>
       <t>This document defines a YANG module which extends the YANG-Push
