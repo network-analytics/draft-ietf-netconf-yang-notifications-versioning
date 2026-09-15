@@ -54,7 +54,7 @@
       </address>
     </author>
 
-    <date day="14" month="September" year="2026"/>
+    <date day="15" month="September" year="2026"/>
 
     <abstract>
       <t>This document defines a YANG module which extends the YANG-Push
@@ -1058,7 +1058,7 @@ module: ietf-subscribed-notifications
 				target="I-D.ietf-netmod-yang-semver"/>.</t>
 
         <sourcecode type="yang" markers="true"
-        name="ietf-yang-push-revision@2026-07-02.yang"><![CDATA[
+        name="ietf-yang-push-revision@2026-09-15.yang"><![CDATA[
 module ietf-yang-push-revision {
   yang-version 1.1;
   namespace
@@ -1228,12 +1228,14 @@ module ietf-yang-push-revision {
       in the data.";
     leaf name {
       type yang:yang-identifier;
+      config false;
       mandatory true;
       description
         "This references the YANG module name.";
     }
     leaf revision {
       type rev:revision-date;
+      config false;
       mandatory true;
       description
         "This references the YANG module revision of the sent
@@ -1241,6 +1243,7 @@ module ietf-yang-push-revision {
     }
     leaf version {
       type ysv:version;
+      config false;
       description
         "This references the YANG module semantic version of the
         sent notification message.";

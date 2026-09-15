@@ -85,7 +85,7 @@ module ietf-yang-push-revision {
     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
     they appear in all capitals, as shown here.";
 
-  revision 2026-09-06 {
+  revision 2026-09-15 {
     description
       "First revision";
     reference
@@ -167,12 +167,14 @@ module ietf-yang-push-revision {
       in the data.";
     leaf name {
       type yang:yang-identifier;
+      config false;
       mandatory true;
       description
         "This references the YANG module name.";
     }
     leaf revision {
       type rev:revision-date;
+      config false;
       mandatory true;
       description
         "This references the YANG module revision of the sent
@@ -180,6 +182,7 @@ module ietf-yang-push-revision {
     }
     leaf version {
       type ysv:version;
+      config false;
       description
         "This references the YANG module semantic version of the
         sent notification message.";
