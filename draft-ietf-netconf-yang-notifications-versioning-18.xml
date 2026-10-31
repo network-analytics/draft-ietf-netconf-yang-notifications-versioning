@@ -163,10 +163,12 @@
 
     <section anchor="Subscription_Policy_Extension"
              title="Subscription Policy Extension">
-      <t>The ability to configure or establish a Dynamic Subscription
-      can be constrained to particular module versions or revisions
-      using the following fields that are defined in
-      the 'ietf-yang-push-revision' YANG module:</t>
+      <t>The ability to <xref section="2.4" sectionFormat="of"
+			target="RFC8639">configure</xref> or establish a <xref
+			section="2.5" sectionFormat="of" target="RFC8639">Dynamic</xref>
+			Subscription can be constrained to particular module versions or
+			revisions using the following fields that are defined in the
+			'ietf-yang-push-revision' YANG module:</t>
 
       <dl>
         <dt>module:</dt>
@@ -1505,8 +1507,8 @@ module ietf-yang-push-revision {
         <li>/sn:subscriptions/sn:subscription/ypr:module-version-subs</li>
       </ul>
 
-      <t>An attacker could possibly infer the network operating system
-			version in use.</t>
+      <t>An attacker could possibly infer the version of the network
+			operating system or other software in use.</t>
 		
       <t>Some of the RPC or action operations in this YANG module may be
       considered sensitive or vulnerable in some network environments.

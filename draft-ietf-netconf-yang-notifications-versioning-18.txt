@@ -189,10 +189,10 @@ Internet-Draft        YANG Notifications Versioning         October 2026
 
 2.  Subscription Policy Extension
 
-   The ability to configure or establish a Dynamic Subscription can be
-   constrained to particular module versions or revisions using the
-   following fields that are defined in the 'ietf-yang-push-revision'
-   YANG module:
+   The ability to Section 2.4 of configure [RFC8639] or establish a
+   Section 2.5 of Dynamic [RFC8639] Subscription can be constrained to
+   particular module versions or revisions using the following fields
+   that are defined in the 'ietf-yang-push-revision' YANG module:
 
    module:  Specifies the YANG module names to which the Subscription is
       restricted, based on either a module revision or a semantic
@@ -1705,8 +1705,8 @@ Internet-Draft        YANG Notifications Versioning         October 2026
 
    *  /sn:subscriptions/sn:subscription/ypr:module-version-subs
 
-   An attacker could possibly infer the network operating system version
-   in use.
+   An attacker could possibly infer the version of the network operating
+   system or other software in use.
 
    Some of the RPC or action operations in this YANG module may be
    considered sensitive or vulnerable in some network environments.  It
